@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MockGART Scorekeeper control</title>
+    <style type="text/css">
+        body {
+            font-family: Calibri;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Title + start button -->
+    <center><h1>MockGART Scorekeeper control</h1><button style="width: 100px; height: 100px; color: white; background-color: green; font-size: 24px;" onclick="startMatch();">Start</button></center><br>
+
+    <!-- Overall matches -->
+    <table border="5" width="100%" style="table-layout: fixed;">
+        <tr>
+            <th style="background-color:#ff0000; width: 33%;"><font color="white">RED wins</font></th>
+            <th style="width: 33%;">Match played</th>
+            <th style="background-color:#0000ff; width: 33%;"><font color="white">BLUE wins</font></th>
+        </tr>
+        <tr>
+            <th><p style="font-size: 30px;" id="redWins">0</p></th>
+            <th><p style="font-size: 30px;" id="playedMatches">0</p></th>
+            <th><p style="font-size: 30px;" id="blueWins">0</p></th>
+        </tr>
+    </table>
+    <hr>
+
+    <!-- Score board control -->
+    <table border="5" width="100%">
+        <tr>
+            <th style="background-color:#ff0000;"><font color="white">RED</font></th>
+            <th style="background-color:#0000ff;"><font color="white">BLUE</font></th>
+        </tr>
+        <tr>
+            <th><p style="font-size: 30px;" id="redScore">0</p></th>
+            <th><p style="font-size: 30px;" id="blueScore">0</p></th>
+        </tr>
+        <tr>
+            <th><p>Hatch</p><input type="checkbox" id="redHatch" onclick="redHatchCheck();"></th>
+            <th><p>Hatch</p><input type="checkbox" id="blueHatch" onclick="blueHatchCheck();"></th>
+        </tr>
+        <tr>
+            <th>
+                <p>Solid Fuel</p>
+                <button style="width: 64px; height: 64px; font-size: 16px;" onclick="redFuelInc();">+</button>
+                <input type="text" min="0" id="redFuelNum" value="0" onchange="redFuelInput();">
+                <button style="width: 64px; height: 64px; font-size: 16px;" onclick="redFuelDec();">-</button></th>
+            <th>
+                <p>Solid Fuel</p>
+                <button style="width: 64px; height: 64px; font-size: 16px;" onclick="blueFuelInc();">+</button>
+                <input type="text" min="0" id="blueFuelNum" value="0" onchange="blueFuelInput();">
+                <button style="width: 64px; height: 64px; font-size: 16px;" onclick="blueFuelDec();">-</button></th>
+        </tr>
+        <tr>
+            <th>
+                <p>No parking<input name="redParkStatus" checked value="no" type="radio" onclick="redParkCheck();"></p>
+                <p>Partial parking<input name="redParkStatus" value="half" type="radio" onclick="redParkCheck();"></p>
+                <p>Full parking<input name="redParkStatus" value="full" type="radio" onclick="redParkCheck();"></p>
+            </th>
+            <th>
+                <p>No parking<input name="blueParkStatus" checked value="no" type="radio" onclick="blueParkCheck();"></p>
+                <p>Partial parking<input name="blueParkStatus" value="half" type="radio" onclick="blueParkCheck();"></p>
+                <p>Full parking<input name="blueParkStatus" value="full" type="radio" onclick="blueParkCheck();"></p>
+        </tr>
+    </table>
+    <br>
+
+    <!-- Additional settings -->
+    <hr>
+    <button onclick="resetScoreControl();">Reset</button>
+    <p>Match time (in seconds) <input type="text" id="matchTime" value="180"> <button onclick="setMatchTime();">Set match time</button></p>
+    <button onclick="toggleTeamSide();">Toggle team side</button>
+
+    <!-- Main script -->
+    <script type="text/javascript">
+        // Overall matches stat
+        var red_wins = 0;
+        var blue_wins = 0;
+        var match_played = 0;
+
+        // This match's score
+        var red_score = 0;
+        var blue_score = 0;
+
+        // Fuel
+        var red_fuel_num = 0;
+        var blue_fuel_num = 0;
+
+        // Park status
+        var red_park_status = "no";
+        var blue_park_status = "no";
+
+        // Update score helper
+        function updateScore() {
+            document.getElementById("redScore").textContent = red_score;
+            document.getElementById("blueScore").textContent = blue_score;
+
+            document.getElementById("redFuelNum").value = red_fuel_num;
+            document.getElementById("blueFuelNum").value = blue_fuel_num;
+        }
+
+        function startMatch() {
+
+        }
+
+        // Red hatch
+        function redHatchCheck() {
+            if (document.getElementById("redHatch").checked) {
+                red_score += 20;
+            } else {
+                red_score -= 20;
+            }
+
+            updateScore();
+        }
+
+        // Blue hatch
+        function blueHatchCheck() {
+            if (document.getElementById("blueHatch").checked) {
+                blue_score += 20;
+            } else {
+                blue_score -= 20;
+            }
+
+            updateScore();
+        }
+
+        // Red fuel increase
+        function redFuelInc() {
+            red_fuel_num++;
+            red_score += 2;
+            updateScore();
+        }
+
+        // Red fuel decrease
+        function redFuelDec() {
+            red_fuel_num--;
+            red_score -= 2;
+            updateScore();
+        }
+
+        // Blue fuel increase
+        function blueFuelInc() {
+            blue_fuel_num++;
+            blue_score += 2;
+            updateScore();
+        }
+
+        // Blue fuel decrease
+        function blueFuelDec() {
+            blue_fuel_num--;
+            blue_score -= 2;
+            updateScore();
+        }
+
+        // Red fuel numerical input
+        function redFuelInput() {
+            var current_fuel = parseInt(document.getElementById("redFuelNum").value);
+            if (isNaN(current_fuel)) return;
+            red_score += (current_fuel - red_fuel_num) * 2;
+            red_fuel_num = current_fuel;
+            updateScore();
+        }
+
+        // Blue fuel numerical input
+        function blueFuelInput() {
+            var current_fuel = parseInt(document.getElementById("blueFuelNum").value);
+            if (isNaN(current_fuel)) return;
+            blue_score += (current_fuel - blue_fuel_num) * 2;
+            blue_fuel_num = current_fuel;
+            updateScore();
+        }
+
+        // Red park
+        function redParkCheck() {
+            var park_status = document.querySelector('input[name="redParkStatus"]:checked').value;
+            if (park_status == red_park_status) return;
+
+            switch (park_status) {
+            case "no":
+                red_score -= (red_park_status == "full") ? 30 : 10;
+                break;
+            case "half":
+                red_score += (red_park_status == "no") ? 10 : -20;
+                break;
+            case "full":
+                red_score += (red_park_status == "no") ? 30 : 20;
+                break;
+            default:
+                // How tf
+                break;
+            }
+
+            // Update park status
+            red_park_status = park_status;
+
+            // Update
+            updateScore();
+        }
+
+        // Blue park
+        function blueParkCheck() {
+            var park_status = document.querySelector('input[name="blueParkStatus"]:checked').value;
+            if (park_status == blue_park_status) return;
+
+            switch (park_status) {
+            case "no":
+                blue_score -= (blue_park_status == "full") ? 30 : 10;
+                break;
+            case "half":
+                blue_score += (blue_park_status == "no") ? 10 : -20;
+                break;
+            case "full":
+                blue_score += (blue_park_status == "no") ? 30 : 20;
+                break;
+            default:
+                // How tf
+                break;
+            }
+
+            // Update park status
+            blue_park_status = park_status;
+
+            // Update
+            updateScore();
+        }
+
+        function resetScoreControl() {
+            // This match's score
+            red_score = 0;
+            blue_score = 0;
+
+            // Reset hatch
+            document.getElementById("redHatch").checked = false;
+            document.getElementById("blueHatch").checked = false;
+
+            // Fuel
+            red_fuel_num = 0;
+            blue_fuel_num = 0;
+
+            // Park status
+            red_park_status = "no";
+            document.getElementsByName("redParkStatus")[0].click()
+            blue_park_status = "no";
+            document.getElementsByName("blueParkStatus")[0].click()
+
+            updateScore();
+        }
+
+        function setMatchTime() {
+
+        }
+
+        function toggleTeamSide() {
+
+        }
+
+    </script>
+</body>
+</html>
