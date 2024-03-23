@@ -18,3 +18,4 @@ D:\dev\MockGARTScore\obj\Debug\net8.0-windows\refint\MockGARTScore.dll
 D:\dev\MockGARTScore\obj\Debug\net8.0-windows\MockGARTScore.pdb
 D:\dev\MockGARTScore\obj\Debug\net8.0-windows\MockGARTScore.genruntimeconfig.cache
 D:\dev\MockGARTScore\obj\Debug\net8.0-windows\ref\MockGARTScore.dll
+D:\dev\MockGARTScore\obj\Debug\net8.0-windows\MockGARTScore.Properties.Resources.resources

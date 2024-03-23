@@ -1,3 +1,4 @@
+using MockGARTScore;
 using System;
 using System.Runtime.CompilerServices;
 using WebSocketSharp;
@@ -5,7 +6,7 @@ using WebSocketSharp.Server;
 
 namespace MockGARTScore
 {
-    public class UpdateScore : WebSocketBehavior
+    public class WSUpdate : WebSocketBehavior
     {
         protected override void OnMessage(MessageEventArgs e)
         {
@@ -38,8 +39,11 @@ namespace MockGARTScore
         }
     }
 
-    internal static class Program
+    public static class Program
     {
+        // Forms
+        public static InMatchScore inMatchScoreForm = new InMatchScore();
+
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
@@ -49,13 +53,17 @@ namespace MockGARTScore
             // Create WebSocket server
             var wssv = new WebSocketServer("ws://0.0.0.0");
 
-            wssv.AddWebSocketService<UpdateScore>("/updatescore");
+            wssv.AddWebSocketService<WSUpdate>("/wsupdate");
             wssv.Start();
 
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new InMatchScore());
+
+            //inMatchScoreForm.setTeamColor(Color.DodgerBlue, Color.Red);
+            inMatchScoreForm.setScore(100, 200);
+
+            Application.Run(inMatchScoreForm);
         }
     }
 }

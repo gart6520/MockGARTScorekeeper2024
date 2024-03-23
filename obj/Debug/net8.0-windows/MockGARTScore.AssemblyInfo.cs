@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MockGARTScore")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6648b7e390b236a28c3d196b59cf11799d175766")]
 [assembly: System.Reflection.AssemblyProductAttribute("MockGARTScore")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MockGARTScore")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
