@@ -60,8 +60,12 @@ namespace MockGARTScore
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            //inMatchScoreForm.setTeamColor(Color.DodgerBlue, Color.Red);
+            inMatchScoreForm.setTeamColor(Color.DodgerBlue, Color.Red);
+            //inMatchScoreForm.setTime(180);
             inMatchScoreForm.setScore(100, 200);
+            inMatchScoreForm.setHatch(true, false);
+            inMatchScoreForm.setFuel(300, 200);
+            inMatchScoreForm.setPark(1, 2);
 
             Application.Run(inMatchScoreForm);
         }

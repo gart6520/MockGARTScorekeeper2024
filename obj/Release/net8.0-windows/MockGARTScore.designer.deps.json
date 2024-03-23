@@ -1,0 +1,28 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "WebSocketSharp/1.0.3-rc11": {
+        "runtime": {
+          "lib/websocket-sharp.dll": {
+            "assemblyVersion": "1.0.2.59611",
+            "fileVersion": "1.0.2.59611"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "WebSocketSharp/1.0.3-rc11": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7VCF7f7zVMOvLGD8LeGS4DVXc8lOcB6kXnUMeTxigu+PMiU+6wW5Olq2gYrDU8vDRKOwFY+5RyBaLyzb8skEzA==",
+      "path": "websocketsharp/1.0.3-rc11",
+      "hashPath": "websocketsharp.1.0.3-rc11.nupkg.sha512"
+    }
+  }
+}

@@ -40,9 +40,25 @@
             rightScore = new Label();
             leftHatch = new PictureBox();
             rightHatch = new PictureBox();
+            leftFuelLabel = new Label();
+            rightFuelLabel = new Label();
+            rightFuel = new Label();
+            leftFuel = new Label();
+            leftParkNo = new PictureBox();
+            leftParkHalf = new PictureBox();
+            leftParkFull = new PictureBox();
+            rightParkFull = new PictureBox();
+            rightParkHalf = new PictureBox();
+            rightParkNo = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)canvas).BeginInit();
             ((System.ComponentModel.ISupportInitialize)leftHatch).BeginInit();
             ((System.ComponentModel.ISupportInitialize)rightHatch).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)leftParkNo).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)leftParkHalf).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)leftParkFull).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)rightParkFull).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)rightParkHalf).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)rightParkNo).BeginInit();
             SuspendLayout();
             // 
             // exitButton
@@ -142,6 +158,7 @@
             leftScore.AutoSize = true;
             leftScore.BackColor = Color.Red;
             leftScore.Font = new Font("Arial", 96F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            leftScore.ForeColor = Color.White;
             leftScore.Location = new Point(81, 195);
             leftScore.Name = "leftScore";
             leftScore.Size = new Size(166, 183);
@@ -153,6 +170,7 @@
             rightScore.AutoSize = true;
             rightScore.BackColor = Color.DodgerBlue;
             rightScore.Font = new Font("Arial", 96F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            rightScore.ForeColor = Color.White;
             rightScore.Location = new Point(772, 195);
             rightScore.Name = "rightScore";
             rightScore.Size = new Size(166, 183);
@@ -161,6 +179,7 @@
             // 
             // leftHatch
             // 
+            leftHatch.BackColor = Color.Red;
             leftHatch.Image = Properties.Resources.hatch;
             leftHatch.Location = new Point(150, 393);
             leftHatch.Name = "leftHatch";
@@ -170,6 +189,7 @@
             // 
             // rightHatch
             // 
+            rightHatch.BackColor = Color.DodgerBlue;
             rightHatch.Image = Properties.Resources.hatch;
             rightHatch.Location = new Point(740, 393);
             rightHatch.Name = "rightHatch";
@@ -177,12 +197,130 @@
             rightHatch.TabIndex = 11;
             rightHatch.TabStop = false;
             // 
+            // leftFuelLabel
+            // 
+            leftFuelLabel.AutoSize = true;
+            leftFuelLabel.BackColor = Color.Red;
+            leftFuelLabel.Font = new Font("Arial", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            leftFuelLabel.ForeColor = Color.White;
+            leftFuelLabel.Location = new Point(29, 534);
+            leftFuelLabel.Name = "leftFuelLabel";
+            leftFuelLabel.Size = new Size(154, 70);
+            leftFuelLabel.TabIndex = 12;
+            leftFuelLabel.Text = "Fuel";
+            // 
+            // rightFuelLabel
+            // 
+            rightFuelLabel.AutoSize = true;
+            rightFuelLabel.BackColor = Color.DodgerBlue;
+            rightFuelLabel.Font = new Font("Arial", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            rightFuelLabel.ForeColor = Color.White;
+            rightFuelLabel.Location = new Point(830, 534);
+            rightFuelLabel.Name = "rightFuelLabel";
+            rightFuelLabel.Size = new Size(154, 70);
+            rightFuelLabel.TabIndex = 13;
+            rightFuelLabel.Text = "Fuel";
+            // 
+            // rightFuel
+            // 
+            rightFuel.AutoSize = true;
+            rightFuel.BackColor = Color.DodgerBlue;
+            rightFuel.Font = new Font("Arial", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            rightFuel.ForeColor = Color.White;
+            rightFuel.Location = new Point(691, 534);
+            rightFuel.Name = "rightFuel";
+            rightFuel.Size = new Size(63, 70);
+            rightFuel.TabIndex = 14;
+            rightFuel.Text = "0";
+            // 
+            // leftFuel
+            // 
+            leftFuel.AutoSize = true;
+            leftFuel.BackColor = Color.Red;
+            leftFuel.Font = new Font("Arial", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            leftFuel.ForeColor = Color.White;
+            leftFuel.Location = new Point(268, 534);
+            leftFuel.Name = "leftFuel";
+            leftFuel.Size = new Size(63, 70);
+            leftFuel.TabIndex = 15;
+            leftFuel.Text = "0";
+            // 
+            // leftParkNo
+            // 
+            leftParkNo.BackColor = Color.Red;
+            leftParkNo.Image = Properties.Resources.nopark;
+            leftParkNo.Location = new Point(12, 628);
+            leftParkNo.Name = "leftParkNo";
+            leftParkNo.Size = new Size(128, 128);
+            leftParkNo.TabIndex = 16;
+            leftParkNo.TabStop = false;
+            // 
+            // leftParkHalf
+            // 
+            leftParkHalf.BackColor = Color.Red;
+            leftParkHalf.Image = Properties.Resources.partialpark;
+            leftParkHalf.Location = new Point(150, 628);
+            leftParkHalf.Name = "leftParkHalf";
+            leftParkHalf.Size = new Size(128, 128);
+            leftParkHalf.TabIndex = 17;
+            leftParkHalf.TabStop = false;
+            // 
+            // leftParkFull
+            // 
+            leftParkFull.BackColor = Color.Red;
+            leftParkFull.Image = Properties.Resources.fullpark;
+            leftParkFull.Location = new Point(293, 628);
+            leftParkFull.Name = "leftParkFull";
+            leftParkFull.Size = new Size(128, 128);
+            leftParkFull.TabIndex = 18;
+            leftParkFull.TabStop = false;
+            // 
+            // rightParkFull
+            // 
+            rightParkFull.BackColor = Color.DodgerBlue;
+            rightParkFull.Image = Properties.Resources.fullpark;
+            rightParkFull.Location = new Point(883, 628);
+            rightParkFull.Name = "rightParkFull";
+            rightParkFull.Size = new Size(128, 128);
+            rightParkFull.TabIndex = 21;
+            rightParkFull.TabStop = false;
+            // 
+            // rightParkHalf
+            // 
+            rightParkHalf.BackColor = Color.DodgerBlue;
+            rightParkHalf.Image = Properties.Resources.partialpark;
+            rightParkHalf.Location = new Point(740, 628);
+            rightParkHalf.Name = "rightParkHalf";
+            rightParkHalf.Size = new Size(128, 128);
+            rightParkHalf.TabIndex = 20;
+            rightParkHalf.TabStop = false;
+            // 
+            // rightParkNo
+            // 
+            rightParkNo.BackColor = Color.DodgerBlue;
+            rightParkNo.Image = Properties.Resources.nopark;
+            rightParkNo.Location = new Point(606, 628);
+            rightParkNo.Name = "rightParkNo";
+            rightParkNo.Size = new Size(128, 128);
+            rightParkNo.TabIndex = 22;
+            rightParkNo.TabStop = false;
+            // 
             // InMatchScore
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = exitButton;
             ClientSize = new Size(1024, 768);
+            Controls.Add(rightParkNo);
+            Controls.Add(rightParkFull);
+            Controls.Add(rightParkHalf);
+            Controls.Add(leftParkFull);
+            Controls.Add(leftParkHalf);
+            Controls.Add(leftParkNo);
+            Controls.Add(leftFuel);
+            Controls.Add(rightFuel);
+            Controls.Add(rightFuelLabel);
+            Controls.Add(leftFuelLabel);
             Controls.Add(rightHatch);
             Controls.Add(leftHatch);
             Controls.Add(rightScore);
@@ -204,6 +342,12 @@
             ((System.ComponentModel.ISupportInitialize)canvas).EndInit();
             ((System.ComponentModel.ISupportInitialize)leftHatch).EndInit();
             ((System.ComponentModel.ISupportInitialize)rightHatch).EndInit();
+            ((System.ComponentModel.ISupportInitialize)leftParkNo).EndInit();
+            ((System.ComponentModel.ISupportInitialize)leftParkHalf).EndInit();
+            ((System.ComponentModel.ISupportInitialize)leftParkFull).EndInit();
+            ((System.ComponentModel.ISupportInitialize)rightParkFull).EndInit();
+            ((System.ComponentModel.ISupportInitialize)rightParkHalf).EndInit();
+            ((System.ComponentModel.ISupportInitialize)rightParkNo).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -222,5 +366,15 @@
         private Label rightScore;
         private PictureBox leftHatch;
         private PictureBox rightHatch;
+        private Label leftFuelLabel;
+        private Label rightFuelLabel;
+        private Label rightFuel;
+        private Label leftFuel;
+        private PictureBox leftParkNo;
+        private PictureBox leftParkHalf;
+        private PictureBox leftParkFull;
+        private PictureBox rightParkFull;
+        private PictureBox rightParkHalf;
+        private PictureBox rightParkNo;
     }
 }
