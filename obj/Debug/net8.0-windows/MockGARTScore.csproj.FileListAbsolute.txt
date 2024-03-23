@@ -19,3 +19,24 @@ D:\dev\MockGARTScore\obj\Debug\net8.0-windows\MockGARTScore.pdb
 D:\dev\MockGARTScore\obj\Debug\net8.0-windows\MockGARTScore.genruntimeconfig.cache
 D:\dev\MockGARTScore\obj\Debug\net8.0-windows\ref\MockGARTScore.dll
 D:\dev\MockGARTScore\obj\Debug\net8.0-windows\MockGARTScore.Properties.Resources.resources
+E:\Coding\Rider C#\MockGartScorekeeper_Loc\bin\Debug\net8.0-windows\MockGARTScore.exe
+E:\Coding\Rider C#\MockGartScorekeeper_Loc\bin\Debug\net8.0-windows\MockGARTScore.deps.json
+E:\Coding\Rider C#\MockGartScorekeeper_Loc\bin\Debug\net8.0-windows\MockGARTScore.runtimeconfig.json
+E:\Coding\Rider C#\MockGartScorekeeper_Loc\bin\Debug\net8.0-windows\MockGARTScore.dll
+E:\Coding\Rider C#\MockGartScorekeeper_Loc\bin\Debug\net8.0-windows\MockGARTScore.pdb
+E:\Coding\Rider C#\MockGartScorekeeper_Loc\bin\Debug\net8.0-windows\websocket-sharp.dll
+E:\Coding\Rider C#\MockGartScorekeeper_Loc\obj\Debug\net8.0-windows\MockGARTScore.csproj.AssemblyReference.cache
+E:\Coding\Rider C#\MockGartScorekeeper_Loc\obj\Debug\net8.0-windows\MockGARTScore.InMatchScore.resources
+E:\Coding\Rider C#\MockGartScorekeeper_Loc\obj\Debug\net8.0-windows\MockGARTScore.Properties.Resources.resources
+E:\Coding\Rider C#\MockGartScorekeeper_Loc\obj\Debug\net8.0-windows\MockGARTScore.csproj.GenerateResource.cache
+E:\Coding\Rider C#\MockGartScorekeeper_Loc\obj\Debug\net8.0-windows\MockGARTScore.GeneratedMSBuildEditorConfig.editorconfig
+E:\Coding\Rider C#\MockGartScorekeeper_Loc\obj\Debug\net8.0-windows\MockGARTScore.AssemblyInfoInputs.cache
+E:\Coding\Rider C#\MockGartScorekeeper_Loc\obj\Debug\net8.0-windows\MockGARTScore.AssemblyInfo.cs
+E:\Coding\Rider C#\MockGartScorekeeper_Loc\obj\Debug\net8.0-windows\MockGARTScore.csproj.CoreCompileInputs.cache
+E:\Coding\Rider C#\MockGartScorekeeper_Loc\obj\Debug\net8.0-windows\MockGARTScore.sourcelink.json
+E:\Coding\Rider C#\MockGartScorekeeper_Loc\obj\Debug\net8.0-windows\MockGART.87A1E7DE.Up2Date
+E:\Coding\Rider C#\MockGartScorekeeper_Loc\obj\Debug\net8.0-windows\MockGARTScore.dll
+E:\Coding\Rider C#\MockGartScorekeeper_Loc\obj\Debug\net8.0-windows\refint\MockGARTScore.dll
+E:\Coding\Rider C#\MockGartScorekeeper_Loc\obj\Debug\net8.0-windows\MockGARTScore.pdb
+E:\Coding\Rider C#\MockGartScorekeeper_Loc\obj\Debug\net8.0-windows\MockGARTScore.genruntimeconfig.cache
+E:\Coding\Rider C#\MockGartScorekeeper_Loc\obj\Debug\net8.0-windows\ref\MockGARTScore.dll
