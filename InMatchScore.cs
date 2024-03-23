@@ -68,12 +68,12 @@ namespace MockGARTScore
             // Add paint event handler to the canvas
             canvas.Paint += canvas_Paint;
 
-            // Aligin the "Wins" label to the center
+            // Align the "Wins" label to the center
             winsLabel.Location = new Point(
                 (w - winsLabel.Size.Width) / 2,
                 (h / 10 - winsLabel.Size.Height) / 2);
 
-            // Aligin the leftWins and rightWins label
+            // Align the leftWins and rightWins label
             leftWins.Location = new Point(
                 w / 3 + w / 24 - leftWins.Size.Width / 2,
                 (h / 10 - leftWins.Size.Height) / 2);
@@ -81,7 +81,7 @@ namespace MockGARTScore
                 w / 3 + w * 7 / 24 - rightWins.Size.Width / 2,
                 (h / 10 - rightWins.Size.Height) / 2);
 
-            // Aligin the timerText to center
+            // Align the timerText to center
             timerText.Location = new Point(
                 (w - timerText.Size.Width) / 2,
                 (h - timerText.Size.Height) / 2);
@@ -90,7 +90,7 @@ namespace MockGARTScore
             leftTeamName.Text = leftColor == Color.Red ? "RED" : "BLUE";
             rightTeamName.Text = rightColor == Color.DodgerBlue ? "BLUE" : "RED";
 
-            // Aligin team names
+            // Align team names
             leftTeamName.Location = new Point(
                 w / 4 - leftTeamName.Size.Width / 2,
                 h / 4 - leftTeamName.Size.Height / 2);
@@ -98,7 +98,7 @@ namespace MockGARTScore
                 w * 3 / 4 - rightTeamName.Size.Width / 2,
                 h / 4 - rightTeamName.Size.Height / 2);
 
-            // Aligin team scores
+            // Align team scores
             leftScore.Location = new Point(
                 w / 4 - leftScore.Size.Width / 2,
                 h / 2 - leftScore.Size.Height / 2);
@@ -106,7 +106,7 @@ namespace MockGARTScore
                 w * 3 / 4 - rightScore.Size.Width / 2,
                 h / 2 - rightScore.Size.Height / 2);
 
-            // Aligin hatch images
+            // Align hatch images
             leftHatch.Location = new Point(
                 w / 4 - leftHatch.Size.Width / 2,
                 h / 2 + h / 6 - leftHatch.Size.Height / 2);
@@ -160,16 +160,42 @@ namespace MockGARTScore
             g.DrawLine(new Pen(new SolidBrush(Color.Black), 5), new Point(sep_up_x, 0), new Point(sep_down_x, h));
 
             // Draw wins box
-            g.FillRectangle(new SolidBrush(Color.Black),
-                new Rectangle(new Point(w / 3, 0), new Size(w / 3, h / 10)));
+            Point[] winBoxLinePoints =
+            [
+                new(w / 4, 0),
+                new(w / 3, h / 10),
+                new(2 * w / 3, h / 10),
+                new(3 * w / 4, 0)
+            ];
+            // g.FillRectangle(new SolidBrush(Color.Black),
+            //     new Rectangle(new Point(w / 3, 0), new Size(w / 3, h / 10)));
+            g.FillPolygon(new SolidBrush(Color.Black), winBoxLinePoints);
             g.FillRectangle(new SolidBrush(Color.White),
                 new Rectangle(new Point(w / 3 + 8, 8), new Size(w / 3 - 16, h / 10 - 16)));
 
             // Fill team color to the wins number
-            g.FillRectangle(new SolidBrush(leftColor),
-                new Rectangle(new Point(w / 3 + 8, 8), new Size(w / 12 - 8, h / 10 - 16)));
-            g.FillRectangle(new SolidBrush(rightColor),
-                new Rectangle(new Point(w / 3 + w / 4, 8), new Size(w / 12 - 8, h / 10 - 16)));
+            double a = 48.0 / 5.0 / Math.Sqrt(36.0 / 25.0 + (double)w * w / (h * h));
+            double b = -8 / Math.Sqrt(36.0 / 25.0 * h * h / (w * w) + 1);
+            Point[] winBoxFillLeftPoints =
+            [
+                new((int)Math.Round(w / 4.0 + a + w / 12.0 * (80.0 - 10.0 * b) / h), 8),
+                new((int)Math.Round(w / 3.0 + a - w / 12.0 * (80.0 + 10.0 * b) / h), h / 10 - 8),
+                new(5 * w / 12, h / 10 - 8),
+                new(5 * w / 12, 8)
+            ];
+            // g.FillRectangle(new SolidBrush(leftColor),
+            //     new Rectangle(new Point(w / 3 + 8, 8), new Size(w / 12 - 8, h / 10 - 16)));
+            g.FillPolygon(new SolidBrush(leftColor), winBoxFillLeftPoints);
+            Point[] winBoxFillRightPoints =
+            [
+                new((int)Math.Round(3 * w / 4.0 - a - w / 12.0 * (80.0 - 10.0 * b) / h), 8),
+                new((int)Math.Round(2 * w / 3.0 - a + w / 12.0 * (80.0 + 10.0 * b) / h), h / 10 - 8),
+                new(7 * w / 12, h / 10 - 8),
+                new(7 * w / 12, 8)
+            ];
+            g.FillPolygon(new SolidBrush(rightColor), winBoxFillRightPoints);
+            // g.FillRectangle(new SolidBrush(rightColor),
+            //     new Rectangle(new Point(w / 3 + w / 4, 8), new Size(w / 12 - 8, h / 10 - 16)));
 
             // Separator lines in wins box
             g.DrawLine(new Pen(new SolidBrush(Color.Black), 8), new Point(w / 3 + w / 12, 0),
