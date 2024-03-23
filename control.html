@@ -48,12 +48,12 @@
             <th>
                 <p>Solid Fuel</p>
                 <button style="width: 64px; height: 64px; font-size: 16px;" onclick="redFuelInc();">+</button>
-                <input type="text" min="0" id="redFuelNum" value="0" onchange="redFuelInput();">
+                <input type="number" min="0" id="redFuelNum" value="0" onchange="redFuelInput();">
                 <button style="width: 64px; height: 64px; font-size: 16px;" onclick="redFuelDec();">-</button></th>
             <th>
                 <p>Solid Fuel</p>
                 <button style="width: 64px; height: 64px; font-size: 16px;" onclick="blueFuelInc();">+</button>
-                <input type="text" min="0" id="blueFuelNum" value="0" onchange="blueFuelInput();">
+                <input type="number" min="0" id="blueFuelNum" value="0" onchange="blueFuelInput();">
                 <button style="width: 64px; height: 64px; font-size: 16px;" onclick="blueFuelDec();">-</button></th>
         </tr>
         <tr>
@@ -66,6 +66,16 @@
                 <p>No parking<input name="blueParkStatus" checked value="no" type="radio" onclick="blueParkCheck();"></p>
                 <p>Partial parking<input name="blueParkStatus" value="half" type="radio" onclick="blueParkCheck();"></p>
                 <p>Full parking<input name="blueParkStatus" value="full" type="radio" onclick="blueParkCheck();"></p>
+        </tr>
+        <tr>
+            <th>
+                <p>Penalty</p>
+                <input type="number" min="0" id="redPen" value="0" onchange="redPenInput();">
+            </th>
+            <th>
+                <p>Penalty</p>
+                <input type="number" min="0" id="bluePen" value="0" onchange="bluePenInput();">
+            </th>
         </tr>
     </table>
     <br>
@@ -94,6 +104,10 @@
         // Park status
         var red_park_status = "no";
         var blue_park_status = "no";
+
+        // Penalty
+        var red_pen_score = 0;
+        var blue_pen_score = 0;
 
         // Update score helper
         function updateScore() {
@@ -230,6 +244,24 @@
             updateScore();
         }
 
+        // Red penalty
+        function redPenInput() {
+            var red_pen = parseInt(document.getElementById("redPen").value);
+            if (isNaN(red_pen)) return;
+            blue_score += (red_pen - red_pen_score);
+            red_pen_score = red_pen;
+            updateScore();
+        }
+
+        // Blue penalty
+        function bluePenInput() {
+            var blue_pen = parseInt(document.getElementById("bluePen").value);
+            if (isNaN(blue_pen)) return;
+            red_score += (blue_pen - blue_pen_score);
+            blue_pen_score = blue_pen;
+            updateScore();
+        }
+
         function resetScoreControl() {
             // This match's score
             red_score = 0;
@@ -248,6 +280,12 @@
             document.getElementsByName("redParkStatus")[0].click()
             blue_park_status = "no";
             document.getElementsByName("blueParkStatus")[0].click()
+
+            // Penalty
+            red_pen_score = 0;
+            document.getElementById("redPen").value = 0;
+            blue_pen_score = 0;
+            document.getElementById("bluePen").value = 0;
 
             updateScore();
         }

@@ -5,12 +5,13 @@ D:\dev\MockGARTScore\bin\Debug\net8.0-windows\MockGARTScore.dll
 D:\dev\MockGARTScore\bin\Debug\net8.0-windows\MockGARTScore.pdb
 D:\dev\MockGARTScore\bin\Debug\net8.0-windows\websocket-sharp.dll
 D:\dev\MockGARTScore\obj\Debug\net8.0-windows\MockGARTScore.csproj.AssemblyReference.cache
-D:\dev\MockGARTScore\obj\Debug\net8.0-windows\MockGARTScore.Form1.resources
+D:\dev\MockGARTScore\obj\Debug\net8.0-windows\MockGARTScore.InMatchScore.resources
 D:\dev\MockGARTScore\obj\Debug\net8.0-windows\MockGARTScore.csproj.GenerateResource.cache
 D:\dev\MockGARTScore\obj\Debug\net8.0-windows\MockGARTScore.GeneratedMSBuildEditorConfig.editorconfig
 D:\dev\MockGARTScore\obj\Debug\net8.0-windows\MockGARTScore.AssemblyInfoInputs.cache
 D:\dev\MockGARTScore\obj\Debug\net8.0-windows\MockGARTScore.AssemblyInfo.cs
 D:\dev\MockGARTScore\obj\Debug\net8.0-windows\MockGARTScore.csproj.CoreCompileInputs.cache
+D:\dev\MockGARTScore\obj\Debug\net8.0-windows\MockGARTScore.sourcelink.json
 D:\dev\MockGARTScore\obj\Debug\net8.0-windows\MockGARTScore.csproj.CopyComplete
 D:\dev\MockGARTScore\obj\Debug\net8.0-windows\MockGARTScore.dll
 D:\dev\MockGARTScore\obj\Debug\net8.0-windows\refint\MockGARTScore.dll
