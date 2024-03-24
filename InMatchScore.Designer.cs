@@ -182,22 +182,24 @@
             // leftHatch
             // 
             leftHatch.BackColor = Color.Red;
-            leftHatch.Image = Properties.Resources.tanknohatch;
+            leftHatch.Image = Properties.Resources.tankwithhatch;
             leftHatch.Location = new Point(150, 393);
             leftHatch.Name = "leftHatch";
             leftHatch.Size = new Size(156, 221);
             leftHatch.TabIndex = 10;
             leftHatch.TabStop = false;
+            leftHatch.Visible = false;
             // 
             // rightHatch
             // 
             rightHatch.BackColor = Color.DodgerBlue;
-            rightHatch.Image = Properties.Resources.tanknohatch;
+            rightHatch.Image = Properties.Resources.tankwithhatch;
             rightHatch.Location = new Point(740, 393);
             rightHatch.Name = "rightHatch";
             rightHatch.Size = new Size(156, 221);
             rightHatch.TabIndex = 11;
             rightHatch.TabStop = false;
+            rightHatch.Visible = false;
             // 
             // leftFuelLabel
             // 

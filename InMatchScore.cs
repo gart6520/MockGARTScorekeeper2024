@@ -140,10 +140,10 @@ namespace MockGARTScore
         // Set hatch
         public void SetHatch(bool left, bool right)
         {
-            //leftHatch.Visible = left;
-            //rightHatch.Visible = right;
-            leftHatch.Image = left ? Properties.Resources.tankwithhatch : Properties.Resources.tanknohatch;
-            rightHatch.Image = right ? Properties.Resources.tankwithhatch : Properties.Resources.tanknohatch;
+            leftHatch.Visible = left;
+            rightHatch.Visible = right;
+            //leftHatch.Image = left ? Properties.Resources.tankwithhatch : Properties.Resources.tanknohatch;
+            //rightHatch.Image = right ? Properties.Resources.tankwithhatch : Properties.Resources.tanknohatch;
             leftHatch.Refresh();
             rightHatch.Refresh();
         }
