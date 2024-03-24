@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "46SIuZZXWK8J8gsrI+JLcqrLirySiJd6XQ/CHOgwwYNwSE091S5yH/VsWMSGWwKe5MU92uxnF2952lq36pUMgA==",
+  "dgSpecHash": "iTRTvYwl29R3BSS9eZU7N5+RG7EzbPQaU+i1EJeeEAF0u/qsErlpAuWzNIePyFWmYoIi/CH89OHfqKWoo3UEYQ==",
   "success": true,
-  "projectFilePath": "D:\\dev\\MockGARTScore\\MockGARTScore.csproj",
+  "projectFilePath": "D:\\Codes\\Project\\MockGARTScoreController\\MockGARTScorekeeper2024\\MockGARTScore.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\mmb\\.nuget\\packages\\websocketsharp\\1.0.3-rc11\\websocketsharp.1.0.3-rc11.nupkg.sha512"
+    "C:\\Users\\DELL\\.nuget\\packages\\websocketsharp\\1.0.3-rc11\\websocketsharp.1.0.3-rc11.nupkg.sha512"
   ],
   "logs": [
     {

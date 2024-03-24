@@ -1,8 +1,21 @@
+using MockGARTScore.Properties;
+using System.Configuration;
+using System.Drawing.Text;
+using System.Media;
+using System.Reflection.Emit;
+
 namespace MockGARTScore
 {
     public partial class InMatchScore : Form
     {
         // Public variables
+        // Time left
+        public int timeLeft = 0;
+
+        // SFX
+        public SoundPlayer startGame = new SoundPlayer("match_start.wav");
+        public SoundPlayer startEndGame = new SoundPlayer("endgame_start.wav");
+        public SoundPlayer endGame = new SoundPlayer("match_end.wav");
 
         // Team color
         public Color leftColor = Color.Red;
@@ -84,14 +97,21 @@ namespace MockGARTScore
             rightFuelLabel.BackColor = rightColor;
             rightFuel.BackColor = rightColor;
 
-            // Set park background
-            leftParkNo.BackColor = Color.ForestGreen;
+            // Change park background
+            leftParkNo.BackColor = leftColor;
             leftParkHalf.BackColor = leftColor;
             leftParkFull.BackColor = leftColor;
-
-            rightParkNo.BackColor = Color.ForestGreen;
+            rightParkNo.BackColor = rightColor;
             rightParkHalf.BackColor = rightColor;
             rightParkFull.BackColor = rightColor;
+
+            // Set park visibility
+            leftParkNo.Visible = true;
+            leftParkHalf.Visible = false;
+            leftParkFull.Visible = false;
+            rightParkNo.Visible = true;
+            rightParkHalf.Visible = false;
+            rightParkFull.Visible = false;
         }
 
         // Set score
@@ -151,49 +171,64 @@ namespace MockGARTScore
             rightParkStatus = right;
 
             // Left
-            leftParkNo.BackColor = leftColor;
-            leftParkHalf.BackColor = leftColor;
-            leftParkFull.BackColor = leftColor;
             switch (left)
             {
                 case 0:
-                    leftParkNo.BackColor = Color.ForestGreen;
+                    leftParkNo.Visible = true;
+                    leftParkHalf.Visible = false;
+                    leftParkFull.Visible = false;
                     break;
                 case 1:
-                    leftParkHalf.BackColor = Color.ForestGreen;
+                    leftParkNo.Visible = false;
+                    leftParkHalf.Visible = true;
+                    leftParkFull.Visible = false;
                     break;
                 case 2:
-                    leftParkFull.BackColor = Color.ForestGreen;
+                    leftParkNo.Visible = false;
+                    leftParkHalf.Visible = false;
+                    leftParkFull.Visible = true;
                     break;
                 default:
                     // How tf
                     break;
             }
+            leftParkNo.Refresh();
+            leftParkHalf.Refresh();
+            leftParkFull.Refresh();
 
             // Right
-            rightParkNo.BackColor = rightColor;
-            rightParkHalf.BackColor = rightColor;
-            rightParkFull.BackColor = rightColor;
             switch (right)
             {
                 case 0:
-                    rightParkNo.BackColor = Color.ForestGreen;
+                    rightParkNo.Visible = true;
+                    rightParkHalf.Visible = false;
+                    rightParkFull.Visible = false;
                     break;
                 case 1:
-                    rightParkHalf.BackColor = Color.ForestGreen;
+                    rightParkNo.Visible = false;
+                    rightParkHalf.Visible = true;
+                    rightParkFull.Visible = false;
                     break;
                 case 2:
-                    rightParkFull.BackColor = Color.ForestGreen;
+                    rightParkNo.Visible = false;
+                    rightParkHalf.Visible = false;
+                    rightParkFull.Visible = true;
                     break;
                 default:
                     // How tf
                     break;
             }
+            rightParkNo.Refresh();
+            rightParkHalf.Refresh();
+            rightParkFull.Refresh();
         }
 
         // Set timer
         public void setTime(int seconds)
         {
+            // Set time left
+            timeLeft = seconds;
+
             // Window size
             int w = Size.Width;
             int h = Size.Height;
@@ -207,6 +242,27 @@ namespace MockGARTScore
             timerText.Location = new Point(
                 (w - timerText.Size.Width) / 2,
                 (h - timerText.Size.Height) / 2);
+        }
+
+        public async void startTimer()
+        {
+            bool ok = true;
+            while (true)
+            {
+                if (ok)
+                {
+                    startGame.Play();
+                    ok = false;
+                }
+                if (timeLeft == 30) startEndGame.Play();
+                int m = timeLeft / 60;
+                int s = timeLeft % 60;
+                timerText.Text = m.ToString("D2") + ":" + s.ToString("D2");
+                if (timeLeft == 0) break;
+                timeLeft--;
+                await Task.Delay(1000);
+            }
+            endGame.Play();
         }
 
         // Set wins
@@ -309,24 +365,24 @@ namespace MockGARTScore
 
             // Align park images
             leftParkNo.Location = new Point(
-                w / 8 - leftParkNo.Size.Width / 2,
+                w / 4 - leftParkHalf.Size.Width / 2,
                 h - leftParkNo.Size.Height * 4 / 3);
             leftParkHalf.Location = new Point(
                 w / 4 - leftParkHalf.Size.Width / 2,
                 h - leftParkNo.Size.Height * 4 / 3);
             leftParkFull.Location = new Point(
-                w * 3 / 8 - leftParkFull.Size.Width / 2,
-                h - leftParkFull.Size.Height * 4 / 3);
+                w / 4 - leftParkHalf.Size.Width / 2,
+                h - leftParkNo.Size.Height * 4 / 3);
 
             rightParkNo.Location = new Point(
-                w / 2 + w / 8 - rightParkNo.Size.Width / 2,
-                h - rightParkNo.Size.Height * 4 / 3);
+                w / 2 + w / 4 - rightParkHalf.Size.Width / 2,
+                h - rightParkHalf.Size.Height * 4 / 3);
             rightParkHalf.Location = new Point(
                 w / 2 + w / 4 - rightParkHalf.Size.Width / 2,
                 h - rightParkHalf.Size.Height * 4 / 3);
             rightParkFull.Location = new Point(
-                w / 2 + w * 3 / 8 - rightParkFull.Size.Width / 2,
-                h - rightParkFull.Size.Height * 4 / 3);
+                w / 2 + w / 4 - rightParkHalf.Size.Width / 2,
+                h - rightParkHalf.Size.Height * 4 / 3);
         }
 
         void exitButton_Click(object sender, EventArgs e)
