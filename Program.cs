@@ -83,6 +83,14 @@ namespace MockGARTScore
                     Program.inMatchScoreForm.startTimer();
                     Send("done");
                     break;
+                case "stop":
+                    Program.inMatchScoreForm.timerRunning = false;
+                    Send("done");
+                    break;
+                case "reset":
+                    Program.inMatchScoreForm.resetMatch();
+                    Send("done");
+                    break;
                 default:
                     // No way
                     Send("unimplemented");

@@ -12,6 +12,9 @@ namespace MockGARTScore
         // Time left
         public int timeLeft = 0;
 
+        // Timer running
+        public bool timerRunning = false;
+
         // SFX
         public SoundPlayer startGame = new SoundPlayer("match_start.wav");
         public SoundPlayer startEndGame = new SoundPlayer("endgame_start.wav");
@@ -246,23 +249,44 @@ namespace MockGARTScore
 
         public async void startTimer()
         {
-            bool ok = true;
-            while (true)
+            // Start timer and play sound if it's not currently started
+            if (!timerRunning)
             {
-                if (ok)
-                {
-                    startGame.Play();
-                    ok = false;
-                }
+                startGame.Play();
+                timerRunning = true;
+            }
+
+            while (timerRunning)
+            {
                 if (timeLeft == 30) startEndGame.Play();
+                
                 int m = timeLeft / 60;
                 int s = timeLeft % 60;
                 timerText.Text = m.ToString("D2") + ":" + s.ToString("D2");
-                if (timeLeft == 0) break;
+                
+                if (timeLeft == 0)
+                {
+                    timerRunning = false;
+                    break;
+                }
+
                 timeLeft--;
                 await Task.Delay(1000);
             }
+            
             endGame.Play();
+        }
+
+        // Reset match
+        public void resetMatch()
+        {
+            //this.setTeamColor(Color.Red, Color.DodgerBlue);
+            //this.setWins(0, 0);
+            this.setTime(180);
+            this.setScore(0, 0);
+            this.setHatch(false, false);
+            this.setFuel(0, 0);
+            this.setPark(0, 0);
         }
 
         // Set wins

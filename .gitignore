@@ -400,5 +400,6 @@ FodyWeavers.xsd
 # IDEA (used by KhiemGOM)
 .idea/
 
-# obj folder
+# Build artifacts
 obj/
+bin/
