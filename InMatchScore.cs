@@ -140,8 +140,10 @@ namespace MockGARTScore
         // Set hatch
         public void SetHatch(bool left, bool right)
         {
-            leftHatch.Visible = left;
-            rightHatch.Visible = right;
+            //leftHatch.Visible = left;
+            //rightHatch.Visible = right;
+            leftHatch.Image = left ? Properties.Resources.tankwithhatch : Properties.Resources.tanknohatch;
+            rightHatch.Image = right ? Properties.Resources.tankwithhatch : Properties.Resources.tanknohatch;
             leftHatch.Refresh();
             rightHatch.Refresh();
         }
@@ -160,10 +162,10 @@ namespace MockGARTScore
             // Align
             leftFuel.Location = new Point(
                 w / 4 + w / 16 - leftFuel.Size.Width / 2,
-                h / 2 + h / 6 + h / 24 + h / 96 - leftFuel.Size.Height / 2);
+                h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - leftFuel.Size.Height / 2);
             rightFuel.Location = new Point(
                 w * 5 / 8 + w / 16 - rightFuel.Size.Width / 2,
-                h / 2 + h / 6 + h / 24 + h / 96 - rightFuel.Size.Height / 2);
+                h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - rightFuel.Size.Height / 2);
         }
 
         // Set park
@@ -376,17 +378,17 @@ namespace MockGARTScore
             // Align fuel labels
             leftFuelLabel.Location = new Point(
                 w / 8 + w / 16 - leftFuelLabel.Size.Width / 2,
-                h / 2 + h / 6 + h / 24 + h / 96 - leftFuelLabel.Size.Height / 2);
+                h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - leftFuelLabel.Size.Height / 2);
             leftFuel.Location = new Point(
                 w / 4 + w / 16 - leftFuel.Size.Width / 2,
-                h / 2 + h / 6 + h / 24 + h / 96 - leftFuel.Size.Height / 2);
+                h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - leftFuel.Size.Height / 2);
 
             rightFuelLabel.Location = new Point(
                 w * 3 / 4 + w / 16 - rightFuelLabel.Size.Width / 2,
-                h / 2 + h / 6 + h / 24 + h / 96 - rightFuelLabel.Size.Height / 2);
+                h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - rightFuelLabel.Size.Height / 2);
             rightFuel.Location = new Point(
                 w * 5 / 8 + w / 16 - rightFuel.Size.Width / 2,
-                h / 2 + h / 6 + h / 24 + h / 96 - rightFuel.Size.Height / 2);
+                h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - rightFuel.Size.Height / 2);
 
             // Align park images
             leftParkNo.Location = new Point(
@@ -512,11 +514,11 @@ namespace MockGARTScore
 
             // Draw fuel box
             g.DrawRectangle(smallBoxPen,
-                new Rectangle(w / 8, h / 2 + h / 6, w / 4, h / 12 + h / 48));
+                new Rectangle(w / 8, h / 2 + h / 6 + h / 36, w / 4, h / 12 + h / 48));
             g.DrawRectangle(smallBoxPen,
-                new Rectangle(w * 5 / 8, h / 2 + h / 6, w / 4, h / 12 + h / 48));
-            g.DrawLine(smallBoxPen, new Point(w / 4, h / 2 + h / 6), new Point(w / 4, h / 2 + h / 6 + h / 12 + h / 48));
-            g.DrawLine(smallBoxPen, new Point(w * 3 / 4, h / 2 + h / 6), new Point(w * 3 / 4, h / 2 + h / 6 + h / 12 + h / 48));
+                new Rectangle(w * 5 / 8, h / 2 + h / 6 + h / 36, w / 4, h / 12 + h / 48));
+            g.DrawLine(smallBoxPen, new Point(w / 4, h / 2 + h / 6 + h / 36), new Point(w / 4, h / 2 + h / 6 + h / 36 + h / 12 + h / 48));
+            g.DrawLine(smallBoxPen, new Point(w * 3 / 4, h / 2 + h / 6 + h / 36), new Point(w * 3 / 4, h / 2 + h / 6 + h / 36 + h / 12 + h / 48));
         }
     }
 }

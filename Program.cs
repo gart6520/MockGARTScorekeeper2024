@@ -159,7 +159,7 @@ public static class Program
         InMatchScoreForm.SetWins(0, 0);
         InMatchScoreForm.SetTime(180);
         InMatchScoreForm.SetScore(0, 0);
-        InMatchScoreForm.SetHatch(true, false);
+        InMatchScoreForm.SetHatch(false, false);
         InMatchScoreForm.SetFuel(0, 0);
         InMatchScoreForm.SetPark(0, 0);
 

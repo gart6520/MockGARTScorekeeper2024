@@ -182,20 +182,20 @@
             // leftHatch
             // 
             leftHatch.BackColor = Color.Red;
-            leftHatch.Image = Properties.Resources.hatch;
+            leftHatch.Image = Properties.Resources.tanknohatch;
             leftHatch.Location = new Point(150, 393);
             leftHatch.Name = "leftHatch";
-            leftHatch.Size = new Size(128, 128);
+            leftHatch.Size = new Size(156, 221);
             leftHatch.TabIndex = 10;
             leftHatch.TabStop = false;
             // 
             // rightHatch
             // 
             rightHatch.BackColor = Color.DodgerBlue;
-            rightHatch.Image = Properties.Resources.hatch;
+            rightHatch.Image = Properties.Resources.tanknohatch;
             rightHatch.Location = new Point(740, 393);
             rightHatch.Name = "rightHatch";
-            rightHatch.Size = new Size(128, 128);
+            rightHatch.Size = new Size(156, 221);
             rightHatch.TabIndex = 11;
             rightHatch.TabStop = false;
             // 
@@ -314,7 +314,7 @@
             rightParkNo.SizeMode = PictureBoxSizeMode.CenterImage;
             rightParkNo.TabIndex = 22;
             rightParkNo.TabStop = false;
-            //
+            // 
             // timer
             // 
             timer.Interval = 1000;
@@ -351,7 +351,6 @@
             Name = "InMatchScore";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MockGARTInMatchScore";
-            TopMost = true;
             WindowState = FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)canvas).EndInit();
             ((System.ComponentModel.ISupportInitialize)leftHatch).EndInit();
