@@ -282,11 +282,12 @@ namespace MockGARTScore
         {
             //this.setTeamColor(Color.Red, Color.DodgerBlue);
             //this.setWins(0, 0);
-            this.SetTime(180);
-            this.SetScore(0, 0);
-            this.SetHatch(false, false);
-            this.SetFuel(0, 0);
-            this.SetPark(0, 0);
+            Program.SwitchForm(Program.FormEnum.InMatchScore);
+            SetTime(180);
+            SetScore(0, 0);
+            SetHatch(false, false);
+            SetFuel(0, 0);
+            SetPark(0, 0);
         }
 
         // Set wins

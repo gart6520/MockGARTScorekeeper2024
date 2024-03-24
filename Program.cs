@@ -31,36 +31,36 @@ public class WSUpdate : WebSocketBehavior
                 break;
             case "wins":
                 // Set the wins number for red and blue team
-                left = int.Parse((leftColor == Color.Red) ? param[1] : param[2]);
-                right = int.Parse((rightColor == Color.DodgerBlue) ? param[2] : param[1]);
+                left = int.Parse(leftColor == Color.Red ? param[1] : param[2]);
+                right = int.Parse(rightColor == Color.DodgerBlue ? param[2] : param[1]);
                 Program.InMatchScoreForm.SetWins(left, right);
                 Send("done");
                 break;
             case "score":
                 // Set both team's score
-                left = int.Parse((leftColor == Color.Red) ? param[1] : param[2]);
-                right = int.Parse((rightColor == Color.DodgerBlue) ? param[2] : param[1]);
+                left = int.Parse(leftColor == Color.Red ? param[1] : param[2]);
+                right = int.Parse(rightColor == Color.DodgerBlue ? param[2] : param[1]);
                 Program.InMatchScoreForm.SetScore(left, right);
                 Send("done");
                 break;
             case "hatch":
                 // Hatch score display
-                left = int.Parse((leftColor == Color.Red) ? param[1] : param[2]);
-                right = int.Parse((rightColor == Color.DodgerBlue) ? param[2] : param[1]);
+                left = int.Parse(leftColor == Color.Red ? param[1] : param[2]);
+                right = int.Parse(rightColor == Color.DodgerBlue ? param[2] : param[1]);
                 Program.InMatchScoreForm.SetHatch(left == 1, right == 1);
                 Send("done");
                 break;
             case "fuel":
                 // Fuel score display
-                left = int.Parse((leftColor == Color.Red) ? param[1] : param[2]);
-                right = int.Parse((rightColor == Color.DodgerBlue) ? param[2] : param[1]);
+                left = int.Parse(leftColor == Color.Red ? param[1] : param[2]);
+                right = int.Parse(rightColor == Color.DodgerBlue ? param[2] : param[1]);
                 Program.InMatchScoreForm.SetFuel(left, right);
                 Send("done");
                 break;
             case "park":
                 // Park score display
-                left = int.Parse((leftColor == Color.Red) ? param[1] : param[2]);
-                right = int.Parse((rightColor == Color.DodgerBlue) ? param[2] : param[1]);
+                left = int.Parse(leftColor == Color.Red ? param[1] : param[2]);
+                right = int.Parse(rightColor == Color.DodgerBlue ? param[2] : param[1]);
                 Program.InMatchScoreForm.SetPark(left, right);
                 Send("done");
                 break;
