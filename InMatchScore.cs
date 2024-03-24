@@ -164,7 +164,7 @@ namespace MockGARTScore
             // Set timerText
             int m = seconds / 60;
             int s = seconds % 60;
-            timerText.Text = String.Format("{0,##}:{1,##}", m.ToString(), s.ToString());
+            timerText.Text = String.Format(@"{0,##}:{1,##}", m.ToString(), s.ToString());
 
             // Align the timerText to center
             timerText.Location = new Point(

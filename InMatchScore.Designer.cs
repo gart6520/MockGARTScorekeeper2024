@@ -50,6 +50,8 @@
             rightParkFull = new PictureBox();
             rightParkHalf = new PictureBox();
             rightParkNo = new PictureBox();
+            leftBot = new PictureBox();
+            rightBot = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)canvas).BeginInit();
             ((System.ComponentModel.ISupportInitialize)leftHatch).BeginInit();
             ((System.ComponentModel.ISupportInitialize)rightHatch).BeginInit();
@@ -59,6 +61,8 @@
             ((System.ComponentModel.ISupportInitialize)rightParkFull).BeginInit();
             ((System.ComponentModel.ISupportInitialize)rightParkHalf).BeginInit();
             ((System.ComponentModel.ISupportInitialize)rightParkNo).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)leftBot).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)rightBot).BeginInit();
             SuspendLayout();
             // 
             // exitButton
@@ -304,6 +308,26 @@
             rightParkNo.Size = new Size(128, 128);
             rightParkNo.TabIndex = 22;
             rightParkNo.TabStop = false;
+            //
+            // leftBot
+            //
+            leftBot.BackColor = Color.DodgerBlue;
+            leftBot.Image = Properties.Resources.bot;
+            leftBot.Location = new Point();
+            leftBot.Name = "leftBot";
+            leftBot.Size = new Size(229, 309);
+            leftBot.TabIndex = 23;
+            leftBot.TabStop = false;
+            //
+            // rightBot
+            //
+            rightBot.BackColor = Color.Red;
+            rightBot.Image = Properties.Resources.bot;
+            rightBot.Location = new Point();
+            rightBot.Name = "leftBot";
+            rightBot.Size = new Size(229, 309);
+            rightBot.TabIndex = 23;
+            rightBot.TabStop = false;
             // 
             // InMatchScore
             // 
@@ -348,6 +372,8 @@
             ((System.ComponentModel.ISupportInitialize)rightParkFull).EndInit();
             ((System.ComponentModel.ISupportInitialize)rightParkHalf).EndInit();
             ((System.ComponentModel.ISupportInitialize)rightParkNo).EndInit();
+            ((System.ComponentModel.ISupportInitialize)leftBot).EndInit();
+            ((System.ComponentModel.ISupportInitialize)rightBot).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -376,5 +402,7 @@
         private PictureBox rightParkFull;
         private PictureBox rightParkHalf;
         private PictureBox rightParkNo;
+        private PictureBox leftBot;
+        private PictureBox rightBot;
     }
 }
