@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             exitButton = new Button();
             canvas = new PictureBox();
             winsLabel = new Label();
@@ -52,6 +53,7 @@
             rightParkNo = new PictureBox();
             leftBot = new PictureBox();
             rightBot = new PictureBox();
+            timer = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)canvas).BeginInit();
             ((System.ComponentModel.ISupportInitialize)leftHatch).BeginInit();
             ((System.ComponentModel.ISupportInitialize)rightHatch).BeginInit();
@@ -253,9 +255,10 @@
             // 
             leftParkNo.BackColor = Color.Red;
             leftParkNo.Image = Properties.Resources.nopark;
-            leftParkNo.Location = new Point(12, 628);
+            leftParkNo.Location = new Point(7, 613);
             leftParkNo.Name = "leftParkNo";
-            leftParkNo.Size = new Size(128, 128);
+            leftParkNo.Size = new Size(143, 143);
+            leftParkNo.SizeMode = PictureBoxSizeMode.CenterImage;
             leftParkNo.TabIndex = 16;
             leftParkNo.TabStop = false;
             // 
@@ -263,19 +266,23 @@
             // 
             leftParkHalf.BackColor = Color.Red;
             leftParkHalf.Image = Properties.Resources.partialpark;
-            leftParkHalf.Location = new Point(150, 628);
+            leftParkHalf.Location = new Point(156, 613);
             leftParkHalf.Name = "leftParkHalf";
-            leftParkHalf.Size = new Size(128, 128);
+            leftParkHalf.Size = new Size(143, 143);
+            leftParkHalf.SizeMode = PictureBoxSizeMode.CenterImage;
             leftParkHalf.TabIndex = 17;
             leftParkHalf.TabStop = false;
             // 
             // leftParkFull
             // 
+            leftParkFull.Anchor = AnchorStyles.None;
             leftParkFull.BackColor = Color.Red;
             leftParkFull.Image = Properties.Resources.fullpark;
-            leftParkFull.Location = new Point(293, 628);
+            leftParkFull.InitialImage = Properties.Resources.fullpark;
+            leftParkFull.Location = new Point(305, 613);
             leftParkFull.Name = "leftParkFull";
-            leftParkFull.Size = new Size(128, 128);
+            leftParkFull.Size = new Size(143, 143);
+            leftParkFull.SizeMode = PictureBoxSizeMode.CenterImage;
             leftParkFull.TabIndex = 18;
             leftParkFull.TabStop = false;
             // 
@@ -283,9 +290,10 @@
             // 
             rightParkFull.BackColor = Color.DodgerBlue;
             rightParkFull.Image = Properties.Resources.fullpark;
-            rightParkFull.Location = new Point(883, 628);
+            rightParkFull.Location = new Point(874, 613);
             rightParkFull.Name = "rightParkFull";
-            rightParkFull.Size = new Size(128, 128);
+            rightParkFull.Size = new Size(143, 143);
+            rightParkFull.SizeMode = PictureBoxSizeMode.CenterImage;
             rightParkFull.TabIndex = 21;
             rightParkFull.TabStop = false;
             // 
@@ -293,9 +301,10 @@
             // 
             rightParkHalf.BackColor = Color.DodgerBlue;
             rightParkHalf.Image = Properties.Resources.partialpark;
-            rightParkHalf.Location = new Point(740, 628);
+            rightParkHalf.Location = new Point(725, 613);
             rightParkHalf.Name = "rightParkHalf";
-            rightParkHalf.Size = new Size(128, 128);
+            rightParkHalf.Size = new Size(143, 143);
+            rightParkHalf.SizeMode = PictureBoxSizeMode.CenterImage;
             rightParkHalf.TabIndex = 20;
             rightParkHalf.TabStop = false;
             // 
@@ -303,31 +312,36 @@
             // 
             rightParkNo.BackColor = Color.DodgerBlue;
             rightParkNo.Image = Properties.Resources.nopark;
-            rightParkNo.Location = new Point(606, 628);
+            rightParkNo.Location = new Point(576, 613);
             rightParkNo.Name = "rightParkNo";
-            rightParkNo.Size = new Size(128, 128);
+            rightParkNo.Size = new Size(143, 143);
+            rightParkNo.SizeMode = PictureBoxSizeMode.CenterImage;
             rightParkNo.TabIndex = 22;
             rightParkNo.TabStop = false;
-            //
+            // 
             // leftBot
-            //
+            // 
             leftBot.BackColor = Color.DodgerBlue;
             leftBot.Image = Properties.Resources.bot;
-            leftBot.Location = new Point();
+            leftBot.Location = new Point(0, 0);
             leftBot.Name = "leftBot";
             leftBot.Size = new Size(229, 309);
             leftBot.TabIndex = 23;
             leftBot.TabStop = false;
-            //
+            // 
             // rightBot
-            //
+            // 
             rightBot.BackColor = Color.Red;
             rightBot.Image = Properties.Resources.bot;
-            rightBot.Location = new Point();
-            rightBot.Name = "leftBot";
+            rightBot.Location = new Point(0, 0);
+            rightBot.Name = "rightBot";
             rightBot.Size = new Size(229, 309);
             rightBot.TabIndex = 23;
             rightBot.TabStop = false;
+            // 
+            // timer
+            // 
+            timer.Interval = 1000;
             // 
             // InMatchScore
             // 
@@ -404,5 +418,6 @@
         private PictureBox rightParkNo;
         private PictureBox leftBot;
         private PictureBox rightBot;
+        private System.Windows.Forms.Timer timer;
     }
 }

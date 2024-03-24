@@ -21,8 +21,8 @@ namespace MockGARTScore
             // e.Data is the received data
             // Parse it
             // 0 param: command/value name
-            // 1st param: real value (score,...) (required in most cases)
-            // 2nd param: also real value (optional)
+            // 1st param: real value for red
+            // 2nd param: real value for blue
             string[] param = e.Data.Split(",");
 
             switch(param[0])
@@ -77,6 +77,10 @@ namespace MockGARTScore
                 case "timer":
                     // Set timer
                     Program.inMatchScoreForm.setTime(int.Parse(param[1]));
+                    Send("done");
+                    break;
+                case "start":
+                    Program.inMatchScoreForm.startTimer();
                     Send("done");
                     break;
                 default:

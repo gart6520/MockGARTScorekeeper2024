@@ -34,26 +34,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mmb\\.nuget\\packages\\": {}
+    "C:\\Users\\DELL\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\dev\\MockGARTScore\\MockGARTScore.csproj",
+      "projectUniqueName": "D:\\Codes\\Project\\MockGARTScoreController\\MockGARTScorekeeper2024\\MockGARTScore.csproj",
       "projectName": "MockGARTScore",
-      "projectPath": "D:\\dev\\MockGARTScore\\MockGARTScore.csproj",
-      "packagesPath": "C:\\Users\\mmb\\.nuget\\packages\\",
-      "outputPath": "D:\\dev\\MockGARTScore\\obj\\",
+      "projectPath": "D:\\Codes\\Project\\MockGARTScoreController\\MockGARTScorekeeper2024\\MockGARTScore.csproj",
+      "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+      "outputPath": "D:\\Codes\\Project\\MockGARTScoreController\\MockGARTScorekeeper2024\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\mmb\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0-windows"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -66,6 +64,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -96,7 +99,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
       }
     }
   },
