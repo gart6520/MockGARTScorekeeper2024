@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Codes\\Project\\MockGARTScoreController\\MockGARTScorekeeper2024\\MockGARTScore.csproj": {}
+    "E:\\Coding\\Rider C#\\MockGartScorekeeper_Loc\\MockGARTScore.csproj": {}
   },
   "projects": {
-    "D:\\Codes\\Project\\MockGARTScoreController\\MockGARTScorekeeper2024\\MockGARTScore.csproj": {
+    "E:\\Coding\\Rider C#\\MockGartScorekeeper_Loc\\MockGARTScore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Codes\\Project\\MockGARTScoreController\\MockGARTScorekeeper2024\\MockGARTScore.csproj",
+        "projectUniqueName": "E:\\Coding\\Rider C#\\MockGartScorekeeper_Loc\\MockGARTScore.csproj",
         "projectName": "MockGARTScore",
-        "projectPath": "D:\\Codes\\Project\\MockGARTScoreController\\MockGARTScorekeeper2024\\MockGARTScore.csproj",
-        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
-        "outputPath": "D:\\Codes\\Project\\MockGARTScoreController\\MockGARTScorekeeper2024\\obj\\",
+        "projectPath": "E:\\Coding\\Rider C#\\MockGartScorekeeper_Loc\\MockGARTScore.csproj",
+        "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
+        "outputPath": "E:\\Coding\\Rider C#\\MockGartScorekeeper_Loc\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0-windows"
@@ -32,11 +32,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
