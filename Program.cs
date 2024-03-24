@@ -26,7 +26,7 @@ public class WSUpdate : WebSocketBehavior
         {
             case "status":
                 // Send current values to WS client
-                // The format will be "left_color,right_color,red_wins,blue_wins,red_score,blue_score,red_hatch,blue_hatch,red_fuel,blue_fuel,red_park,blue_park"
+                // The format will be "left_color,right_color,red_wins,blue_wins,red_score,blue_score,red_hatch,blue_hatch,red_fuel,blue_fuel,red_park,blue_park,has_match_started"
                 Send(string.Join(",", Program.InMatchScoreForm.GetCurrentValues()));
                 break;
             case "wins":

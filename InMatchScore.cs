@@ -34,7 +34,7 @@ namespace MockGARTScore
             int[] r =
             {
                 (LeftColor == Color.Red) ? 0 : 1, // Left color
-                (RightColor == Color.DodgerBlue) ? 1 : 0, // Blue color
+                (RightColor == Color.DodgerBlue) ? 1 : 0, // Right color
                 int.Parse((LeftColor == Color.Red) ? leftWins.Text : rightWins.Text), // Red wins
                 int.Parse((RightColor == Color.DodgerBlue) ? rightWins.Text : leftWins.Text), // Blue wins
                 int.Parse((LeftColor == Color.Red) ? leftScore.Text : rightScore.Text), // Red score
@@ -44,7 +44,8 @@ namespace MockGARTScore
                 int.Parse((LeftColor == Color.Red) ? leftFuel.Text : rightFuel.Text), // Red fuel
                 int.Parse((RightColor == Color.DodgerBlue) ? rightFuel.Text : leftFuel.Text), // Blue fuel
                 (LeftColor == Color.Red) ? LeftParkStatus : RightParkStatus, // Red park
-                (RightColor == Color.DodgerBlue) ? RightParkStatus : LeftParkStatus // Blue park
+                (RightColor == Color.DodgerBlue) ? RightParkStatus : LeftParkStatus, // Blue park
+                TimerRunning ? 1 : 0 // Has match started?
             };
 
             return r;
@@ -100,14 +101,6 @@ namespace MockGARTScore
             rightFuelLabel.BackColor = RightColor;
             rightFuel.BackColor = RightColor;
 
-            // Change park background
-            leftParkNo.BackColor = LeftColor;
-            leftParkHalf.BackColor = LeftColor;
-            leftParkFull.BackColor = LeftColor;
-            rightParkNo.BackColor = RightColor;
-            rightParkHalf.BackColor = RightColor;
-            rightParkFull.BackColor = RightColor;
-
             // Set park visibility
             leftParkNo.Visible = true;
             leftParkHalf.Visible = false;
@@ -115,6 +108,14 @@ namespace MockGARTScore
             rightParkNo.Visible = true;
             rightParkHalf.Visible = false;
             rightParkFull.Visible = false;
+
+            // Change park background
+            leftParkNo.BackColor = LeftColor;
+            leftParkHalf.BackColor = LeftColor;
+            leftParkFull.BackColor = LeftColor;
+            rightParkNo.BackColor = RightColor;
+            rightParkHalf.BackColor = RightColor;
+            rightParkFull.BackColor = RightColor;
         }
 
         // Set score
@@ -285,7 +286,7 @@ namespace MockGARTScore
             //this.setTeamColor(Color.Red, Color.DodgerBlue);
             //this.setWins(0, 0);
             Program.SwitchForm(Program.FormEnum.InMatchScore);
-            SetTime(180);
+            SetTime(TimeLeft);
             SetScore(0, 0);
             SetHatch(false, false);
             SetFuel(0, 0);
