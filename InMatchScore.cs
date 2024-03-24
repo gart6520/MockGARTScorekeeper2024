@@ -8,6 +8,32 @@ namespace MockGARTScore
         public Color leftColor = Color.Red;
         public Color rightColor = Color.DodgerBlue;
 
+        // Park status
+        public int leftParkStatus = 0;
+        public int rightParkStatus = 0;
+
+        // Return current values (to WS client)
+        public int[] getCurrentValues()
+        {
+            int[] r =
+            {
+                (leftColor == Color.Red) ? 0 : 1, // Left color
+                (rightColor == Color.DodgerBlue) ? 1 : 0, // Blue color 
+                int.Parse((leftColor == Color.Red) ? leftWins.Text : rightWins.Text), // Red wins
+                int.Parse((rightColor == Color.DodgerBlue) ? rightWins.Text : leftWins.Text), // Blue wins
+                int.Parse((leftColor == Color.Red) ? leftScore.Text : rightScore.Text), // Red score
+                int.Parse((rightColor == Color.DodgerBlue) ? rightScore.Text : leftScore.Text), // Blue score
+                Convert.ToInt32((leftColor == Color.Red) ? leftHatch.Visible : rightHatch.Visible), // Red hatch
+                Convert.ToInt32((rightColor == Color.DodgerBlue) ? rightHatch.Visible : leftHatch.Visible), // Blue hatch
+                int.Parse((leftColor == Color.Red) ? leftFuel.Text : rightFuel.Text), // Red fuel
+                int.Parse((rightColor == Color.DodgerBlue) ? rightFuel.Text : leftFuel.Text), // Blue fuel
+                (leftColor == Color.Red) ? leftParkStatus : rightParkStatus, // Red park
+                (rightColor == Color.DodgerBlue) ? rightParkStatus : leftParkStatus // Blue park
+            };
+
+            return r;
+        }
+
         // Set team color
         public void setTeamColor(Color left, Color right)
         {
@@ -18,6 +44,9 @@ namespace MockGARTScore
             // Set team color variables
             leftColor = left;
             rightColor = right;
+
+            // Redraw canvas
+            canvas.Refresh();
 
             // Change team wins text background color
             leftWins.BackColor = leftColor;
@@ -46,6 +75,8 @@ namespace MockGARTScore
             // Change hatch background
             leftHatch.BackColor = leftColor;
             rightHatch.BackColor = rightColor;
+            //leftHatch.Refresh();
+            //rightHatch.Refresh();
 
             // Change fuel background
             leftFuelLabel.BackColor = leftColor;
@@ -54,13 +85,13 @@ namespace MockGARTScore
             rightFuel.BackColor = rightColor;
 
             // Set park background
-            leftParkNo.BackColor = leftColor;
+            leftParkNo.BackColor = Color.ForestGreen;
             leftParkHalf.BackColor = leftColor;
             leftParkFull.BackColor = leftColor;
 
-            rightParkNo.BackColor = leftColor;
-            rightParkHalf.BackColor = leftColor;
-            rightParkFull.BackColor = leftColor;
+            rightParkNo.BackColor = Color.ForestGreen;
+            rightParkHalf.BackColor = rightColor;
+            rightParkFull.BackColor = rightColor;
         }
 
         // Set score
@@ -87,7 +118,9 @@ namespace MockGARTScore
         public void setHatch(bool left, bool right)
         {
             leftHatch.Visible = left;
-            leftHatch.Visible = right;
+            rightHatch.Visible = right;
+            leftHatch.Refresh();
+            rightHatch.Refresh();
         }
 
         // Set fuel
@@ -113,6 +146,10 @@ namespace MockGARTScore
         // Set park
         public void setPark(int left, int right)
         {
+            // Set park status
+            leftParkStatus = left;
+            rightParkStatus = right;
+
             // Left
             leftParkNo.BackColor = leftColor;
             leftParkHalf.BackColor = leftColor;
@@ -170,6 +207,26 @@ namespace MockGARTScore
             timerText.Location = new Point(
                 (w - timerText.Size.Width) / 2,
                 (h - timerText.Size.Height) / 2);
+        }
+
+        // Set wins
+        public void setWins(int left, int right)
+        {
+            // Window size
+            int w = Size.Width;
+            int h = Size.Height;
+
+            // Set wins text
+            leftWins.Text = left.ToString();
+            rightWins.Text = right.ToString();
+
+            // Align the leftWins and rightWins label
+            leftWins.Location = new Point(
+                w / 3 + w / 24 - leftWins.Size.Width / 2,
+                (h / 10 - leftWins.Size.Height) / 2);
+            rightWins.Location = new Point(
+                w / 3 + w * 7 / 24 - rightWins.Size.Width / 2,
+                (h / 10 - rightWins.Size.Height) / 2);
         }
 
         public InMatchScore()
