@@ -399,3 +399,6 @@ FodyWeavers.xsd
 
 # IDEA (used by KhiemGOM)
 .idea/
+
+# obj folder
+obj/
