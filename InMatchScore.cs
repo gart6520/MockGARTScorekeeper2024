@@ -74,7 +74,7 @@ namespace MockGARTScore
             leftScore.Text = left.ToString();
             rightScore.Text = right.ToString();
 
-            // Aligin team scores
+            // Align team scores
             leftScore.Location = new Point(
                 w / 4 - leftScore.Size.Width / 2,
                 h / 4);
@@ -164,7 +164,7 @@ namespace MockGARTScore
             // Set timerText
             int m = seconds / 60;
             int s = seconds % 60;
-            timerText.Text = String.Format("{0,##}:{1,##}", m.ToString(), s.ToString());
+            timerText.Text = m.ToString("D2") + ":" + s.ToString("D2");
 
             // Align the timerText to center
             timerText.Location = new Point(
