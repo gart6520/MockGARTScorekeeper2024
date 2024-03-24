@@ -51,8 +51,6 @@
             rightParkFull = new PictureBox();
             rightParkHalf = new PictureBox();
             rightParkNo = new PictureBox();
-            leftBot = new PictureBox();
-            rightBot = new PictureBox();
             timer = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)canvas).BeginInit();
             ((System.ComponentModel.ISupportInitialize)leftHatch).BeginInit();
@@ -63,8 +61,6 @@
             ((System.ComponentModel.ISupportInitialize)rightParkFull).BeginInit();
             ((System.ComponentModel.ISupportInitialize)rightParkHalf).BeginInit();
             ((System.ComponentModel.ISupportInitialize)rightParkNo).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)leftBot).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)rightBot).BeginInit();
             SuspendLayout();
             // 
             // exitButton
@@ -318,27 +314,7 @@
             rightParkNo.SizeMode = PictureBoxSizeMode.CenterImage;
             rightParkNo.TabIndex = 22;
             rightParkNo.TabStop = false;
-            // 
-            // leftBot
-            // 
-            leftBot.BackColor = Color.DodgerBlue;
-            leftBot.Image = Properties.Resources.bot;
-            leftBot.Location = new Point(0, 0);
-            leftBot.Name = "leftBot";
-            leftBot.Size = new Size(229, 309);
-            leftBot.TabIndex = 23;
-            leftBot.TabStop = false;
-            // 
-            // rightBot
-            // 
-            rightBot.BackColor = Color.Red;
-            rightBot.Image = Properties.Resources.bot;
-            rightBot.Location = new Point(0, 0);
-            rightBot.Name = "rightBot";
-            rightBot.Size = new Size(229, 309);
-            rightBot.TabIndex = 23;
-            rightBot.TabStop = false;
-            // 
+            //
             // timer
             // 
             timer.Interval = 1000;
@@ -386,8 +362,6 @@
             ((System.ComponentModel.ISupportInitialize)rightParkFull).EndInit();
             ((System.ComponentModel.ISupportInitialize)rightParkHalf).EndInit();
             ((System.ComponentModel.ISupportInitialize)rightParkNo).EndInit();
-            ((System.ComponentModel.ISupportInitialize)leftBot).EndInit();
-            ((System.ComponentModel.ISupportInitialize)rightBot).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -416,8 +390,6 @@
         private PictureBox rightParkFull;
         private PictureBox rightParkHalf;
         private PictureBox rightParkNo;
-        private PictureBox leftBot;
-        private PictureBox rightBot;
         private System.Windows.Forms.Timer timer;
     }
 }

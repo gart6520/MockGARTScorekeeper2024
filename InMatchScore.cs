@@ -10,67 +10,67 @@ namespace MockGARTScore
     {
         // Public variables
         // Time left
-        public int timeLeft = 0;
+        public int TimeLeft = 0;
 
         // Timer running
-        public bool timerRunning = false;
+        public bool TimerRunning = false;
 
         // SFX
-        public SoundPlayer startGame = new SoundPlayer("match_start.wav");
-        public SoundPlayer startEndGame = new SoundPlayer("endgame_start.wav");
-        public SoundPlayer endGame = new SoundPlayer("match_end.wav");
+        public SoundPlayer StartGame = new SoundPlayer("match_start.wav");
+        public SoundPlayer StartEndGame = new SoundPlayer("endgame_start.wav");
+        public SoundPlayer EndGame = new SoundPlayer("match_end.wav");
 
         // Team color
-        public Color leftColor = Color.Red;
-        public Color rightColor = Color.DodgerBlue;
+        public Color LeftColor = Color.Red;
+        public Color RightColor = Color.DodgerBlue;
 
         // Park status
-        public int leftParkStatus = 0;
-        public int rightParkStatus = 0;
+        public int LeftParkStatus = 0;
+        public int RightParkStatus = 0;
 
         // Return current values (to WS client)
-        public int[] getCurrentValues()
+        public int[] GetCurrentValues()
         {
             int[] r =
             {
-                (leftColor == Color.Red) ? 0 : 1, // Left color
-                (rightColor == Color.DodgerBlue) ? 1 : 0, // Blue color 
-                int.Parse((leftColor == Color.Red) ? leftWins.Text : rightWins.Text), // Red wins
-                int.Parse((rightColor == Color.DodgerBlue) ? rightWins.Text : leftWins.Text), // Blue wins
-                int.Parse((leftColor == Color.Red) ? leftScore.Text : rightScore.Text), // Red score
-                int.Parse((rightColor == Color.DodgerBlue) ? rightScore.Text : leftScore.Text), // Blue score
-                Convert.ToInt32((leftColor == Color.Red) ? leftHatch.Visible : rightHatch.Visible), // Red hatch
-                Convert.ToInt32((rightColor == Color.DodgerBlue) ? rightHatch.Visible : leftHatch.Visible), // Blue hatch
-                int.Parse((leftColor == Color.Red) ? leftFuel.Text : rightFuel.Text), // Red fuel
-                int.Parse((rightColor == Color.DodgerBlue) ? rightFuel.Text : leftFuel.Text), // Blue fuel
-                (leftColor == Color.Red) ? leftParkStatus : rightParkStatus, // Red park
-                (rightColor == Color.DodgerBlue) ? rightParkStatus : leftParkStatus // Blue park
+                (LeftColor == Color.Red) ? 0 : 1, // Left color
+                (RightColor == Color.DodgerBlue) ? 1 : 0, // Blue color
+                int.Parse((LeftColor == Color.Red) ? leftWins.Text : rightWins.Text), // Red wins
+                int.Parse((RightColor == Color.DodgerBlue) ? rightWins.Text : leftWins.Text), // Blue wins
+                int.Parse((LeftColor == Color.Red) ? leftScore.Text : rightScore.Text), // Red score
+                int.Parse((RightColor == Color.DodgerBlue) ? rightScore.Text : leftScore.Text), // Blue score
+                Convert.ToInt32((LeftColor == Color.Red) ? leftHatch.Visible : rightHatch.Visible), // Red hatch
+                Convert.ToInt32((RightColor == Color.DodgerBlue) ? rightHatch.Visible : leftHatch.Visible), // Blue hatch
+                int.Parse((LeftColor == Color.Red) ? leftFuel.Text : rightFuel.Text), // Red fuel
+                int.Parse((RightColor == Color.DodgerBlue) ? rightFuel.Text : leftFuel.Text), // Blue fuel
+                (LeftColor == Color.Red) ? LeftParkStatus : RightParkStatus, // Red park
+                (RightColor == Color.DodgerBlue) ? RightParkStatus : LeftParkStatus // Blue park
             };
 
             return r;
         }
 
         // Set team color
-        public void setTeamColor(Color left, Color right)
+        public void SetTeamColor(Color left, Color right)
         {
             // Window size
             int w = Size.Width;
             int h = Size.Height;
 
             // Set team color variables
-            leftColor = left;
-            rightColor = right;
+            LeftColor = left;
+            RightColor = right;
 
             // Redraw canvas
             canvas.Refresh();
 
             // Change team wins text background color
-            leftWins.BackColor = leftColor;
-            rightWins.BackColor = rightColor;
+            leftWins.BackColor = LeftColor;
+            rightWins.BackColor = RightColor;
 
             // Change team name
-            leftTeamName.Text = leftColor == Color.Red ? "RED" : "BLUE";
-            rightTeamName.Text = rightColor == Color.DodgerBlue ? "BLUE" : "RED";
+            leftTeamName.Text = LeftColor == Color.Red ? "RED" : "BLUE";
+            rightTeamName.Text = RightColor == Color.DodgerBlue ? "BLUE" : "RED";
 
             // Realign team name
             leftTeamName.Location = new Point(
@@ -81,32 +81,32 @@ namespace MockGARTScore
                 h / 8);
 
             // Change team name background
-            leftTeamName.BackColor = leftColor;
-            rightTeamName.BackColor = rightColor;
+            leftTeamName.BackColor = LeftColor;
+            rightTeamName.BackColor = RightColor;
 
             // Change score background
-            leftScore.BackColor = leftColor;
-            rightScore.BackColor = rightColor;
+            leftScore.BackColor = LeftColor;
+            rightScore.BackColor = RightColor;
 
             // Change hatch background
-            leftHatch.BackColor = leftColor;
-            rightHatch.BackColor = rightColor;
+            leftHatch.BackColor = LeftColor;
+            rightHatch.BackColor = RightColor;
             //leftHatch.Refresh();
             //rightHatch.Refresh();
 
             // Change fuel background
-            leftFuelLabel.BackColor = leftColor;
-            leftFuel.BackColor = leftColor;
-            rightFuelLabel.BackColor = rightColor;
-            rightFuel.BackColor = rightColor;
+            leftFuelLabel.BackColor = LeftColor;
+            leftFuel.BackColor = LeftColor;
+            rightFuelLabel.BackColor = RightColor;
+            rightFuel.BackColor = RightColor;
 
             // Change park background
-            leftParkNo.BackColor = leftColor;
-            leftParkHalf.BackColor = leftColor;
-            leftParkFull.BackColor = leftColor;
-            rightParkNo.BackColor = rightColor;
-            rightParkHalf.BackColor = rightColor;
-            rightParkFull.BackColor = rightColor;
+            leftParkNo.BackColor = LeftColor;
+            leftParkHalf.BackColor = LeftColor;
+            leftParkFull.BackColor = LeftColor;
+            rightParkNo.BackColor = RightColor;
+            rightParkHalf.BackColor = RightColor;
+            rightParkFull.BackColor = RightColor;
 
             // Set park visibility
             leftParkNo.Visible = true;
@@ -118,7 +118,7 @@ namespace MockGARTScore
         }
 
         // Set score
-        public void setScore(int left, int right)
+        public void SetScore(int left, int right)
         {
             // Window size
             int w = Size.Width;
@@ -138,7 +138,7 @@ namespace MockGARTScore
         }
 
         // Set hatch
-        public void setHatch(bool left, bool right)
+        public void SetHatch(bool left, bool right)
         {
             leftHatch.Visible = left;
             rightHatch.Visible = right;
@@ -147,7 +147,7 @@ namespace MockGARTScore
         }
 
         // Set fuel
-        public void setFuel(int left, int right)
+        public void SetFuel(int left, int right)
         {
             // Window size
             int w = Size.Width;
@@ -167,11 +167,11 @@ namespace MockGARTScore
         }
 
         // Set park
-        public void setPark(int left, int right)
+        public void SetPark(int left, int right)
         {
             // Set park status
-            leftParkStatus = left;
-            rightParkStatus = right;
+            LeftParkStatus = left;
+            RightParkStatus = right;
 
             // Left
             switch (left)
@@ -227,10 +227,10 @@ namespace MockGARTScore
         }
 
         // Set timer
-        public void setTime(int seconds)
+        public void SetTime(int seconds)
         {
             // Set time left
-            timeLeft = seconds;
+            TimeLeft = seconds;
 
             // Window size
             int w = Size.Width;
@@ -247,50 +247,51 @@ namespace MockGARTScore
                 (h - timerText.Size.Height) / 2);
         }
 
-        public async void startTimer()
+        public async void StartTimer()
         {
             // Start timer and play sound if it's not currently started
-            if (!timerRunning)
+            if (!TimerRunning)
             {
-                startGame.Play();
-                timerRunning = true;
+                StartGame.Play();
+                TimerRunning = true;
             }
 
-            while (timerRunning)
+            while (TimerRunning)
             {
-                if (timeLeft == 30) startEndGame.Play();
-                
-                int m = timeLeft / 60;
-                int s = timeLeft % 60;
+                if (TimeLeft == 30) StartEndGame.Play();
+
+                int m = TimeLeft / 60;
+                int s = TimeLeft % 60;
                 timerText.Text = m.ToString("D2") + ":" + s.ToString("D2");
-                
-                if (timeLeft == 0)
+
+                if (TimeLeft == 0)
                 {
-                    timerRunning = false;
+                    TimerRunning = false;
                     break;
                 }
 
-                timeLeft--;
+                TimeLeft--;
                 await Task.Delay(1000);
             }
-            
-            endGame.Play();
+
+            EndGame.Play();
         }
 
         // Reset match
-        public void resetMatch()
+        public void ResetMatch()
         {
             //this.setTeamColor(Color.Red, Color.DodgerBlue);
             //this.setWins(0, 0);
-            this.setTime(180);
-            this.setScore(0, 0);
-            this.setHatch(false, false);
-            this.setFuel(0, 0);
-            this.setPark(0, 0);
+            Program.SwitchForm(Program.FormEnum.InMatchScore);
+            SetTime(180);
+            SetScore(0, 0);
+            SetHatch(false, false);
+            SetFuel(0, 0);
+            SetPark(0, 0);
         }
 
         // Set wins
-        public void setWins(int left, int right)
+        public void SetWins(int left, int right)
         {
             // Window size
             int w = Size.Width;
@@ -345,8 +346,8 @@ namespace MockGARTScore
                 (h - timerText.Size.Height) / 2);
 
             // Set team name
-            leftTeamName.Text = leftColor == Color.Red ? "RED" : "BLUE";
-            rightTeamName.Text = rightColor == Color.DodgerBlue ? "BLUE" : "RED";
+            leftTeamName.Text = LeftColor == Color.Red ? "RED" : "BLUE";
+            rightTeamName.Text = RightColor == Color.DodgerBlue ? "BLUE" : "RED";
 
             // Align team names
             leftTeamName.Location = new Point(
@@ -425,33 +426,33 @@ namespace MockGARTScore
             int h = canvas.Size.Height;
 
             // Calculate separator line
-            int sep_up_x = w * 9 / 16;
-            int sep_down_x = w * 7 / 16;
+            int sepUpX = w * 9 / 16;
+            int sepDownX = w * 7 / 16;
 
             // Fill red side in red
-            Point[] red_curve_points =
+            Point[] redCurvePoints =
             {
                 new(0, 0),
-                new(sep_up_x, 0),
-                new(sep_down_x, h),
+                new(sepUpX, 0),
+                new(sepDownX, h),
                 new(0, h)
             };
 
-            g.FillPolygon(new SolidBrush(leftColor), red_curve_points);
+            g.FillPolygon(new SolidBrush(LeftColor), redCurvePoints);
 
             // Fill blue side in blue
-            Point[] blue_curve_points =
+            Point[] blueCurvePoints =
             {
-                new(sep_up_x, 0),
+                new(sepUpX, 0),
                 new(w, 0),
                 new(w, h),
-                new(sep_down_x, h)
+                new(sepDownX, h)
             };
 
-            g.FillPolygon(new SolidBrush(rightColor), blue_curve_points);
+            g.FillPolygon(new SolidBrush(RightColor), blueCurvePoints);
 
             // Draw separator line
-            g.DrawLine(new Pen(new SolidBrush(Color.Black), 5), new Point(sep_up_x, 0), new Point(sep_down_x, h));
+            g.DrawLine(new Pen(new SolidBrush(Color.Black), 5), new Point(sepUpX, 0), new Point(sepDownX, h));
 
             // Draw wins box
             Point[] winBoxLinePoints =
@@ -479,7 +480,7 @@ namespace MockGARTScore
             ];
             // g.FillRectangle(new SolidBrush(leftColor),
             //     new Rectangle(new Point(w / 3 + 8, 8), new Size(w / 12 - 8, h / 10 - 16)));
-            g.FillPolygon(new SolidBrush(leftColor), winBoxFillLeftPoints);
+            g.FillPolygon(new SolidBrush(LeftColor), winBoxFillLeftPoints);
             Point[] winBoxFillRightPoints =
             [
                 new((int)Math.Round(3 * w / 4.0 - a - w / 12.0 * (80.0 - 10.0 * b) / h), 8),
@@ -487,7 +488,7 @@ namespace MockGARTScore
                 new(7 * w / 12, h / 10 - 8),
                 new(7 * w / 12, 8)
             ];
-            g.FillPolygon(new SolidBrush(rightColor), winBoxFillRightPoints);
+            g.FillPolygon(new SolidBrush(RightColor), winBoxFillRightPoints);
             // g.FillRectangle(new SolidBrush(rightColor),
             //     new Rectangle(new Point(w / 3 + w / 4, 8), new Size(w / 12 - 8, h / 10 - 16)));
 
