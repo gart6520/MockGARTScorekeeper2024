@@ -2,14 +2,43 @@ using WebSocketSharp;
 using WebSocketSharp.Server;
 
 namespace MockGARTScore;
+public static class GameStat
+{
+    // Team color
+    public static Color LeftColor = Color.Red;
+    public static Color RightColor = Color.DodgerBlue;
 
+    // Park status
+    public static int LeftParkStatus = 0;
+    public static int RightParkStatus = 0;
+
+    // Fuel level
+    public static int LeftFuelLevel = 0;
+    public static int RightFuelLevel = 0;
+
+    // Hatch status
+    public static bool LeftHatchStatus = false;
+    public static bool RightHatchStatus = false;
+
+    // Score
+    public static int LeftScore = 0;
+    public static int RightScore = 0;
+
+    // Wins
+    public static int LeftWin = 0;
+    public static int RightWin = 0;
+
+    // Penalty
+    public static int LeftPenalty = 0;
+    public static int RightPenalty = 0;
+}
 public class WSUpdate : WebSocketBehavior
 {
     protected override void OnMessage(MessageEventArgs e)
     {
         // Get team color
-        Color leftColor = Program.InMatchScoreForm.LeftColor;
-        Color rightColor = Program.InMatchScoreForm.RightColor;
+        Color leftColor = GameStat.LeftColor;
+        Color rightColor = GameStat.RightColor;
 
         // Init variable
         int left = 0;
@@ -41,6 +70,12 @@ public class WSUpdate : WebSocketBehavior
                 left = int.Parse(leftColor == Color.Red ? param[1] : param[2]);
                 right = int.Parse(rightColor == Color.DodgerBlue ? param[2] : param[1]);
                 Program.InMatchScoreForm.SetScore(left, right);
+                Send("done");
+                break;
+            case "penalty":
+                left = int.Parse(leftColor == Color.Red ? param[1] : param[2]);
+                right = int.Parse(rightColor == Color.DodgerBlue ? param[2] : param[1]);
+                Program.InMatchScoreForm.SetPenalty(left, right);
                 Send("done");
                 break;
             case "hatch":
@@ -86,6 +121,14 @@ public class WSUpdate : WebSocketBehavior
                 Program.InMatchScoreForm.ResetMatch();
                 Send("done");
                 break;
+            case "publish":
+                Program.SwitchForm(Program.FormEnum.PostMatchScore);
+                Send("done");
+                break;
+            case "goback":
+                Program.SwitchForm(Program.FormEnum.InMatchScore);
+                Send("done");
+                break;
             default:
                 // No way
                 Send("unimplemented");
@@ -123,7 +166,9 @@ public static class Program
             from = InMatchScoreForm;
         }
 
+        from.Activate();
         to.Show();
+        from.Activate();
         var fadeTimer = new System.Windows.Forms.Timer();
         fadeTimer.Interval = 10;
         from.Opacity = 1;
@@ -131,8 +176,7 @@ public static class Program
         {
             from.Opacity -= 0.05;
             if (from.Opacity > 0) return;
-            to.TopMost = true;
-            from.TopMost = false;
+            to.Activate();
             from.Opacity = 1;
             fadeTimer.Stop();
         };
@@ -155,6 +199,7 @@ public static class Program
         InMatchScoreForm.SetWins(0, 0);
         InMatchScoreForm.SetTime(180);
         InMatchScoreForm.SetScore(0, 0);
+        InMatchScoreForm.SetPenalty(0, 0);
         InMatchScoreForm.SetHatch(false, false);
         InMatchScoreForm.SetFuel(0, 0);
         InMatchScoreForm.SetPark(0, 0);
@@ -164,7 +209,7 @@ public static class Program
 
         wssv.AddWebSocketService<WSUpdate>("/wsupdate");
         wssv.Start();
-
-        Application.Run(PostMatchScoreForm);
+        Application.Run(InMatchScoreForm);
+        
     }
 }

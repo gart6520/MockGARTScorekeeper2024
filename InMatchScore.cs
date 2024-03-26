@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Drawing.Text;
 using System.Media;
 using System.Reflection.Emit;
+using static MockGARTScore.GameStat;
 
 namespace MockGARTScore
 {
@@ -20,13 +21,7 @@ namespace MockGARTScore
         public SoundPlayer StartEndGame = new SoundPlayer("endgame_start.wav");
         public SoundPlayer EndGame = new SoundPlayer("match_end.wav");
 
-        // Team color
-        public Color LeftColor = Color.Red;
-        public Color RightColor = Color.DodgerBlue;
 
-        // Park status
-        public int LeftParkStatus = 0;
-        public int RightParkStatus = 0;
 
         // Return current values (to WS client)
         public int[] GetCurrentValues()
@@ -128,6 +123,8 @@ namespace MockGARTScore
             // Set team scores
             leftScore.Text = left.ToString();
             rightScore.Text = right.ToString();
+            LeftScore = left;
+            RightScore = right;
 
             // Align team scores
             leftScore.Location = new Point(
@@ -138,6 +135,13 @@ namespace MockGARTScore
                 h / 4);
         }
 
+        // Set penalty
+        public void SetPenalty(int left, int right)
+        {
+            LeftPenalty = left;
+            RightPenalty = right;
+        }
+
         // Set hatch
         public void SetHatch(bool left, bool right)
         {
@@ -145,6 +149,10 @@ namespace MockGARTScore
             //rightHatch.Visible = right;
             leftHatch.Image = left ? Properties.Resources.tankwithhatch : Properties.Resources.tanknohatch;
             rightHatch.Image = right ? Properties.Resources.tankwithhatch : Properties.Resources.tanknohatch;
+
+            LeftHatchStatus = left;
+            RightHatchStatus = right;
+
             leftHatch.Refresh();
             rightHatch.Refresh();
         }
@@ -159,6 +167,9 @@ namespace MockGARTScore
             // Set
             leftFuel.Text = left.ToString();
             rightFuel.Text = right.ToString();
+
+            LeftFuelLevel = left;
+            RightFuelLevel = right;
 
             // Align
             leftFuel.Location = new Point(
@@ -288,6 +299,7 @@ namespace MockGARTScore
             Program.SwitchForm(Program.FormEnum.InMatchScore);
             SetTime(TimeLeft);
             SetScore(0, 0);
+            SetPenalty(0, 0);
             SetHatch(false, false);
             SetFuel(0, 0);
             SetPark(0, 0);
@@ -304,6 +316,9 @@ namespace MockGARTScore
             leftWins.Text = left.ToString();
             rightWins.Text = right.ToString();
 
+            LeftWin = left;
+            RightWin = right;
+
             // Align the leftWins and rightWins label
             leftWins.Location = new Point(
                 w / 3 + w / 24 - leftWins.Size.Width / 2,
@@ -316,6 +331,7 @@ namespace MockGARTScore
         public InMatchScore()
         {
             InitializeComponent();
+
 
             // Set Form to full screen
             Size = Screen.PrimaryScreen.Bounds.Size;
@@ -341,6 +357,8 @@ namespace MockGARTScore
 
             // Add paint event handler to the canvas
             canvas.Paint += canvas_Paint;
+
+
 
             // Align the "Wins" label to the center
             winsLabel.Location = new Point(
@@ -387,7 +405,7 @@ namespace MockGARTScore
             rightHatch.Location = new Point(
                 w * 3 / 4 - rightHatch.Size.Width / 2,
                 h / 2 + h / 16 - rightHatch.Size.Height / 2);
-            
+
             // Align fuel labels
             leftFuelLabel.Location = new Point(
                 w / 8 + w / 16 - leftFuelLabel.Size.Width / 2,
@@ -424,6 +442,8 @@ namespace MockGARTScore
                 w / 2 + w / 4 - rightParkHalf.Size.Width / 2,
                 h - rightParkHalf.Size.Height * 4 / 3);
         }
+
+        protected override bool ShowWithoutActivation => true;
 
         void exitButton_Click(object sender, EventArgs e)
         {
@@ -477,8 +497,6 @@ namespace MockGARTScore
                 new(2 * w / 3, h / 10),
                 new(3 * w / 4, 0)
             ];
-            // g.FillRectangle(new SolidBrush(Color.Black),
-            //     new Rectangle(new Point(w / 3, 0), new Size(w / 3, h / 10)));
             g.FillPolygon(new SolidBrush(Color.Black), winBoxLinePoints);
             g.FillRectangle(new SolidBrush(Color.White),
                 new Rectangle(new Point(w / 3 + 8, 8), new Size(w / 3 - 16, h / 10 - 16)));
@@ -493,8 +511,6 @@ namespace MockGARTScore
                 new(5 * w / 12, h / 10 - 8),
                 new(5 * w / 12, 8)
             ];
-            // g.FillRectangle(new SolidBrush(leftColor),
-            //     new Rectangle(new Point(w / 3 + 8, 8), new Size(w / 12 - 8, h / 10 - 16)));
             g.FillPolygon(new SolidBrush(LeftColor), winBoxFillLeftPoints);
             Point[] winBoxFillRightPoints =
             [
@@ -504,8 +520,6 @@ namespace MockGARTScore
                 new(7 * w / 12, 8)
             ];
             g.FillPolygon(new SolidBrush(RightColor), winBoxFillRightPoints);
-            // g.FillRectangle(new SolidBrush(rightColor),
-            //     new Rectangle(new Point(w / 3 + w / 4, 8), new Size(w / 12 - 8, h / 10 - 16)));
 
             // Separator lines in wins box
             g.DrawLine(new Pen(new SolidBrush(Color.Black), 8), new Point(w / 3 + w / 12, 0),
@@ -532,6 +546,11 @@ namespace MockGARTScore
                 new Rectangle(w * 5 / 8, h / 2 + h / 6 + h / 36, w / 4, h / 12 + h / 48));
             g.DrawLine(smallBoxPen, new Point(w / 4, h / 2 + h / 6 + h / 36), new Point(w / 4, h / 2 + h / 6 + h / 36 + h / 12 + h / 48));
             g.DrawLine(smallBoxPen, new Point(w * 3 / 4, h / 2 + h / 6 + h / 36), new Point(w * 3 / 4, h / 2 + h / 6 + h / 36 + h / 12 + h / 48));
+        }
+
+        private void timerText_Click(object sender, EventArgs e)
+        {
+            Program.SwitchForm(Program.FormEnum.PostMatchScore);
         }
     }
 }

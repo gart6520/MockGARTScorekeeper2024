@@ -133,6 +133,7 @@
             timerText.Size = new Size(584, 219);
             timerText.TabIndex = 5;
             timerText.Text = "00:00";
+            timerText.Click += timerText_Click;
             // 
             // leftTeamName
             // 

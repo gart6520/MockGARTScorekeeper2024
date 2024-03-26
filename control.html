@@ -305,7 +305,17 @@
 
         // Publish official score
         function publishButtonCallback() {
+            var publishButton = document.getElementById("publishButton");
+            if (publishButton.textContent == "Publish") {
 
+                publishButton.textContent = "Go Back";
+                send("publish");
+            }
+            else {
+                publishButton.textContent = "Publish";
+                send("goback");
+            }
+            updateScore();
         }
 
         // Red hatch
@@ -452,6 +462,7 @@
             if (isNaN(red_pen)) return;
             blue_score += (red_pen - red_pen_score);
             red_pen_score = red_pen;
+            send("penalty," + blue_pen_score + "," + red_pen_score);
             updateScore();
         }
 
@@ -461,6 +472,7 @@
             if (isNaN(blue_pen)) return;
             red_score += (blue_pen - blue_pen_score);
             blue_pen_score = blue_pen;
+            send("penalty," + blue_pen_score + "," + red_pen_score);
             updateScore();
         }
 
