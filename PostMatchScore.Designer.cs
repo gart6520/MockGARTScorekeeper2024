@@ -31,11 +31,76 @@ public partial class PostMatchScore
     /// </summary>
     private void InitializeComponent()
     {
-        this.components = new System.ComponentModel.Container();
-        this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        this.ClientSize = new System.Drawing.Size(800, 450);
-        this.Text = "PostMatch";
+        canvas = new PictureBox();
+        teleOpCatLabel = new Label();
+        endgameCatLabel = new Label();
+        penaltyCatLabel = new Label();
+        ((ISupportInitialize)canvas).BeginInit();
+        SuspendLayout();
+        // 
+        // canvas
+        // 
+        canvas.Location = new Point(0, 0);
+        canvas.Name = "canvas";
+        canvas.Padding = new Padding(4);
+        canvas.Size = new Size(1280, 960);
+        canvas.TabIndex = 0;
+        canvas.TabStop = false;
+        // 
+        // teleOpCatLabel
+        // 
+        teleOpCatLabel.AutoSize = true;
+        teleOpCatLabel.BackColor = Color.Yellow;
+        teleOpCatLabel.Font = new Font("Segoe UI", 28F, FontStyle.Bold);
+        teleOpCatLabel.Location = new Point(589, 247);
+        teleOpCatLabel.Name = "teleOpCatLabel";
+        teleOpCatLabel.Size = new Size(485, 74);
+        teleOpCatLabel.TabIndex = 1;
+        teleOpCatLabel.Text = "Driver Controlled";
+        // 
+        // endgameCatLabel
+        // 
+        endgameCatLabel.AutoSize = true;
+        endgameCatLabel.BackColor = Color.Yellow;
+        endgameCatLabel.Font = new Font("Segoe UI", 28F, FontStyle.Bold);
+        endgameCatLabel.Location = new Point(574, 337);
+        endgameCatLabel.Name = "endgameCatLabel";
+        endgameCatLabel.Size = new Size(297, 74);
+        endgameCatLabel.TabIndex = 2;
+        endgameCatLabel.Text = "End Game";
+        // 
+        // penaltyCatLabel
+        // 
+        penaltyCatLabel.AutoSize = true;
+        penaltyCatLabel.BackColor = Color.Yellow;
+        penaltyCatLabel.Font = new Font("Segoe UI", 28F, FontStyle.Bold);
+        penaltyCatLabel.Location = new Point(574, 424);
+        penaltyCatLabel.Name = "penaltyCatLabel";
+        penaltyCatLabel.Size = new Size(226, 74);
+        penaltyCatLabel.TabIndex = 3;
+        penaltyCatLabel.Text = "Penalty";
+        penaltyCatLabel.Click += penaltyCatLabel_Click;
+        // 
+        // PostMatchScore
+        // 
+        AutoScaleDimensions = new SizeF(10F, 25F);
+        AutoScaleMode = AutoScaleMode.Font;
+        ClientSize = new Size(1258, 904);
+        Controls.Add(penaltyCatLabel);
+        Controls.Add(endgameCatLabel);
+        Controls.Add(teleOpCatLabel);
+        Controls.Add(canvas);
+        Name = "PostMatchScore";
+        Text = "PostMatch";
+        ((ISupportInitialize)canvas).EndInit();
+        ResumeLayout(false);
+        PerformLayout();
     }
 
     #endregion
+
+    private PictureBox canvas;
+    private Label teleOpCatLabel;
+    private Label endgameCatLabel;
+    private Label penaltyCatLabel;
 }

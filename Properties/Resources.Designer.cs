@@ -73,6 +73,26 @@ namespace MockGARTScore.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap botToTheLeft {
+            get {
+                object obj = ResourceManager.GetObject("botToTheLeft", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap botToTheRight {
+            get {
+                object obj = ResourceManager.GetObject("botToTheRight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap fullpark {
             get {
                 object obj = ResourceManager.GetObject("fullpark", resourceCulture);

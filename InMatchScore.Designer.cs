@@ -65,9 +65,10 @@
             // 
             // exitButton
             // 
-            exitButton.Location = new Point(794, -3);
+            exitButton.Location = new Point(992, -4);
+            exitButton.Margin = new Padding(4);
             exitButton.Name = "exitButton";
-            exitButton.Size = new Size(10, 10);
+            exitButton.Size = new Size(12, 12);
             exitButton.TabIndex = 0;
             exitButton.Text = "Exit";
             exitButton.UseVisualStyleBackColor = true;
@@ -76,8 +77,9 @@
             // canvas
             // 
             canvas.Location = new Point(0, 0);
+            canvas.Margin = new Padding(4);
             canvas.Name = "canvas";
-            canvas.Size = new Size(1024, 768);
+            canvas.Size = new Size(1280, 960);
             canvas.TabIndex = 1;
             canvas.TabStop = false;
             // 
@@ -86,9 +88,10 @@
             winsLabel.AutoSize = true;
             winsLabel.BackColor = Color.White;
             winsLabel.Font = new Font("Arial", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            winsLabel.Location = new Point(416, -3);
+            winsLabel.Location = new Point(520, -4);
+            winsLabel.Margin = new Padding(4, 0, 4, 0);
             winsLabel.Name = "winsLabel";
-            winsLabel.Size = new Size(187, 70);
+            winsLabel.Size = new Size(224, 84);
             winsLabel.TabIndex = 2;
             winsLabel.Text = "WINS";
             // 
@@ -98,9 +101,10 @@
             leftWins.BackColor = Color.Red;
             leftWins.Font = new Font("Arial", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
             leftWins.ForeColor = Color.White;
-            leftWins.Location = new Point(347, -3);
+            leftWins.Location = new Point(434, -4);
+            leftWins.Margin = new Padding(4, 0, 4, 0);
             leftWins.Name = "leftWins";
-            leftWins.Size = new Size(63, 70);
+            leftWins.Size = new Size(75, 84);
             leftWins.TabIndex = 3;
             leftWins.Text = "0";
             leftWins.TextAlign = ContentAlignment.MiddleCenter;
@@ -111,21 +115,22 @@
             rightWins.BackColor = Color.DodgerBlue;
             rightWins.Font = new Font("Arial", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
             rightWins.ForeColor = Color.White;
-            rightWins.Location = new Point(609, 0);
+            rightWins.Location = new Point(761, 0);
+            rightWins.Margin = new Padding(4, 0, 4, 0);
             rightWins.Name = "rightWins";
-            rightWins.Size = new Size(63, 70);
+            rightWins.Size = new Size(75, 84);
             rightWins.TabIndex = 4;
             rightWins.Text = "0";
             rightWins.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // timerText
             // 
-            timerText.AutoSize = true;
             timerText.BackColor = Color.White;
             timerText.Font = new Font("Arial", 96F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            timerText.Location = new Point(268, 195);
+            timerText.Location = new Point(335, 244);
+            timerText.Margin = new Padding(4, 0, 4, 0);
             timerText.Name = "timerText";
-            timerText.Size = new Size(486, 183);
+            timerText.Size = new Size(584, 219);
             timerText.TabIndex = 5;
             timerText.Text = "00:00";
             // 
@@ -135,9 +140,10 @@
             leftTeamName.BackColor = Color.Red;
             leftTeamName.Font = new Font("Arial", 64.2000046F, FontStyle.Bold, GraphicsUnit.Point, 0);
             leftTeamName.ForeColor = Color.White;
-            leftTeamName.Location = new Point(29, -3);
+            leftTeamName.Location = new Point(36, -4);
+            leftTeamName.Margin = new Padding(4, 0, 4, 0);
             leftTeamName.Name = "leftTeamName";
-            leftTeamName.Size = new Size(280, 124);
+            leftTeamName.Size = new Size(335, 149);
             leftTeamName.TabIndex = 6;
             leftTeamName.Text = "RED";
             leftTeamName.TextAlign = ContentAlignment.MiddleCenter;
@@ -148,9 +154,10 @@
             rightTeamName.BackColor = Color.DodgerBlue;
             rightTeamName.Font = new Font("Arial", 64.2000046F, FontStyle.Bold, GraphicsUnit.Point, 0);
             rightTeamName.ForeColor = Color.White;
-            rightTeamName.Location = new Point(678, 0);
+            rightTeamName.Location = new Point(848, 0);
+            rightTeamName.Margin = new Padding(4, 0, 4, 0);
             rightTeamName.Name = "rightTeamName";
-            rightTeamName.Size = new Size(346, 124);
+            rightTeamName.Size = new Size(414, 149);
             rightTeamName.TabIndex = 7;
             rightTeamName.Text = "BLUE";
             rightTeamName.TextAlign = ContentAlignment.MiddleCenter;
@@ -161,9 +168,10 @@
             leftScore.BackColor = Color.Red;
             leftScore.Font = new Font("Arial", 96F, FontStyle.Bold, GraphicsUnit.Point, 0);
             leftScore.ForeColor = Color.White;
-            leftScore.Location = new Point(81, 195);
+            leftScore.Location = new Point(101, 244);
+            leftScore.Margin = new Padding(4, 0, 4, 0);
             leftScore.Name = "leftScore";
-            leftScore.Size = new Size(166, 183);
+            leftScore.Size = new Size(199, 219);
             leftScore.TabIndex = 8;
             leftScore.Text = "0";
             // 
@@ -173,33 +181,34 @@
             rightScore.BackColor = Color.DodgerBlue;
             rightScore.Font = new Font("Arial", 96F, FontStyle.Bold, GraphicsUnit.Point, 0);
             rightScore.ForeColor = Color.White;
-            rightScore.Location = new Point(772, 195);
+            rightScore.Location = new Point(965, 244);
+            rightScore.Margin = new Padding(4, 0, 4, 0);
             rightScore.Name = "rightScore";
-            rightScore.Size = new Size(166, 183);
+            rightScore.Size = new Size(199, 219);
             rightScore.TabIndex = 9;
             rightScore.Text = "0";
             // 
             // leftHatch
             // 
             leftHatch.BackColor = Color.Red;
-            leftHatch.Image = Properties.Resources.tankwithhatch;
-            leftHatch.Location = new Point(150, 393);
+            leftHatch.Image = Properties.Resources.tanknohatch;
+            leftHatch.Location = new Point(188, 491);
+            leftHatch.Margin = new Padding(4);
             leftHatch.Name = "leftHatch";
-            leftHatch.Size = new Size(156, 221);
+            leftHatch.Size = new Size(162, 233);
             leftHatch.TabIndex = 10;
             leftHatch.TabStop = false;
-            leftHatch.Visible = false;
             // 
             // rightHatch
             // 
             rightHatch.BackColor = Color.DodgerBlue;
-            rightHatch.Image = Properties.Resources.tankwithhatch;
-            rightHatch.Location = new Point(740, 393);
+            rightHatch.Image = Properties.Resources.tanknohatch;
+            rightHatch.Location = new Point(925, 491);
+            rightHatch.Margin = new Padding(4);
             rightHatch.Name = "rightHatch";
-            rightHatch.Size = new Size(156, 221);
+            rightHatch.Size = new Size(160, 233);
             rightHatch.TabIndex = 11;
             rightHatch.TabStop = false;
-            rightHatch.Visible = false;
             // 
             // leftFuelLabel
             // 
@@ -207,9 +216,10 @@
             leftFuelLabel.BackColor = Color.Red;
             leftFuelLabel.Font = new Font("Arial", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
             leftFuelLabel.ForeColor = Color.White;
-            leftFuelLabel.Location = new Point(29, 534);
+            leftFuelLabel.Location = new Point(36, 668);
+            leftFuelLabel.Margin = new Padding(4, 0, 4, 0);
             leftFuelLabel.Name = "leftFuelLabel";
-            leftFuelLabel.Size = new Size(154, 70);
+            leftFuelLabel.Size = new Size(183, 84);
             leftFuelLabel.TabIndex = 12;
             leftFuelLabel.Text = "Fuel";
             // 
@@ -219,9 +229,10 @@
             rightFuelLabel.BackColor = Color.DodgerBlue;
             rightFuelLabel.Font = new Font("Arial", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
             rightFuelLabel.ForeColor = Color.White;
-            rightFuelLabel.Location = new Point(830, 534);
+            rightFuelLabel.Location = new Point(1038, 668);
+            rightFuelLabel.Margin = new Padding(4, 0, 4, 0);
             rightFuelLabel.Name = "rightFuelLabel";
-            rightFuelLabel.Size = new Size(154, 70);
+            rightFuelLabel.Size = new Size(183, 84);
             rightFuelLabel.TabIndex = 13;
             rightFuelLabel.Text = "Fuel";
             // 
@@ -231,9 +242,10 @@
             rightFuel.BackColor = Color.DodgerBlue;
             rightFuel.Font = new Font("Arial", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
             rightFuel.ForeColor = Color.White;
-            rightFuel.Location = new Point(691, 534);
+            rightFuel.Location = new Point(864, 668);
+            rightFuel.Margin = new Padding(4, 0, 4, 0);
             rightFuel.Name = "rightFuel";
-            rightFuel.Size = new Size(63, 70);
+            rightFuel.Size = new Size(75, 84);
             rightFuel.TabIndex = 14;
             rightFuel.Text = "0";
             // 
@@ -243,9 +255,10 @@
             leftFuel.BackColor = Color.Red;
             leftFuel.Font = new Font("Arial", 36F, FontStyle.Bold, GraphicsUnit.Point, 0);
             leftFuel.ForeColor = Color.White;
-            leftFuel.Location = new Point(268, 534);
+            leftFuel.Location = new Point(335, 668);
+            leftFuel.Margin = new Padding(4, 0, 4, 0);
             leftFuel.Name = "leftFuel";
-            leftFuel.Size = new Size(63, 70);
+            leftFuel.Size = new Size(75, 84);
             leftFuel.TabIndex = 15;
             leftFuel.Text = "0";
             // 
@@ -253,9 +266,10 @@
             // 
             leftParkNo.BackColor = Color.Red;
             leftParkNo.Image = Properties.Resources.nopark;
-            leftParkNo.Location = new Point(7, 613);
+            leftParkNo.Location = new Point(9, 766);
+            leftParkNo.Margin = new Padding(4);
             leftParkNo.Name = "leftParkNo";
-            leftParkNo.Size = new Size(143, 143);
+            leftParkNo.Size = new Size(179, 179);
             leftParkNo.SizeMode = PictureBoxSizeMode.CenterImage;
             leftParkNo.TabIndex = 16;
             leftParkNo.TabStop = false;
@@ -264,9 +278,10 @@
             // 
             leftParkHalf.BackColor = Color.Red;
             leftParkHalf.Image = Properties.Resources.partialpark;
-            leftParkHalf.Location = new Point(156, 613);
+            leftParkHalf.Location = new Point(195, 766);
+            leftParkHalf.Margin = new Padding(4);
             leftParkHalf.Name = "leftParkHalf";
-            leftParkHalf.Size = new Size(143, 143);
+            leftParkHalf.Size = new Size(179, 179);
             leftParkHalf.SizeMode = PictureBoxSizeMode.CenterImage;
             leftParkHalf.TabIndex = 17;
             leftParkHalf.TabStop = false;
@@ -277,9 +292,10 @@
             leftParkFull.BackColor = Color.Red;
             leftParkFull.Image = Properties.Resources.fullpark;
             leftParkFull.InitialImage = Properties.Resources.fullpark;
-            leftParkFull.Location = new Point(305, 613);
+            leftParkFull.Location = new Point(381, 766);
+            leftParkFull.Margin = new Padding(4);
             leftParkFull.Name = "leftParkFull";
-            leftParkFull.Size = new Size(143, 143);
+            leftParkFull.Size = new Size(179, 179);
             leftParkFull.SizeMode = PictureBoxSizeMode.CenterImage;
             leftParkFull.TabIndex = 18;
             leftParkFull.TabStop = false;
@@ -288,9 +304,10 @@
             // 
             rightParkFull.BackColor = Color.DodgerBlue;
             rightParkFull.Image = Properties.Resources.fullpark;
-            rightParkFull.Location = new Point(874, 613);
+            rightParkFull.Location = new Point(1092, 766);
+            rightParkFull.Margin = new Padding(4);
             rightParkFull.Name = "rightParkFull";
-            rightParkFull.Size = new Size(143, 143);
+            rightParkFull.Size = new Size(179, 179);
             rightParkFull.SizeMode = PictureBoxSizeMode.CenterImage;
             rightParkFull.TabIndex = 21;
             rightParkFull.TabStop = false;
@@ -299,9 +316,10 @@
             // 
             rightParkHalf.BackColor = Color.DodgerBlue;
             rightParkHalf.Image = Properties.Resources.partialpark;
-            rightParkHalf.Location = new Point(725, 613);
+            rightParkHalf.Location = new Point(906, 766);
+            rightParkHalf.Margin = new Padding(4);
             rightParkHalf.Name = "rightParkHalf";
-            rightParkHalf.Size = new Size(143, 143);
+            rightParkHalf.Size = new Size(179, 179);
             rightParkHalf.SizeMode = PictureBoxSizeMode.CenterImage;
             rightParkHalf.TabIndex = 20;
             rightParkHalf.TabStop = false;
@@ -310,9 +328,10 @@
             // 
             rightParkNo.BackColor = Color.DodgerBlue;
             rightParkNo.Image = Properties.Resources.nopark;
-            rightParkNo.Location = new Point(576, 613);
+            rightParkNo.Location = new Point(720, 766);
+            rightParkNo.Margin = new Padding(4);
             rightParkNo.Name = "rightParkNo";
-            rightParkNo.Size = new Size(143, 143);
+            rightParkNo.Size = new Size(179, 179);
             rightParkNo.SizeMode = PictureBoxSizeMode.CenterImage;
             rightParkNo.TabIndex = 22;
             rightParkNo.TabStop = false;
@@ -323,10 +342,10 @@
             // 
             // InMatchScore
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = exitButton;
-            ClientSize = new Size(1024, 768);
+            ClientSize = new Size(1280, 960);
             Controls.Add(rightParkNo);
             Controls.Add(rightParkFull);
             Controls.Add(rightParkHalf);
@@ -350,6 +369,7 @@
             Controls.Add(canvas);
             Controls.Add(exitButton);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(4);
             Name = "InMatchScore";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MockGARTInMatchScore";

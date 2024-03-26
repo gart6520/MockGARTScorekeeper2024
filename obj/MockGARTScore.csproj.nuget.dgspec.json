@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\dev\\MockGARTScore\\MockGARTScore.csproj": {}
+    "E:\\Coding\\Rider C#\\MockGartScorekeeper_Loc\\MockGARTScore.csproj": {}
   },
   "projects": {
-    "D:\\dev\\MockGARTScore\\MockGARTScore.csproj": {
+    "E:\\Coding\\Rider C#\\MockGartScorekeeper_Loc\\MockGARTScore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\dev\\MockGARTScore\\MockGARTScore.csproj",
+        "projectUniqueName": "E:\\Coding\\Rider C#\\MockGartScorekeeper_Loc\\MockGARTScore.csproj",
         "projectName": "MockGARTScore",
-        "projectPath": "D:\\dev\\MockGARTScore\\MockGARTScore.csproj",
-        "packagesPath": "C:\\Users\\mmb\\.nuget\\packages\\",
-        "outputPath": "D:\\dev\\MockGARTScore\\obj\\",
+        "projectPath": "E:\\Coding\\Rider C#\\MockGartScorekeeper_Loc\\MockGARTScore.csproj",
+        "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
+        "outputPath": "E:\\Coding\\Rider C#\\MockGartScorekeeper_Loc\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\mmb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -34,6 +38,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -64,7 +73,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

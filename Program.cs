@@ -145,11 +145,7 @@ public static class Program
     [STAThread]
     static void Main()
     {
-        // Create WebSocket server
-        var wssv = new WebSocketServer("ws://0.0.0.0:8000");
-
-        wssv.AddWebSocketService<WSUpdate>("/wsupdate");
-        wssv.Start();
+        
 
         // To customize application configuration such as set high DPI settings or default font,
         // see https://aka.ms/applicationconfiguration.
@@ -163,6 +159,12 @@ public static class Program
         InMatchScoreForm.SetFuel(0, 0);
         InMatchScoreForm.SetPark(0, 0);
 
-        Application.Run(InMatchScoreForm);
+        // Create WebSocket server
+        var wssv = new WebSocketServer("ws://0.0.0.0:8000");
+
+        wssv.AddWebSocketService<WSUpdate>("/wsupdate");
+        wssv.Start();
+
+        Application.Run(PostMatchScoreForm);
     }
 }

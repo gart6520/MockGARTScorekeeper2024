@@ -39,8 +39,8 @@ namespace MockGARTScore
                 int.Parse((RightColor == Color.DodgerBlue) ? rightWins.Text : leftWins.Text), // Blue wins
                 int.Parse((LeftColor == Color.Red) ? leftScore.Text : rightScore.Text), // Red score
                 int.Parse((RightColor == Color.DodgerBlue) ? rightScore.Text : leftScore.Text), // Blue score
-                Convert.ToInt32((LeftColor == Color.Red) ? leftHatch.Visible : rightHatch.Visible), // Red hatch
-                Convert.ToInt32((RightColor == Color.DodgerBlue) ? rightHatch.Visible : leftHatch.Visible), // Blue hatch
+                Convert.ToInt32((LeftColor == Color.Red) ? leftHatch.Image == Properties.Resources.tankwithhatch : rightHatch.Image == Properties.Resources.tankwithhatch), // Red hatch
+                Convert.ToInt32((RightColor == Color.DodgerBlue) ? rightHatch.Image == Properties.Resources.tankwithhatch : leftHatch.Image == Properties.Resources.tankwithhatch), // Blue hatch
                 int.Parse((LeftColor == Color.Red) ? leftFuel.Text : rightFuel.Text), // Red fuel
                 int.Parse((RightColor == Color.DodgerBlue) ? rightFuel.Text : leftFuel.Text), // Blue fuel
                 (LeftColor == Color.Red) ? LeftParkStatus : RightParkStatus, // Red park
@@ -141,10 +141,10 @@ namespace MockGARTScore
         // Set hatch
         public void SetHatch(bool left, bool right)
         {
-            leftHatch.Visible = left;
-            rightHatch.Visible = right;
-            //leftHatch.Image = left ? Properties.Resources.tankwithhatch : Properties.Resources.tanknohatch;
-            //rightHatch.Image = right ? Properties.Resources.tankwithhatch : Properties.Resources.tanknohatch;
+            //leftHatch.Visible = left;
+            //rightHatch.Visible = right;
+            leftHatch.Image = left ? Properties.Resources.tankwithhatch : Properties.Resources.tanknohatch;
+            rightHatch.Image = right ? Properties.Resources.tankwithhatch : Properties.Resources.tanknohatch;
             leftHatch.Refresh();
             rightHatch.Refresh();
         }
@@ -323,6 +323,18 @@ namespace MockGARTScore
             // Set PictureBox size to full Form size
             canvas.Size = Size;
 
+            // Set ImageBox size to the actual image size
+            leftHatch.Size = leftHatch.Image.Size;
+            rightHatch.Size = rightHatch.Image.Size;
+            leftParkFull.Size = leftParkFull.Image.Size;
+            leftParkNo.Size = leftParkNo.Image.Size;
+            leftParkHalf.Size = leftParkHalf.Image.Size;
+            rightParkHalf.Size = rightParkHalf.Image.Size;
+            rightParkFull.Size = rightParkFull.Image.Size;
+            rightParkNo.Size = rightParkNo.Image.Size;
+
+
+
             // Window size
             int w = Size.Width;
             int h = Size.Height;
@@ -375,7 +387,7 @@ namespace MockGARTScore
             rightHatch.Location = new Point(
                 w * 3 / 4 - rightHatch.Size.Width / 2,
                 h / 2 + h / 16 - rightHatch.Size.Height / 2);
-
+            
             // Align fuel labels
             leftFuelLabel.Location = new Point(
                 w / 8 + w / 16 - leftFuelLabel.Size.Width / 2,
