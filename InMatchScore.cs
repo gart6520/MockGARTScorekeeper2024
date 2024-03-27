@@ -12,6 +12,7 @@ public partial class InMatchScore : Form
     public event EventHandler Publish = null!;
 
     // Time left
+    private int timeTotal;
     private int timeLeft;
 
     readonly int w;
@@ -25,6 +26,7 @@ public partial class InMatchScore : Form
     private readonly SoundPlayer startGame = new("match_start.wav");
     private readonly SoundPlayer startEndGame = new("endgame_start.wav");
     private readonly SoundPlayer endGame = new("match_end.wav");
+    private readonly SoundPlayer abortMatch = new("abort_match.wav");
 
 
     // Return current values (to WS client)
@@ -251,8 +253,8 @@ public partial class InMatchScore : Form
     private void SetTime(int seconds)
     {
         // Set time left
-        timeLeft = seconds;
-
+        timeTotal = seconds;
+        timeLeft = timeTotal;
 
         // Set timerText
         int m = seconds / 60;
@@ -281,30 +283,42 @@ public partial class InMatchScore : Form
         {
             if (timeLeft == 30) startEndGame.Play();
 
+            if (timeLeft <= 0)
+            {
+                timerText.Invoke(() => { timerText.Text = "00:00"; });
+                timerRunning = false;
+                break;
+            }
+
             int m = timeLeft / 60;
             int s = timeLeft % 60;
             timerText.Invoke(() => { timerText.Text = m.ToString("D2") + @":" + s.ToString("D2"); });
 
-            if (timeLeft <= 0)
-            {
-                timerRunning = false;
-                break;
-            }
 
             timeLeft--;
             await Task.Delay(1000);
         }
 
-        endGame.Play();
+        if (timeLeft == 0) endGame.Play();
     }
 
+    private void AbortMatch()
+    {
+        timeLeft = -1;
+        abortMatch.Play();
+        SetScore(0, 0);
+        SetPenalty(0, 0);
+        SetHatch(false, false);
+        SetFuel(0, 0);
+        SetPark(0, 0);
+    }
     // Reset match
     private void ResetMatch()
     {
         //this.setTeamColor(Color.Red, Color.DodgerBlue);
         //this.setWins(0, 0);
         // Program.SwitchForm(Program.FormEnum.InMatchScore);
-        SetTime(timeLeft);
+        SetTime(timeTotal);
         SetScore(0, 0);
         SetPenalty(0, 0);
         SetHatch(false, false);
@@ -460,7 +474,7 @@ public partial class InMatchScore : Form
         WSUpdate.SetTeamColor += (_, e) => SetTeamColor(e.Left, e.Right);
         WSUpdate.SetTimer += (_, e) => SetTime(e.Time);
         WSUpdate.ResetMatch += (_, _) => ResetMatch();
-        WSUpdate.StopTimer += (_, _) => timerRunning = false;
+        WSUpdate.AbortMatch += (_, _) => AbortMatch();
 
         HandleCreated += (_, _) =>
         {

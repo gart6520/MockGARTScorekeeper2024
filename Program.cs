@@ -55,7 +55,7 @@ public class WSUpdate : WebSocketBehavior
     public static event EventHandler<GameEventArgs<bool>> SetHatch = null!;
     public static event EventHandler<GameEventArgs<Color>> SetTeamColor = null!;
     public static event EventHandler StartTimer = null!;
-    public static event EventHandler StopTimer = null!;
+    public static event EventHandler AbortMatch = null!;
     public static event EventHandler<SetTimerEventArgs> SetTimer = null!;
     public static event EventHandler ResetMatch = null!;
     public static event EventHandler Publish = null!;
@@ -140,9 +140,9 @@ public class WSUpdate : WebSocketBehavior
                 StartTimer.Invoke(this, EventArgs.Empty);
                 Send("done");
                 break;
-            case "stop":
+            case "abort":
                 // Program.InMatchScoreForm.TimerRunning = false;
-                StopTimer.Invoke(this, EventArgs.Empty);
+                AbortMatch.Invoke(this, EventArgs.Empty);
                 Send("done");
                 break;
             case "reset":

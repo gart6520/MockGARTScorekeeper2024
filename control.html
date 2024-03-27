@@ -285,20 +285,24 @@
 
                     // Change button status to stop
                     var mainButton = document.getElementById("mainButton");
-                    mainButton.textContent = "Stop";
-                    mainButton.style.backgroundColor = "yellow";
+                    mainButton.textContent = "Abort";
+                    mainButton.style.backgroundColor = "purple";
                 }
 
                 // If match already started -> stop it
                 else {
-                    match_started = false;
-                    console.log("Match stopped!")
-                    send("stop");
+                    var cf = confirm("Confirm Match Abort?");
+                    if (cf) {
+                        match_started = false;
+                        console.log("Match stopped!")
+                        send("abort");
 
-                    // Change button status to start
-                    var mainButton = document.getElementById("mainButton");
-                    mainButton.textContent = "Start";
-                    mainButton.style.backgroundColor = "green";
+                        // Change button status to start
+                        var mainButton = document.getElementById("mainButton");
+                        mainButton.textContent = "Start";
+                        mainButton.style.backgroundColor = "green";
+                    }
+                    
                 }
             }
         }
@@ -502,6 +506,13 @@
             document.getElementById("redPen").value = 0;
             blue_pen_score = 0;
             document.getElementById("bluePen").value = 0;
+
+            // Reset start button 
+            match_started = false;
+            
+            var mainButton = document.getElementById("mainButton");
+            mainButton.textContent = "Start";
+            mainButton.style.backgroundColor = "green";
 
             send("reset");
 
