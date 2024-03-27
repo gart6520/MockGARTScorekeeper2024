@@ -1,8 +1,6 @@
+using System.Diagnostics;
 using MockGARTScore.Properties;
-using System.Configuration;
-using System.Drawing.Text;
 using System.Media;
-using System.Reflection.Emit;
 using static MockGARTScore.GameStat;
 
 namespace MockGARTScore;
@@ -14,26 +12,26 @@ public partial class InMatchScore : Form
     public event EventHandler Publish = null!;
 
     // Time left
-    public int TimeLeft = 0;
+    private int timeLeft;
 
-    int w;
+    readonly int w;
 
-    int h;
+    readonly int h;
 
     // Timer running
-    public bool TimerRunning = false;
+    private bool timerRunning;
 
     // SFX
-    public SoundPlayer StartGame = new("match_start.wav");
-    public SoundPlayer StartEndGame = new("endgame_start.wav");
-    public SoundPlayer EndGame = new("match_end.wav");
+    private readonly SoundPlayer startGame = new("match_start.wav");
+    private readonly SoundPlayer startEndGame = new("endgame_start.wav");
+    private readonly SoundPlayer endGame = new("match_end.wav");
 
 
     // Return current values (to WS client)
     public int[] GetCurrentValues()
     {
         int[] r =
-        {
+        [
             LeftColor == Color.Red ? 0 : 1, // Left color
             RightColor == Color.DodgerBlue ? 1 : 0, // Right color
             int.Parse(LeftColor == Color.Red ? leftWins.Text : rightWins.Text), // Red wins
@@ -50,14 +48,14 @@ public partial class InMatchScore : Form
             int.Parse(RightColor == Color.DodgerBlue ? rightFuel.Text : leftFuel.Text), // Blue fuel
             LeftColor == Color.Red ? LeftParkStatus : RightParkStatus, // Red park
             RightColor == Color.DodgerBlue ? RightParkStatus : LeftParkStatus, // Blue park
-            TimerRunning ? 1 : 0 // Has match started?
-        };
+            timerRunning ? 1 : 0 // Has match started?
+        ];
 
         return r;
     }
 
     // Set team color
-    public void SetTeamColor(Color left, Color right)
+    private void SetTeamColor(Color left, Color right)
     {
 
         // Set team color variables
@@ -113,7 +111,7 @@ public partial class InMatchScore : Form
     }
 
     // Set score
-    public void SetScore(int left, int right)
+    private void SetScore(int left, int right)
     {
 
         // Set team scores
@@ -138,14 +136,14 @@ public partial class InMatchScore : Form
     }
 
     // Set penalty
-    public void SetPenalty(int left, int right)
+    private void SetPenalty(int left, int right)
     {
         LeftPenalty = left;
         RightPenalty = right;
     }
 
     // Set hatch
-    public void SetHatch(bool left, bool right)
+    private void SetHatch(bool left, bool right)
     {
         //leftHatch.Visible = left;
         //rightHatch.Visible = right;
@@ -160,7 +158,7 @@ public partial class InMatchScore : Form
     }
 
     // Set fuel
-    public void SetFuel(int left, int right)
+    private void SetFuel(int left, int right)
     {
         // Window size
 
@@ -188,7 +186,7 @@ public partial class InMatchScore : Form
     }
 
     // Set park
-    public void SetPark(int left, int right)
+    private void SetPark(int left, int right)
     {
         // Set park status
         LeftParkStatus = left;
@@ -212,9 +210,6 @@ public partial class InMatchScore : Form
                     leftParkNo.Visible = false;
                     leftParkHalf.Visible = false;
                     leftParkFull.Visible = true;
-                    break;
-                default:
-                    // How tf
                     break;
             }
 
@@ -244,9 +239,6 @@ public partial class InMatchScore : Form
                     rightParkHalf.Visible = false;
                     rightParkFull.Visible = true;
                     break;
-                default:
-                    // How tf
-                    break;
             }
 
             rightParkNo.Refresh();
@@ -256,10 +248,10 @@ public partial class InMatchScore : Form
     }
 
     // Set timer
-    public void SetTime(int seconds)
+    private void SetTime(int seconds)
     {
         // Set time left
-        TimeLeft = seconds;
+        timeLeft = seconds;
 
 
         // Set timerText
@@ -267,7 +259,7 @@ public partial class InMatchScore : Form
         int s = seconds % 60;
         timerText.Invoke(() =>
         {
-            timerText.Text = m.ToString("D2") + ":" + s.ToString("D2");
+            timerText.Text = m.ToString("D2") + @":" + s.ToString("D2");
 
             // Align the timerText to center
             timerText.Location = new Point(
@@ -276,43 +268,43 @@ public partial class InMatchScore : Form
         });
     }
 
-    public async void StartTimer()
+    private async void StartTimer()
     {
         // Start timer and play sound if it's not currently started
-        if (!TimerRunning)
+        if (!timerRunning)
         {
-            StartGame.Play();
-            TimerRunning = true;
+            startGame.Play();
+            timerRunning = true;
         }
 
-        while (TimerRunning)
+        while (timerRunning)
         {
-            if (TimeLeft == 30) StartEndGame.Play();
+            if (timeLeft == 30) startEndGame.Play();
 
-            int m = TimeLeft / 60;
-            int s = TimeLeft % 60;
-            timerText.Invoke(() => { timerText.Text = m.ToString("D2") + ":" + s.ToString("D2"); });
+            int m = timeLeft / 60;
+            int s = timeLeft % 60;
+            timerText.Invoke(() => { timerText.Text = m.ToString("D2") + @":" + s.ToString("D2"); });
 
-            if (TimeLeft <= 0)
+            if (timeLeft <= 0)
             {
-                TimerRunning = false;
+                timerRunning = false;
                 break;
             }
 
-            TimeLeft--;
+            timeLeft--;
             await Task.Delay(1000);
         }
 
-        EndGame.Play();
+        endGame.Play();
     }
 
     // Reset match
-    public void ResetMatch()
+    private void ResetMatch()
     {
         //this.setTeamColor(Color.Red, Color.DodgerBlue);
         //this.setWins(0, 0);
         // Program.SwitchForm(Program.FormEnum.InMatchScore);
-        SetTime(TimeLeft);
+        SetTime(timeLeft);
         SetScore(0, 0);
         SetPenalty(0, 0);
         SetHatch(false, false);
@@ -321,7 +313,7 @@ public partial class InMatchScore : Form
     }
 
     // Set wins
-    public void SetWins(int left, int right)
+    private void SetWins(int left, int right)
     {
 
         // Set wins text
@@ -351,6 +343,7 @@ public partial class InMatchScore : Form
 
 
         // Set Form to full screen
+        Debug.Assert(Screen.PrimaryScreen != null, "Screen.PrimaryScreen != null");
         Size = Screen.PrimaryScreen.Bounds.Size;
 
         // Set PictureBox size to full Form size
@@ -372,7 +365,7 @@ public partial class InMatchScore : Form
 
 
         // Add paint event handler to the canvas
-        canvas.Paint += canvas_Paint;
+        canvas.Paint += canvas_Paint!;
 
 
         // Align the "Wins" label to the center
@@ -467,7 +460,7 @@ public partial class InMatchScore : Form
         WSUpdate.SetTeamColor += (_, e) => SetTeamColor(e.Left, e.Right);
         WSUpdate.SetTimer += (_, e) => SetTime(e.Time);
         WSUpdate.ResetMatch += (_, _) => ResetMatch();
-        WSUpdate.StopTimer += (_, _) => TimerRunning = false;
+        WSUpdate.StopTimer += (_, _) => timerRunning = false;
 
         HandleCreated += (_, _) =>
         {
@@ -504,23 +497,23 @@ public partial class InMatchScore : Form
 
         // Fill red side in red
         Point[] redCurvePoints =
-        {
+        [
             new(0, 0),
             new(sepUpX, 0),
             new(sepDownX, h),
             new(0, h)
-        };
+        ];
 
         g.FillPolygon(new SolidBrush(LeftColor), redCurvePoints);
 
         // Fill blue side in blue
         Point[] blueCurvePoints =
-        {
+        [
             new(sepUpX, 0),
             new(w, 0),
             new(w, h),
             new(sepDownX, h)
-        };
+        ];
 
         g.FillPolygon(new SolidBrush(RightColor), blueCurvePoints);
 

@@ -1,25 +1,27 @@
+using System.Diagnostics;
 using static MockGARTScore.GameStat;
 
 namespace MockGARTScore;
 
 public partial class PostMatchScore : Form
 {
-    int w;
-    int h;
-    readonly Color DarkerRed = Color.FromArgb(200, 0, 0);
+    private readonly int w;
+    private readonly int h;
+    readonly Color darkerRed = Color.FromArgb(200, 0, 0);
     public event EventHandler GoBack = null!;
-    private int winner = 0; // -1 is left 0 is tie 1 is right
+    private int winner; // -1 is left 0 is tie 1 is right
 
     public PostMatchScore()
     {
         InitializeComponent();
         WindowState = FormWindowState.Maximized;
         FormBorderStyle = FormBorderStyle.None;
+        Debug.Assert(Screen.PrimaryScreen != null, "Screen.PrimaryScreen != null");
         Size = Screen.PrimaryScreen.Bounds.Size;
 
         canvas.Location = new Point();
         canvas.Size = Size;
-        canvas.Paint += Canvas_Paint;
+        canvas.Paint += Canvas_Paint!;
 
         Activated += (_, _) => UpdateScore();
 
@@ -35,9 +37,9 @@ public partial class PostMatchScore : Form
             new Point(w / 2 - penaltyCatLabel.Size.Width / 2, 19 * h / 30 - penaltyCatLabel.Height / 2);
 
         // Align score labels
-        leftTeleOpScoreLabel.BackColor = DarkerRed;
-        leftEndgameScoreLabel.BackColor = DarkerRed;
-        leftPenaltyScoreLabel.BackColor = DarkerRed;
+        leftTeleOpScoreLabel.BackColor = darkerRed;
+        leftEndgameScoreLabel.BackColor = darkerRed;
+        leftPenaltyScoreLabel.BackColor = darkerRed;
         leftTeleOpScoreLabel.Location = new Point(7 * w / 24 - leftTeleOpScoreLabel.Width / 2,
             11 * h / 30 - leftTeleOpScoreLabel.Height / 2);
         leftEndgameScoreLabel.Location = new Point(7 * w / 24 - leftEndgameScoreLabel.Width / 2,
@@ -141,28 +143,28 @@ public partial class PostMatchScore : Form
 
     private void Canvas_Paint(object sender, PaintEventArgs e)
     {
-        Graphics g = e.Graphics;
+        var g = e.Graphics;
         // Canvas size
-        int w = canvas.Size.Width;
-        int h = canvas.Size.Height;
+        var _w = canvas.Width;
+        var _h = canvas.Height;
 
-        //Draw sereperator line
-        g.FillRectangle(new SolidBrush(LeftColor), new Rectangle(0, 0, w / 2, h));
-        g.FillRectangle(new SolidBrush(RightColor), new Rectangle(w / 2, 0, w / 2, h));
-        g.DrawLine(new Pen(new SolidBrush(Color.Black), 5), new Point(w / 2, 0), new Point(w / 2, h));
+        //Draw separator line
+        g.FillRectangle(new SolidBrush(LeftColor), new Rectangle(0, 0, _w / 2, _h));
+        g.FillRectangle(new SolidBrush(RightColor), new Rectangle(_w / 2, 0, _w / 2, _h));
+        g.DrawLine(new Pen(new SolidBrush(Color.Black), 5), new Point(_w / 2, 0), new Point(_w / 2, _h));
 
         //Draw category box
-        g.FillRectangle(new SolidBrush(Color.White), new Rectangle(w / 3, 19 * h / 60, w / 3, h / 10));
-        g.FillRectangle(new SolidBrush(Color.White), new Rectangle(w / 3, 9 * h / 20, w / 3, h / 10));
-        g.FillRectangle(new SolidBrush(Color.White), new Rectangle(w / 3, 7 * h / 12, w / 3, h / 10));
+        g.FillRectangle(new SolidBrush(Color.White), new Rectangle(_w / 3, 19 * _h / 60, _w / 3, _h / 10));
+        g.FillRectangle(new SolidBrush(Color.White), new Rectangle(_w / 3, 9 * _h / 20, _w / 3, _h / 10));
+        g.FillRectangle(new SolidBrush(Color.White), new Rectangle(_w / 3, 7 * _h / 12, _w / 3, _h / 10));
 
         // Draw category score box
-        g.FillRectangle(new SolidBrush(DarkerRed), new Rectangle(w / 4, 19 * h / 60, w / 12, h / 10));
-        g.FillRectangle(new SolidBrush(DarkerRed), new Rectangle(w / 4, 9 * h / 20, w / 12, h / 10));
-        g.FillRectangle(new SolidBrush(DarkerRed), new Rectangle(w / 4, 7 * h / 12, w / 12, h / 10));
-        g.FillRectangle(new SolidBrush(Color.DarkBlue), new Rectangle(2 * w / 3, 19 * h / 60, w / 12, h / 10));
-        g.FillRectangle(new SolidBrush(Color.DarkBlue), new Rectangle(2 * w / 3, 9 * h / 20, w / 12, h / 10));
-        g.FillRectangle(new SolidBrush(Color.DarkBlue), new Rectangle(2 * w / 3, 7 * h / 12, w / 12, h / 10));
+        g.FillRectangle(new SolidBrush(darkerRed), new Rectangle(_w / 4, 19 * _h / 60, _w / 12, _h / 10));
+        g.FillRectangle(new SolidBrush(darkerRed), new Rectangle(_w / 4, 9 * _h / 20, _w / 12, _h / 10));
+        g.FillRectangle(new SolidBrush(darkerRed), new Rectangle(_w / 4, 7 * _h / 12, _w / 12, _h / 10));
+        g.FillRectangle(new SolidBrush(Color.DarkBlue), new Rectangle(2 * _w / 3, 19 * _h / 60, _w / 12, _h / 10));
+        g.FillRectangle(new SolidBrush(Color.DarkBlue), new Rectangle(2 * _w / 3, 9 * _h / 20, _w / 12, _h / 10));
+        g.FillRectangle(new SolidBrush(Color.DarkBlue), new Rectangle(2 * _w / 3, 7 * _h / 12, _w / 12, _h / 10));
 
         // Draw champion box
         leftWinningCupImage.Visible = false;
@@ -171,39 +173,39 @@ public partial class PostMatchScore : Form
         rightWinnerLabel.Visible = false;
         if (winner == -1)
         {
-            g.FillRectangle(new SolidBrush(Color.Yellow), new Rectangle(0, h / 120, w / 2, h / 12));
-            leftWinnerLabel.Location = new Point(w / 30, h / 20 - leftWinnerLabel.Height / 2);
+            g.FillRectangle(new SolidBrush(Color.Yellow), new Rectangle(0, _h / 120, _w / 2, _h / 12));
+            leftWinnerLabel.Location = new Point(_w / 30, _h / 20 - leftWinnerLabel.Height / 2);
             leftWinningCupImage.Size = new Size(leftWinnerLabel.Height, leftWinnerLabel.Height);
             leftWinningCupImage.Location =
-                new Point(leftWinnerLabel.Right + w / 60, h / 20 - leftWinningCupImage.Height / 2);
+                new Point(leftWinnerLabel.Right + _w / 60, _h / 20 - leftWinningCupImage.Height / 2);
             leftWinningCupImage.Visible = true;
             leftWinnerLabel.Visible = true;
         }
         else if (winner == 1)
         {
-            g.FillRectangle(new SolidBrush(Color.Yellow), new Rectangle(w / 2, h / 120, w / 2, h / 12));
+            g.FillRectangle(new SolidBrush(Color.Yellow), new Rectangle(_w / 2, _h / 120, _w / 2, _h / 12));
             rightWinnerLabel.Location =
-                new Point(29 * w / 30 - rightWinnerLabel.Width, h / 20 - rightWinnerLabel.Height / 2);
+                new Point(29 * _w / 30 - rightWinnerLabel.Width, _h / 20 - rightWinnerLabel.Height / 2);
             rightWinningCupImage.Size = new Size(rightWinnerLabel.Height, rightWinnerLabel.Height);
-            rightWinningCupImage.Location = new Point(rightWinnerLabel.Left - w / 60 - rightWinningCupImage.Width,
-                h / 20 - rightWinningCupImage.Height / 2);
+            rightWinningCupImage.Location = new Point(rightWinnerLabel.Left - _w / 60 - rightWinningCupImage.Width,
+                _h / 20 - rightWinningCupImage.Height / 2);
             rightWinningCupImage.Visible = true;
             rightWinnerLabel.Visible = true;
         }
         else
         {
-            g.FillRectangle(new SolidBrush(Color.Yellow), new Rectangle(0, h / 120, w / 2, h / 12));
-            leftWinnerLabel.Location = new Point(w / 30, h / 20 - leftWinnerLabel.Height / 2);
+            g.FillRectangle(new SolidBrush(Color.Yellow), new Rectangle(0, _h / 120, _w / 2, _h / 12));
+            leftWinnerLabel.Location = new Point(_w / 30, _h / 20 - leftWinnerLabel.Height / 2);
             leftWinningCupImage.Size = new Size(leftWinnerLabel.Height, leftWinnerLabel.Height);
             leftWinningCupImage.Location =
-                new Point(leftWinnerLabel.Right + w / 60, h / 20 - leftWinningCupImage.Height / 2);
+                new Point(leftWinnerLabel.Right + _w / 60, _h / 20 - leftWinningCupImage.Height / 2);
 
-            g.FillRectangle(new SolidBrush(Color.Yellow), new Rectangle(w / 2, h / 120, w / 2, h / 12));
+            g.FillRectangle(new SolidBrush(Color.Yellow), new Rectangle(_w / 2, _h / 120, _w / 2, _h / 12));
             rightWinnerLabel.Location =
-                new Point(29 * w / 30 - rightWinnerLabel.Width, h / 20 - rightWinnerLabel.Height / 2);
+                new Point(29 * _w / 30 - rightWinnerLabel.Width, _h / 20 - rightWinnerLabel.Height / 2);
             rightWinningCupImage.Size = new Size(rightWinnerLabel.Height, rightWinnerLabel.Height);
-            rightWinningCupImage.Location = new Point(rightWinnerLabel.Left - w / 60 - rightWinningCupImage.Width,
-                h / 20 - rightWinningCupImage.Height / 2);
+            rightWinningCupImage.Location = new Point(rightWinnerLabel.Left - _w / 60 - rightWinningCupImage.Width,
+                _h / 20 - rightWinningCupImage.Height / 2);
 
             leftWinningCupImage.Visible = true;
             leftWinnerLabel.Visible = true;
@@ -215,41 +217,41 @@ public partial class PostMatchScore : Form
         // Draw wins box
         Point[] winBoxLinePoints =
         [
-            new(w / 4, 0),
-            new(w / 3, h / 10),
-            new(2 * w / 3, h / 10),
-            new(3 * w / 4, 0)
+            new(_w / 4, 0),
+            new(_w / 3, _h / 10),
+            new(2 * _w / 3, _h / 10),
+            new(3 * _w / 4, 0)
         ];
         g.FillPolygon(new SolidBrush(Color.Black), winBoxLinePoints);
         g.FillRectangle(new SolidBrush(Color.White),
-            new Rectangle(new Point(w / 3 + 8, 8), new Size(w / 3 - 16, h / 10 - 16)));
+            new Rectangle(new Point(_w / 3 + 8, 8), new Size(_w / 3 - 16, _h / 10 - 16)));
 
 
         // Fill team color to the wins number
-        double a = 48.0 / 5.0 / Math.Sqrt(36.0 / 25.0 + (double)w * w / (h * h));
-        double b = -8 / Math.Sqrt(36.0 / 25.0 * h * h / (w * w) + 1);
+        double a = 48.0 / 5.0 / Math.Sqrt(36.0 / 25.0 + (double)_w * _w / (_h * _h));
+        double b = -8 / Math.Sqrt(36.0 / 25.0 * _h * _h / (_w * _w) + 1);
         Point[] winBoxFillLeftPoints =
         [
-            new((int)Math.Round(w / 4.0 + a + w / 12.0 * (80.0 - 10.0 * b) / h), 8),
-            new((int)Math.Round(w / 3.0 + a - w / 12.0 * (80.0 + 10.0 * b) / h), h / 10 - 8),
-            new(5 * w / 12, h / 10 - 8),
-            new(5 * w / 12, 8)
+            new((int)Math.Round(_w / 4.0 + a + _w / 12.0 * (80.0 - 10.0 * b) / _h), 8),
+            new((int)Math.Round(_w / 3.0 + a - _w / 12.0 * (80.0 + 10.0 * b) / _h), _h / 10 - 8),
+            new(5 * _w / 12, _h / 10 - 8),
+            new(5 * _w / 12, 8)
         ];
         g.FillPolygon(new SolidBrush(LeftColor), winBoxFillLeftPoints);
         Point[] winBoxFillRightPoints =
         [
-            new((int)Math.Round(3 * w / 4.0 - a - w / 12.0 * (80.0 - 10.0 * b) / h), 8),
-            new((int)Math.Round(2 * w / 3.0 - a + w / 12.0 * (80.0 + 10.0 * b) / h), h / 10 - 8),
-            new(7 * w / 12, h / 10 - 8),
-            new(7 * w / 12, 8)
+            new((int)Math.Round(3 * _w / 4.0 - a - _w / 12.0 * (80.0 - 10.0 * b) / _h), 8),
+            new((int)Math.Round(2 * _w / 3.0 - a + _w / 12.0 * (80.0 + 10.0 * b) / _h), _h / 10 - 8),
+            new(7 * _w / 12, _h / 10 - 8),
+            new(7 * _w / 12, 8)
         ];
         g.FillPolygon(new SolidBrush(RightColor), winBoxFillRightPoints);
 
         // Separator lines in wins box
-        g.DrawLine(new Pen(new SolidBrush(Color.Black), 8), new Point(w / 3 + w / 12, 0),
-            new Point(w / 3 + w / 12, h / 10));
-        g.DrawLine(new Pen(new SolidBrush(Color.Black), 8), new Point(w / 3 + w / 4, 0),
-            new Point(w / 3 + w / 4, h / 10));
+        g.DrawLine(new Pen(new SolidBrush(Color.Black), 8), new Point(_w / 3 + _w / 12, 0),
+            new Point(_w / 3 + _w / 12, _h / 10));
+        g.DrawLine(new Pen(new SolidBrush(Color.Black), 8), new Point(_w / 3 + _w / 4, 0),
+            new Point(_w / 3 + _w / 4, _h / 10));
     }
 
     private void leftTeleOpScoreLabel_TextChanged(object sender, EventArgs e)

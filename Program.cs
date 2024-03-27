@@ -64,12 +64,12 @@ public class WSUpdate : WebSocketBehavior
     protected override void OnMessage(MessageEventArgs e)
     {
         // Get team color
-        Color leftColor = GameStat.LeftColor;
-        Color rightColor = GameStat.RightColor;
+        var leftColor = GameStat.LeftColor;
+        var rightColor = GameStat.RightColor;
 
         // Init variable
-        int left = 0;
-        int right = 0;
+        int left;
+        int right;
 
         // e.Data is the received data
         // Parse it
@@ -171,18 +171,16 @@ public class WSUpdate : WebSocketBehavior
 public static class Program
 {
     // Forms
-    public static InMatchScore InMatchScoreForm = new();
-    public static PostMatchScore PostMatchScoreForm = new();
+    public static readonly InMatchScore InMatchScoreForm = new();
+    public static readonly PostMatchScore PostMatchScoreForm = new();
 
-    public enum FormEnum
+    private enum FormEnum
     {
         InMatchScore,
         PostMatchScore
     }
 
-    private static FormEnum currentForm = FormEnum.InMatchScore;
-
-    public static void SwitchForm(FormEnum target)
+    private static void SwitchForm(FormEnum target)
     {
         Form to, from;
         if (target == FormEnum.InMatchScore)
@@ -224,7 +222,7 @@ public static class Program
     ///  The main entry point for the application.
     /// </summary>
     [STAThread]
-    static void Main()
+    private static void Main()
     {
         // To customize application configuration such as set high DPI settings or default font,
         // see https://aka.ms/applicationconfiguration.
@@ -232,10 +230,10 @@ public static class Program
 
 
         // Create WebSocket server
-        var wssv = new WebSocketServer("ws://0.0.0.0:8000");
+        var webSocketServer = new WebSocketServer("ws://0.0.0.0:8000");
 
-        wssv.AddWebSocketService<WSUpdate>("/wsupdate");
-        wssv.Start();
+        webSocketServer.AddWebSocketService<WSUpdate>("/wsupdate");
+        webSocketServer.Start();
 
         WSUpdate.Publish += (_, _) => SwitchForm(FormEnum.PostMatchScore);
         WSUpdate.GoBack += (_, _) => SwitchForm(FormEnum.InMatchScore);
