@@ -48,7 +48,14 @@ public partial class PostMatchScore
         rightPenaltyScoreLabel = new Label();
         rightEndgameScoreLabel = new Label();
         rightTeleOpScoreLabel = new Label();
+        leftWinnerLabel = new Label();
+        rightWinnerLabel = new Label();
+        leftWinningCupImage = new PictureBox();
+        rightWinningCupImage = new PictureBox();
+        exitButton = new Button();
         ((ISupportInitialize)canvas).BeginInit();
+        ((ISupportInitialize)leftWinningCupImage).BeginInit();
+        ((ISupportInitialize)rightWinningCupImage).BeginInit();
         SuspendLayout();
         // 
         // canvas
@@ -106,6 +113,7 @@ public partial class PostMatchScore
         rightScore.Size = new Size(199, 219);
         rightScore.TabIndex = 13;
         rightScore.Text = "0";
+        rightScore.SizeChanged += rightScore_SizeChanged;
         // 
         // leftScore
         // 
@@ -113,12 +121,13 @@ public partial class PostMatchScore
         leftScore.BackColor = Color.Red;
         leftScore.Font = new Font("Arial", 96F, FontStyle.Bold, GraphicsUnit.Point, 0);
         leftScore.ForeColor = Color.White;
-        leftScore.Location = new Point(84, 269);
+        leftScore.Location = new Point(59, 577);
         leftScore.Margin = new Padding(4, 0, 4, 0);
         leftScore.Name = "leftScore";
         leftScore.Size = new Size(199, 219);
         leftScore.TabIndex = 12;
         leftScore.Text = "0";
+        leftScore.SizeChanged += leftScore_SizeChanged;
         // 
         // rightTeamName
         // 
@@ -266,11 +275,73 @@ public partial class PostMatchScore
         rightTeleOpScoreLabel.Text = "200";
         rightTeleOpScoreLabel.SizeChanged += rightTeleOpScoreLabel_TextChanged;
         // 
+        // leftWinnerLabel
+        // 
+        leftWinnerLabel.AutoSize = true;
+        leftWinnerLabel.BackColor = Color.Yellow;
+        leftWinnerLabel.Font = new Font("Segoe UI", 28F, FontStyle.Bold);
+        leftWinnerLabel.ForeColor = Color.Black;
+        leftWinnerLabel.Location = new Point(131, 10);
+        leftWinnerLabel.Name = "leftWinnerLabel";
+        leftWinnerLabel.Size = new Size(261, 74);
+        leftWinnerLabel.TabIndex = 23;
+        leftWinnerLabel.Text = "WINNER";
+        // 
+        // rightWinnerLabel
+        // 
+        rightWinnerLabel.AutoSize = true;
+        rightWinnerLabel.BackColor = Color.Yellow;
+        rightWinnerLabel.Font = new Font("Segoe UI", 28F, FontStyle.Bold);
+        rightWinnerLabel.ForeColor = Color.Black;
+        rightWinnerLabel.Location = new Point(892, 0);
+        rightWinnerLabel.Name = "rightWinnerLabel";
+        rightWinnerLabel.Size = new Size(261, 74);
+        rightWinnerLabel.TabIndex = 24;
+        rightWinnerLabel.Text = "WINNER";
+        // 
+        // leftWinningCupImage
+        // 
+        leftWinningCupImage.BackColor = Color.Yellow;
+        leftWinningCupImage.Image = Properties.Resources.winningCup;
+        leftWinningCupImage.Location = new Point(366, 63);
+        leftWinningCupImage.Name = "leftWinningCupImage";
+        leftWinningCupImage.Size = new Size(150, 75);
+        leftWinningCupImage.SizeMode = PictureBoxSizeMode.Zoom;
+        leftWinningCupImage.TabIndex = 25;
+        leftWinningCupImage.TabStop = false;
+        // 
+        // rightWinningCupImage
+        // 
+        rightWinningCupImage.BackColor = Color.Yellow;
+        rightWinningCupImage.Image = Properties.Resources.winningCup;
+        rightWinningCupImage.Location = new Point(924, 42);
+        rightWinningCupImage.Name = "rightWinningCupImage";
+        rightWinningCupImage.Size = new Size(150, 75);
+        rightWinningCupImage.SizeMode = PictureBoxSizeMode.Zoom;
+        rightWinningCupImage.TabIndex = 26;
+        rightWinningCupImage.TabStop = false;
+        // 
+        // exitButton
+        // 
+        exitButton.Location = new Point(0, 0);
+        exitButton.Name = "exitButton";
+        exitButton.Size = new Size(0, 0);
+        exitButton.TabIndex = 27;
+        exitButton.Text = "esc";
+        exitButton.UseVisualStyleBackColor = true;
+        exitButton.Click += exitButton_Click;
+        // 
         // PostMatchScore
         // 
         AutoScaleDimensions = new SizeF(10F, 25F);
         AutoScaleMode = AutoScaleMode.Font;
+        CancelButton = exitButton;
         ClientSize = new Size(1258, 904);
+        Controls.Add(exitButton);
+        Controls.Add(rightWinningCupImage);
+        Controls.Add(leftWinningCupImage);
+        Controls.Add(rightWinnerLabel);
+        Controls.Add(leftWinnerLabel);
         Controls.Add(rightPenaltyScoreLabel);
         Controls.Add(rightEndgameScoreLabel);
         Controls.Add(rightTeleOpScoreLabel);
@@ -291,6 +362,8 @@ public partial class PostMatchScore
         Name = "PostMatchScore";
         Text = "PostMatch";
         ((ISupportInitialize)canvas).EndInit();
+        ((ISupportInitialize)leftWinningCupImage).EndInit();
+        ((ISupportInitialize)rightWinningCupImage).EndInit();
         ResumeLayout(false);
         PerformLayout();
     }
@@ -314,4 +387,9 @@ public partial class PostMatchScore
     private Label rightPenaltyScoreLabel;
     private Label rightEndgameScoreLabel;
     private Label rightTeleOpScoreLabel;
+    private Label leftWinnerLabel;
+    private Label rightWinnerLabel;
+    private PictureBox leftWinningCupImage;
+    private PictureBox rightWinningCupImage;
+    private Button exitButton;
 }

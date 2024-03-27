@@ -5,188 +5,196 @@ using System.Media;
 using System.Reflection.Emit;
 using static MockGARTScore.GameStat;
 
-namespace MockGARTScore
+namespace MockGARTScore;
+
+public partial class InMatchScore : Form
 {
-    public partial class InMatchScore : Form
+    // Public variables
+
+    public event EventHandler Publish = null!;
+
+    // Time left
+    public int TimeLeft = 0;
+
+    int w;
+
+    int h;
+
+    // Timer running
+    public bool TimerRunning = false;
+
+    // SFX
+    public SoundPlayer StartGame = new("match_start.wav");
+    public SoundPlayer StartEndGame = new("endgame_start.wav");
+    public SoundPlayer EndGame = new("match_end.wav");
+
+
+    // Return current values (to WS client)
+    public int[] GetCurrentValues()
     {
-        // Public variables
-        // Time left
-        public int TimeLeft = 0;
-
-        // Timer running
-        public bool TimerRunning = false;
-
-        // SFX
-        public SoundPlayer StartGame = new SoundPlayer("match_start.wav");
-        public SoundPlayer StartEndGame = new SoundPlayer("endgame_start.wav");
-        public SoundPlayer EndGame = new SoundPlayer("match_end.wav");
-
-
-
-        // Return current values (to WS client)
-        public int[] GetCurrentValues()
+        int[] r =
         {
-            int[] r =
-            {
-                (LeftColor == Color.Red) ? 0 : 1, // Left color
-                (RightColor == Color.DodgerBlue) ? 1 : 0, // Right color
-                int.Parse((LeftColor == Color.Red) ? leftWins.Text : rightWins.Text), // Red wins
-                int.Parse((RightColor == Color.DodgerBlue) ? rightWins.Text : leftWins.Text), // Blue wins
-                int.Parse((LeftColor == Color.Red) ? leftScore.Text : rightScore.Text), // Red score
-                int.Parse((RightColor == Color.DodgerBlue) ? rightScore.Text : leftScore.Text), // Blue score
-                Convert.ToInt32((LeftColor == Color.Red) ? leftHatch.Image == Properties.Resources.tankwithhatch : rightHatch.Image == Properties.Resources.tankwithhatch), // Red hatch
-                Convert.ToInt32((RightColor == Color.DodgerBlue) ? rightHatch.Image == Properties.Resources.tankwithhatch : leftHatch.Image == Properties.Resources.tankwithhatch), // Blue hatch
-                int.Parse((LeftColor == Color.Red) ? leftFuel.Text : rightFuel.Text), // Red fuel
-                int.Parse((RightColor == Color.DodgerBlue) ? rightFuel.Text : leftFuel.Text), // Blue fuel
-                (LeftColor == Color.Red) ? LeftParkStatus : RightParkStatus, // Red park
-                (RightColor == Color.DodgerBlue) ? RightParkStatus : LeftParkStatus, // Blue park
-                TimerRunning ? 1 : 0 // Has match started?
-            };
+            LeftColor == Color.Red ? 0 : 1, // Left color
+            RightColor == Color.DodgerBlue ? 1 : 0, // Right color
+            int.Parse(LeftColor == Color.Red ? leftWins.Text : rightWins.Text), // Red wins
+            int.Parse(RightColor == Color.DodgerBlue ? rightWins.Text : leftWins.Text), // Blue wins
+            int.Parse(LeftColor == Color.Red ? leftScore.Text : rightScore.Text), // Red score
+            int.Parse(RightColor == Color.DodgerBlue ? rightScore.Text : leftScore.Text), // Blue score
+            Convert.ToInt32(LeftColor == Color.Red
+                ? leftHatch.Image == Resources.tankwithhatch
+                : rightHatch.Image == Resources.tankwithhatch), // Red hatch
+            Convert.ToInt32(RightColor == Color.DodgerBlue
+                ? rightHatch.Image == Resources.tankwithhatch
+                : leftHatch.Image == Resources.tankwithhatch), // Blue hatch
+            int.Parse(LeftColor == Color.Red ? leftFuel.Text : rightFuel.Text), // Red fuel
+            int.Parse(RightColor == Color.DodgerBlue ? rightFuel.Text : leftFuel.Text), // Blue fuel
+            LeftColor == Color.Red ? LeftParkStatus : RightParkStatus, // Red park
+            RightColor == Color.DodgerBlue ? RightParkStatus : LeftParkStatus, // Blue park
+            TimerRunning ? 1 : 0 // Has match started?
+        };
 
-            return r;
-        }
+        return r;
+    }
 
-        // Set team color
-        public void SetTeamColor(Color left, Color right)
+    // Set team color
+    public void SetTeamColor(Color left, Color right)
+    {
+
+        // Set team color variables
+        LeftColor = left;
+        RightColor = right;
+
+        // Redraw canvas
+        canvas.Refresh();
+
+        // Change team wins text background color
+        leftWins.BackColor = LeftColor;
+        rightWins.BackColor = RightColor;
+
+        // Change team name
+        leftTeamName.Text = LeftColor == Color.Red ? "RED" : "BLUE";
+        rightTeamName.Text = RightColor == Color.DodgerBlue ? "BLUE" : "RED";
+
+        // Align team names
+        leftTeamName.Location = new Point(
+            w / 6 - leftTeamName.Size.Width / 2,
+            h / 8);
+        rightTeamName.Location = new Point(
+            w * 5 / 6 - rightTeamName.Size.Width / 2,
+            h / 8);
+
+        // Change team name background
+        leftTeamName.BackColor = LeftColor;
+        rightTeamName.BackColor = RightColor;
+
+        // Change score background
+        leftScore.BackColor = LeftColor;
+        rightScore.BackColor = RightColor;
+
+        // Change hatch background
+        leftHatch.BackColor = LeftColor;
+        rightHatch.BackColor = RightColor;
+        //leftHatch.Refresh();
+        //rightHatch.Refresh();
+
+        // Change fuel background
+        leftFuelLabel.BackColor = LeftColor;
+        leftFuel.BackColor = LeftColor;
+        rightFuelLabel.BackColor = RightColor;
+        rightFuel.BackColor = RightColor;
+
+        // Change park background
+        leftParkNo.BackColor = LeftColor;
+        leftParkHalf.BackColor = LeftColor;
+        leftParkFull.BackColor = LeftColor;
+        rightParkNo.BackColor = RightColor;
+        rightParkHalf.BackColor = RightColor;
+        rightParkFull.BackColor = RightColor;
+    }
+
+    // Set score
+    public void SetScore(int left, int right)
+    {
+
+        // Set team scores
+        // Align team scores
+        leftScore.Invoke(() =>
         {
-            // Window size
-            int w = Size.Width;
-            int h = Size.Height;
-
-            // Set team color variables
-            LeftColor = left;
-            RightColor = right;
-
-            // Redraw canvas
-            canvas.Refresh();
-
-            // Change team wins text background color
-            leftWins.BackColor = LeftColor;
-            rightWins.BackColor = RightColor;
-
-            // Change team name
-            leftTeamName.Text = LeftColor == Color.Red ? "RED" : "BLUE";
-            rightTeamName.Text = RightColor == Color.DodgerBlue ? "BLUE" : "RED";
-
-            // Realign team name
-            leftTeamName.Location = new Point(
-                w / 4 - leftTeamName.Size.Width / 2,
-                h / 8);
-            rightTeamName.Location = new Point(
-                w * 3 / 4 - rightTeamName.Size.Width / 2,
-                h / 8);
-
-            // Change team name background
-            leftTeamName.BackColor = LeftColor;
-            rightTeamName.BackColor = RightColor;
-
-            // Change score background
-            leftScore.BackColor = LeftColor;
-            rightScore.BackColor = RightColor;
-
-            // Change hatch background
-            leftHatch.BackColor = LeftColor;
-            rightHatch.BackColor = RightColor;
-            //leftHatch.Refresh();
-            //rightHatch.Refresh();
-
-            // Change fuel background
-            leftFuelLabel.BackColor = LeftColor;
-            leftFuel.BackColor = LeftColor;
-            rightFuelLabel.BackColor = RightColor;
-            rightFuel.BackColor = RightColor;
-
-            // Set park visibility
-            leftParkNo.Visible = true;
-            leftParkHalf.Visible = false;
-            leftParkFull.Visible = false;
-            rightParkNo.Visible = true;
-            rightParkHalf.Visible = false;
-            rightParkFull.Visible = false;
-
-            // Change park background
-            leftParkNo.BackColor = LeftColor;
-            leftParkHalf.BackColor = LeftColor;
-            leftParkFull.BackColor = LeftColor;
-            rightParkNo.BackColor = RightColor;
-            rightParkHalf.BackColor = RightColor;
-            rightParkFull.BackColor = RightColor;
-        }
-
-        // Set score
-        public void SetScore(int left, int right)
-        {
-            // Window size
-            int w = Size.Width;
-            int h = Size.Height;
-
-            // Set team scores
             leftScore.Text = left.ToString();
-            rightScore.Text = right.ToString();
-            LeftScore = left;
-            RightScore = right;
-
-            // Align team scores
             leftScore.Location = new Point(
-                w / 4 - leftScore.Size.Width / 2,
+                w / 6 - leftScore.Size.Width / 2,
                 h / 4);
+        });
+        rightScore.Invoke(() =>
+        {
+            rightScore.Text = right.ToString();
+
             rightScore.Location = new Point(
-                w * 3 / 4 - rightScore.Size.Width / 2,
+                w * 5 / 6 - rightScore.Size.Width / 2,
                 h / 4);
-        }
+        });
+        LeftScore = left;
+        RightScore = right;
+    }
 
-        // Set penalty
-        public void SetPenalty(int left, int right)
+    // Set penalty
+    public void SetPenalty(int left, int right)
+    {
+        LeftPenalty = left;
+        RightPenalty = right;
+    }
+
+    // Set hatch
+    public void SetHatch(bool left, bool right)
+    {
+        //leftHatch.Visible = left;
+        //rightHatch.Visible = right;
+        leftHatch.Invoke(() => leftHatch.Image = left ? Resources.tankwithhatch : Resources.tanknohatch);
+        rightHatch.Invoke(() => rightHatch.Image = right ? Resources.tankwithhatch : Resources.tanknohatch);
+
+        LeftHatchStatus = left;
+        RightHatchStatus = right;
+
+        //leftHatch.Refresh();
+        //rightHatch.Refresh();
+    }
+
+    // Set fuel
+    public void SetFuel(int left, int right)
+    {
+        // Window size
+
+
+        // Set fuel score
+        // Align fuel score label
+        leftFuel.Invoke(() =>
         {
-            LeftPenalty = left;
-            RightPenalty = right;
-        }
-
-        // Set hatch
-        public void SetHatch(bool left, bool right)
-        {
-            //leftHatch.Visible = left;
-            //rightHatch.Visible = right;
-            leftHatch.Image = left ? Properties.Resources.tankwithhatch : Properties.Resources.tanknohatch;
-            rightHatch.Image = right ? Properties.Resources.tankwithhatch : Properties.Resources.tanknohatch;
-
-            LeftHatchStatus = left;
-            RightHatchStatus = right;
-
-            leftHatch.Refresh();
-            rightHatch.Refresh();
-        }
-
-        // Set fuel
-        public void SetFuel(int left, int right)
-        {
-            // Window size
-            int w = Size.Width;
-            int h = Size.Height;
-
-            // Set
             leftFuel.Text = left.ToString();
+            leftFuel.Location = new Point(
+                11 * w / 48 - leftFuel.Width / 2,
+                h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - leftFuel.Height / 2);
+        });
+        rightFuel.Invoke(() =>
+        {
             rightFuel.Text = right.ToString();
 
-            LeftFuelLevel = left;
-            RightFuelLevel = right;
-
-            // Align
-            leftFuel.Location = new Point(
-                w / 4 + w / 16 - leftFuel.Size.Width / 2,
-                h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - leftFuel.Size.Height / 2);
             rightFuel.Location = new Point(
-                w * 5 / 8 + w / 16 - rightFuel.Size.Width / 2,
-                h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - rightFuel.Size.Height / 2);
-        }
+                w * 37 / 48 - rightFuel.Width / 2,
+                h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - rightFuel.Height / 2);
+        });
 
-        // Set park
-        public void SetPark(int left, int right)
+        LeftFuelLevel = left;
+        RightFuelLevel = right;
+    }
+
+    // Set park
+    public void SetPark(int left, int right)
+    {
+        // Set park status
+        LeftParkStatus = left;
+        RightParkStatus = right;
+        leftParkFull.Invoke(() =>
         {
-            // Set park status
-            LeftParkStatus = left;
-            RightParkStatus = right;
-
             // Left
             switch (left)
             {
@@ -209,10 +217,15 @@ namespace MockGARTScore
                     // How tf
                     break;
             }
+
             leftParkNo.Refresh();
             leftParkHalf.Refresh();
             leftParkFull.Refresh();
+        });
 
+
+        rightParkFull.Invoke(() =>
+        {
             // Right
             switch (right)
             {
@@ -235,322 +248,348 @@ namespace MockGARTScore
                     // How tf
                     break;
             }
+
             rightParkNo.Refresh();
             rightParkHalf.Refresh();
             rightParkFull.Refresh();
-        }
+        });
+    }
 
-        // Set timer
-        public void SetTime(int seconds)
+    // Set timer
+    public void SetTime(int seconds)
+    {
+        // Set time left
+        TimeLeft = seconds;
+
+
+        // Set timerText
+        int m = seconds / 60;
+        int s = seconds % 60;
+        timerText.Invoke(() =>
         {
-            // Set time left
-            TimeLeft = seconds;
-
-            // Window size
-            int w = Size.Width;
-            int h = Size.Height;
-
-            // Set timerText
-            int m = seconds / 60;
-            int s = seconds % 60;
             timerText.Text = m.ToString("D2") + ":" + s.ToString("D2");
 
             // Align the timerText to center
             timerText.Location = new Point(
                 (w - timerText.Size.Width) / 2,
                 (h - timerText.Size.Height) / 2);
+        });
+    }
+
+    public async void StartTimer()
+    {
+        // Start timer and play sound if it's not currently started
+        if (!TimerRunning)
+        {
+            StartGame.Play();
+            TimerRunning = true;
         }
 
-        public async void StartTimer()
+        while (TimerRunning)
         {
-            // Start timer and play sound if it's not currently started
-            if (!TimerRunning)
+            if (TimeLeft == 30) StartEndGame.Play();
+
+            int m = TimeLeft / 60;
+            int s = TimeLeft % 60;
+            timerText.Invoke(() => { timerText.Text = m.ToString("D2") + ":" + s.ToString("D2"); });
+
+            if (TimeLeft <= 0)
             {
-                StartGame.Play();
-                TimerRunning = true;
+                TimerRunning = false;
+                break;
             }
 
-            while (TimerRunning)
-            {
-                if (TimeLeft == 30) StartEndGame.Play();
-
-                int m = TimeLeft / 60;
-                int s = TimeLeft % 60;
-                timerText.Text = m.ToString("D2") + ":" + s.ToString("D2");
-
-                if (TimeLeft == 0)
-                {
-                    TimerRunning = false;
-                    break;
-                }
-
-                TimeLeft--;
-                await Task.Delay(1000);
-            }
-
-            EndGame.Play();
+            TimeLeft--;
+            await Task.Delay(1000);
         }
 
-        // Reset match
-        public void ResetMatch()
+        EndGame.Play();
+    }
+
+    // Reset match
+    public void ResetMatch()
+    {
+        //this.setTeamColor(Color.Red, Color.DodgerBlue);
+        //this.setWins(0, 0);
+        // Program.SwitchForm(Program.FormEnum.InMatchScore);
+        SetTime(TimeLeft);
+        SetScore(0, 0);
+        SetPenalty(0, 0);
+        SetHatch(false, false);
+        SetFuel(0, 0);
+        SetPark(0, 0);
+    }
+
+    // Set wins
+    public void SetWins(int left, int right)
+    {
+
+        // Set wins text
+        // Align the leftWins and rightWins label
+        leftWins.Invoke(() =>
         {
-            //this.setTeamColor(Color.Red, Color.DodgerBlue);
-            //this.setWins(0, 0);
-            Program.SwitchForm(Program.FormEnum.InMatchScore);
-            SetTime(TimeLeft);
+            leftWins.Text = left.ToString();
+            leftWins.Location = new Point(
+                w / 3 + w / 24 - leftWins.Size.Width / 2,
+                (h / 10 - leftWins.Size.Height) / 2);
+        });
+        rightWins.Invoke(() =>
+        {
+            rightWins.Text = right.ToString();
+            rightWins.Location = new Point(
+                w / 3 + w * 7 / 24 - rightWins.Size.Width / 2,
+                (h / 10 - rightWins.Size.Height) / 2);
+        });
+
+        LeftWin = left;
+        RightWin = right;
+    }
+
+    public InMatchScore()
+    {
+        InitializeComponent();
+
+
+        // Set Form to full screen
+        Size = Screen.PrimaryScreen.Bounds.Size;
+
+        // Set PictureBox size to full Form size
+        canvas.Size = Size;
+
+        w = Width;
+        h = Height;
+
+        // Set ImageBox size to the actual image size
+        leftHatch.Size = leftHatch.Image.Size;
+        rightHatch.Size = rightHatch.Image.Size;
+        leftParkFull.Size = leftParkFull.Image.Size;
+        leftParkNo.Size = leftParkNo.Image.Size;
+        leftParkHalf.Size = leftParkHalf.Image.Size;
+        rightParkHalf.Size = rightParkHalf.Image.Size;
+        rightParkFull.Size = rightParkFull.Image.Size;
+        rightParkNo.Size = rightParkNo.Image.Size;
+
+
+
+        // Add paint event handler to the canvas
+        canvas.Paint += canvas_Paint;
+
+
+        // Align the "Wins" label to the center
+        winsLabel.Location = new Point(
+            (w - winsLabel.Size.Width) / 2,
+            (h / 10 - winsLabel.Size.Height) / 2);
+
+        // Align the leftWins and rightWins label
+        leftWins.Location = new Point(
+            w / 3 + w / 24 - leftWins.Size.Width / 2,
+            (h / 10 - leftWins.Size.Height) / 2);
+        rightWins.Location = new Point(
+            w / 3 + w * 7 / 24 - rightWins.Size.Width / 2,
+            (h / 10 - rightWins.Size.Height) / 2);
+
+        // Align the timerText to center
+        timerText.Location = new Point(
+            (w - timerText.Size.Width) / 2,
+            (h - timerText.Size.Height) / 2);
+
+        // Set team name
+        leftTeamName.Text = LeftColor == Color.Red ? "RED" : "BLUE";
+        rightTeamName.Text = RightColor == Color.DodgerBlue ? "BLUE" : "RED";
+
+        // Align team names
+        leftTeamName.Location = new Point(
+            w / 6 - leftTeamName.Size.Width / 2,
+            h / 8);
+        rightTeamName.Location = new Point(
+            w * 5 / 6 - rightTeamName.Size.Width / 2,
+            h / 8);
+
+        // Align team scores
+        leftScore.Location = new Point(
+            w / 6 - leftScore.Size.Width / 2,
+            h / 4);
+        rightScore.Location = new Point(
+            w * 5 / 6 - rightScore.Size.Width / 2,
+            h / 4);
+
+        // Align hatch images
+        leftHatch.Location = new Point(
+            w / 6 - leftHatch.Size.Width / 2,
+            h / 2 + h / 16 - leftHatch.Size.Height / 2);
+        rightHatch.Location = new Point(
+            w * 5 / 6 - rightHatch.Size.Width / 2,
+            h / 2 + h / 16 - rightHatch.Size.Height / 2);
+
+        // Align fuel labels
+        leftFuelLabel.Location = new Point(
+            5 * w / 48 - leftFuelLabel.Width / 2,
+            h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - leftFuelLabel.Height / 2);
+        leftFuel.Location = new Point(
+            11 * w / 48 - leftFuel.Width / 2,
+            h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - leftFuel.Height / 2);
+
+        rightFuelLabel.Location = new Point(
+            43 * w / 48 - rightFuelLabel.Width / 2,
+            h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - rightFuelLabel.Height / 2);
+        rightFuel.Location = new Point(
+            w * 37 / 48 - rightFuel.Width / 2,
+            h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - rightFuel.Height / 2);
+
+        // Align park images
+        leftParkNo.Location = new Point(
+            w / 6 - leftParkHalf.Size.Width / 2,
+            h - leftParkNo.Size.Height * 4 / 3);
+        leftParkHalf.Location = new Point(
+            w / 6 - leftParkHalf.Size.Width / 2,
+            h - leftParkNo.Size.Height * 4 / 3);
+        leftParkFull.Location = new Point(
+            w / 6 - leftParkHalf.Size.Width / 2,
+            h - leftParkNo.Size.Height * 4 / 3);
+
+        rightParkNo.Location = new Point(
+            w * 5 / 6 - rightParkHalf.Size.Width / 2,
+            h - rightParkHalf.Size.Height * 4 / 3);
+        rightParkHalf.Location = new Point(
+            w * 5 / 6 - rightParkHalf.Size.Width / 2,
+            h - rightParkHalf.Size.Height * 4 / 3);
+        rightParkFull.Location = new Point(
+            w * 5 / 6 - rightParkHalf.Size.Width / 2,
+            h - rightParkHalf.Size.Height * 4 / 3);
+
+        WSUpdate.StartTimer += (_, _) => StartTimer();
+        WSUpdate.SetFuel += (_, e) => SetFuel(e.Left, e.Right);
+        WSUpdate.SetPark += (_, e) => SetPark(e.Left, e.Right);
+        WSUpdate.SetScore += (_, e) => SetScore(e.Left, e.Right);
+        WSUpdate.SetHatch += (_, e) => SetHatch(e.Left, e.Right);
+        WSUpdate.SetPenalty += (_, e) => SetPenalty(e.Left, e.Right);
+        WSUpdate.SetWins += (_, e) => SetWins(e.Left, e.Right);
+        WSUpdate.SetTeamColor += (_, e) => SetTeamColor(e.Left, e.Right);
+        WSUpdate.SetTimer += (_, e) => SetTime(e.Time);
+        WSUpdate.ResetMatch += (_, _) => ResetMatch();
+        WSUpdate.StopTimer += (_, _) => TimerRunning = false;
+
+        HandleCreated += (_, _) =>
+        {
+            SetTeamColor(Color.Red, Color.DodgerBlue);
+            SetWins(0, 0);
+            SetTime(180);
             SetScore(0, 0);
             SetPenalty(0, 0);
             SetHatch(false, false);
             SetFuel(0, 0);
             SetPark(0, 0);
-        }
+            Program.PostMatchScoreForm.Show();
+            Activate();
+        };
+    }
 
-        // Set wins
-        public void SetWins(int left, int right)
+    protected override bool ShowWithoutActivation => true;
+
+    void exitButton_Click(object sender, EventArgs e)
+    {
+        // Exit
+        Application.Exit();
+    }
+
+    private void canvas_Paint(object sender, PaintEventArgs e)
+    {
+        // Create a local version of the graphics object for the PictureBox.
+        Graphics g = e.Graphics;
+
+
+        // Calculate separator line
+        int sepUpX = w * 9 / 16;
+        int sepDownX = w * 7 / 16;
+
+        // Fill red side in red
+        Point[] redCurvePoints =
         {
-            // Window size
-            int w = Size.Width;
-            int h = Size.Height;
+            new(0, 0),
+            new(sepUpX, 0),
+            new(sepDownX, h),
+            new(0, h)
+        };
 
-            // Set wins text
-            leftWins.Text = left.ToString();
-            rightWins.Text = right.ToString();
+        g.FillPolygon(new SolidBrush(LeftColor), redCurvePoints);
 
-            LeftWin = left;
-            RightWin = right;
-
-            // Align the leftWins and rightWins label
-            leftWins.Location = new Point(
-                w / 3 + w / 24 - leftWins.Size.Width / 2,
-                (h / 10 - leftWins.Size.Height) / 2);
-            rightWins.Location = new Point(
-                w / 3 + w * 7 / 24 - rightWins.Size.Width / 2,
-                (h / 10 - rightWins.Size.Height) / 2);
-        }
-
-        public InMatchScore()
+        // Fill blue side in blue
+        Point[] blueCurvePoints =
         {
-            InitializeComponent();
+            new(sepUpX, 0),
+            new(w, 0),
+            new(w, h),
+            new(sepDownX, h)
+        };
 
+        g.FillPolygon(new SolidBrush(RightColor), blueCurvePoints);
 
-            // Set Form to full screen
-            Size = Screen.PrimaryScreen.Bounds.Size;
+        // Draw separator line
+        g.DrawLine(new Pen(new SolidBrush(Color.Black), 5), new Point(sepUpX, 0), new Point(sepDownX, h));
 
-            // Set PictureBox size to full Form size
-            canvas.Size = Size;
+        // Draw wins box
+        Point[] winBoxLinePoints =
+        [
+            new(w / 4, 0),
+            new(w / 3, h / 10),
+            new(2 * w / 3, h / 10),
+            new(3 * w / 4, 0)
+        ];
+        g.FillPolygon(new SolidBrush(Color.Black), winBoxLinePoints);
+        g.FillRectangle(new SolidBrush(Color.White),
+            new Rectangle(new Point(w / 3 + 8, 8), new Size(w / 3 - 16, h / 10 - 16)));
 
-            // Set ImageBox size to the actual image size
-            leftHatch.Size = leftHatch.Image.Size;
-            rightHatch.Size = rightHatch.Image.Size;
-            leftParkFull.Size = leftParkFull.Image.Size;
-            leftParkNo.Size = leftParkNo.Image.Size;
-            leftParkHalf.Size = leftParkHalf.Image.Size;
-            rightParkHalf.Size = rightParkHalf.Image.Size;
-            rightParkFull.Size = rightParkFull.Image.Size;
-            rightParkNo.Size = rightParkNo.Image.Size;
+        // Fill team color to the wins number
+        double a = 48.0 / 5.0 / Math.Sqrt(36.0 / 25.0 + (double)w * w / (h * h));
+        double b = -8 / Math.Sqrt(36.0 / 25.0 * h * h / (w * w) + 1);
+        Point[] winBoxFillLeftPoints =
+        [
+            new((int)Math.Round(w / 4.0 + a + w / 12.0 * (80.0 - 10.0 * b) / h), 8),
+            new((int)Math.Round(w / 3.0 + a - w / 12.0 * (80.0 + 10.0 * b) / h), h / 10 - 8),
+            new(5 * w / 12, h / 10 - 8),
+            new(5 * w / 12, 8)
+        ];
+        g.FillPolygon(new SolidBrush(LeftColor), winBoxFillLeftPoints);
+        Point[] winBoxFillRightPoints =
+        [
+            new((int)Math.Round(3 * w / 4.0 - a - w / 12.0 * (80.0 - 10.0 * b) / h), 8),
+            new((int)Math.Round(2 * w / 3.0 - a + w / 12.0 * (80.0 + 10.0 * b) / h), h / 10 - 8),
+            new(7 * w / 12, h / 10 - 8),
+            new(7 * w / 12, 8)
+        ];
+        g.FillPolygon(new SolidBrush(RightColor), winBoxFillRightPoints);
 
+        // Separator lines in wins box
+        g.DrawLine(new Pen(new SolidBrush(Color.Black), 8), new Point(w / 3 + w / 12, 0),
+            new Point(w / 3 + w / 12, h / 10));
+        g.DrawLine(new Pen(new SolidBrush(Color.Black), 8), new Point(w / 3 + w / 4, 0),
+            new Point(w / 3 + w / 4, h / 10));
 
+        // Draw timer box
+        Pen timerBoxPen = new Pen(Color.Black, 16);
+        g.DrawRectangle(timerBoxPen,
+            new Rectangle(timerText.Left, timerText.Top, timerText.Width, timerText.Height));
 
-            // Window size
-            int w = Size.Width;
-            int h = Size.Height;
+        // Draw hatch box
+        Pen smallBoxPen = new Pen(Color.Black, 4);
+        //g.DrawRectangle(smallBoxPen,
+        //    new Rectangle(leftHatch.Left, leftHatch.Top, leftHatch.Width, leftHatch.Height));
+        //g.DrawRectangle(smallBoxPen,
+        //    new Rectangle(rightHatch.Left, rightHatch.Top, rightHatch.Width, rightHatch.Height));
 
-            // Add paint event handler to the canvas
-            canvas.Paint += canvas_Paint;
+        // Draw fuel box
+        g.DrawRectangle(smallBoxPen,
+            new Rectangle(w / 24, h / 2 + h / 6 + h / 36, w / 4, h / 12 + h / 48));
+        g.DrawRectangle(smallBoxPen,
+            new Rectangle(w * 17 / 24, h / 2 + h / 6 + h / 36, w / 4, h / 12 + h / 48));
+        g.DrawLine(smallBoxPen, new Point(w / 6, h / 2 + h / 6 + h / 36),
+            new Point(w / 6, h / 2 + h / 6 + h / 36 + h / 12 + h / 48));
+        g.DrawLine(smallBoxPen, new Point(w * 5 / 6, h / 2 + h / 6 + h / 36),
+            new Point(w * 5 / 6, h / 2 + h / 6 + h / 36 + h / 12 + h / 48));
+    }
 
-
-
-            // Align the "Wins" label to the center
-            winsLabel.Location = new Point(
-                (w - winsLabel.Size.Width) / 2,
-                (h / 10 - winsLabel.Size.Height) / 2);
-
-            // Align the leftWins and rightWins label
-            leftWins.Location = new Point(
-                w / 3 + w / 24 - leftWins.Size.Width / 2,
-                (h / 10 - leftWins.Size.Height) / 2);
-            rightWins.Location = new Point(
-                w / 3 + w * 7 / 24 - rightWins.Size.Width / 2,
-                (h / 10 - rightWins.Size.Height) / 2);
-
-            // Align the timerText to center
-            timerText.Location = new Point(
-                (w - timerText.Size.Width) / 2,
-                (h - timerText.Size.Height) / 2);
-
-            // Set team name
-            leftTeamName.Text = LeftColor == Color.Red ? "RED" : "BLUE";
-            rightTeamName.Text = RightColor == Color.DodgerBlue ? "BLUE" : "RED";
-
-            // Align team names
-            leftTeamName.Location = new Point(
-                w / 4 - leftTeamName.Size.Width / 2,
-                h / 8);
-            rightTeamName.Location = new Point(
-                w * 3 / 4 - rightTeamName.Size.Width / 2,
-                h / 8);
-
-            // Align team scores
-            leftScore.Location = new Point(
-                w / 4 - leftScore.Size.Width / 2,
-                h / 4);
-            rightScore.Location = new Point(
-                w * 3 / 4 - rightScore.Size.Width / 2,
-                h / 4);
-
-            // Align hatch images
-            leftHatch.Location = new Point(
-                w / 4 - leftHatch.Size.Width / 2,
-                h / 2 + h / 16 - leftHatch.Size.Height / 2);
-            rightHatch.Location = new Point(
-                w * 3 / 4 - rightHatch.Size.Width / 2,
-                h / 2 + h / 16 - rightHatch.Size.Height / 2);
-
-            // Align fuel labels
-            leftFuelLabel.Location = new Point(
-                w / 8 + w / 16 - leftFuelLabel.Size.Width / 2,
-                h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - leftFuelLabel.Size.Height / 2);
-            leftFuel.Location = new Point(
-                w / 4 + w / 16 - leftFuel.Size.Width / 2,
-                h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - leftFuel.Size.Height / 2);
-
-            rightFuelLabel.Location = new Point(
-                w * 3 / 4 + w / 16 - rightFuelLabel.Size.Width / 2,
-                h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - rightFuelLabel.Size.Height / 2);
-            rightFuel.Location = new Point(
-                w * 5 / 8 + w / 16 - rightFuel.Size.Width / 2,
-                h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - rightFuel.Size.Height / 2);
-
-            // Align park images
-            leftParkNo.Location = new Point(
-                w / 4 - leftParkHalf.Size.Width / 2,
-                h - leftParkNo.Size.Height * 4 / 3);
-            leftParkHalf.Location = new Point(
-                w / 4 - leftParkHalf.Size.Width / 2,
-                h - leftParkNo.Size.Height * 4 / 3);
-            leftParkFull.Location = new Point(
-                w / 4 - leftParkHalf.Size.Width / 2,
-                h - leftParkNo.Size.Height * 4 / 3);
-
-            rightParkNo.Location = new Point(
-                w / 2 + w / 4 - rightParkHalf.Size.Width / 2,
-                h - rightParkHalf.Size.Height * 4 / 3);
-            rightParkHalf.Location = new Point(
-                w / 2 + w / 4 - rightParkHalf.Size.Width / 2,
-                h - rightParkHalf.Size.Height * 4 / 3);
-            rightParkFull.Location = new Point(
-                w / 2 + w / 4 - rightParkHalf.Size.Width / 2,
-                h - rightParkHalf.Size.Height * 4 / 3);
-        }
-
-        protected override bool ShowWithoutActivation => true;
-
-        void exitButton_Click(object sender, EventArgs e)
-        {
-            // Exit
-            Application.Exit();
-        }
-
-        private void canvas_Paint(object sender, PaintEventArgs e)
-        {
-            // Create a local version of the graphics object for the PictureBox.
-            Graphics g = e.Graphics;
-
-            // Canvas size
-            int w = canvas.Size.Width;
-            int h = canvas.Size.Height;
-
-            // Calculate separator line
-            int sepUpX = w * 9 / 16;
-            int sepDownX = w * 7 / 16;
-
-            // Fill red side in red
-            Point[] redCurvePoints =
-            {
-                new(0, 0),
-                new(sepUpX, 0),
-                new(sepDownX, h),
-                new(0, h)
-            };
-
-            g.FillPolygon(new SolidBrush(LeftColor), redCurvePoints);
-
-            // Fill blue side in blue
-            Point[] blueCurvePoints =
-            {
-                new(sepUpX, 0),
-                new(w, 0),
-                new(w, h),
-                new(sepDownX, h)
-            };
-
-            g.FillPolygon(new SolidBrush(RightColor), blueCurvePoints);
-
-            // Draw separator line
-            g.DrawLine(new Pen(new SolidBrush(Color.Black), 5), new Point(sepUpX, 0), new Point(sepDownX, h));
-
-            // Draw wins box
-            Point[] winBoxLinePoints =
-            [
-                new(w / 4, 0),
-                new(w / 3, h / 10),
-                new(2 * w / 3, h / 10),
-                new(3 * w / 4, 0)
-            ];
-            g.FillPolygon(new SolidBrush(Color.Black), winBoxLinePoints);
-            g.FillRectangle(new SolidBrush(Color.White),
-                new Rectangle(new Point(w / 3 + 8, 8), new Size(w / 3 - 16, h / 10 - 16)));
-
-            // Fill team color to the wins number
-            double a = 48.0 / 5.0 / Math.Sqrt(36.0 / 25.0 + (double)w * w / (h * h));
-            double b = -8 / Math.Sqrt(36.0 / 25.0 * h * h / (w * w) + 1);
-            Point[] winBoxFillLeftPoints =
-            [
-                new((int)Math.Round(w / 4.0 + a + w / 12.0 * (80.0 - 10.0 * b) / h), 8),
-                new((int)Math.Round(w / 3.0 + a - w / 12.0 * (80.0 + 10.0 * b) / h), h / 10 - 8),
-                new(5 * w / 12, h / 10 - 8),
-                new(5 * w / 12, 8)
-            ];
-            g.FillPolygon(new SolidBrush(LeftColor), winBoxFillLeftPoints);
-            Point[] winBoxFillRightPoints =
-            [
-                new((int)Math.Round(3 * w / 4.0 - a - w / 12.0 * (80.0 - 10.0 * b) / h), 8),
-                new((int)Math.Round(2 * w / 3.0 - a + w / 12.0 * (80.0 + 10.0 * b) / h), h / 10 - 8),
-                new(7 * w / 12, h / 10 - 8),
-                new(7 * w / 12, 8)
-            ];
-            g.FillPolygon(new SolidBrush(RightColor), winBoxFillRightPoints);
-
-            // Separator lines in wins box
-            g.DrawLine(new Pen(new SolidBrush(Color.Black), 8), new Point(w / 3 + w / 12, 0),
-                new Point(w / 3 + w / 12, h / 10));
-            g.DrawLine(new Pen(new SolidBrush(Color.Black), 8), new Point(w / 3 + w / 4, 0),
-                new Point(w / 3 + w / 4, h / 10));
-
-            // Draw timer box
-            Pen timerBoxPen = new Pen(Color.Black, 16);
-            g.DrawRectangle(timerBoxPen,
-                new Rectangle(timerText.Left, timerText.Top, timerText.Width, timerText.Height));
-
-            // Draw hatch box
-            Pen smallBoxPen = new Pen(Color.Black, 8);
-            //g.DrawRectangle(smallBoxPen,
-            //    new Rectangle(leftHatch.Left, leftHatch.Top, leftHatch.Width, leftHatch.Height));
-            //g.DrawRectangle(smallBoxPen,
-            //    new Rectangle(rightHatch.Left, rightHatch.Top, rightHatch.Width, rightHatch.Height));
-
-            // Draw fuel box
-            g.DrawRectangle(smallBoxPen,
-                new Rectangle(w / 8, h / 2 + h / 6 + h / 36, w / 4, h / 12 + h / 48));
-            g.DrawRectangle(smallBoxPen,
-                new Rectangle(w * 5 / 8, h / 2 + h / 6 + h / 36, w / 4, h / 12 + h / 48));
-            g.DrawLine(smallBoxPen, new Point(w / 4, h / 2 + h / 6 + h / 36), new Point(w / 4, h / 2 + h / 6 + h / 36 + h / 12 + h / 48));
-            g.DrawLine(smallBoxPen, new Point(w * 3 / 4, h / 2 + h / 6 + h / 36), new Point(w * 3 / 4, h / 2 + h / 6 + h / 36 + h / 12 + h / 48));
-        }
-
-        private void timerText_Click(object sender, EventArgs e)
-        {
-            Program.SwitchForm(Program.FormEnum.PostMatchScore);
-        }
+    private void timerText_Click(object sender, EventArgs e)
+    {
+        Publish.Invoke(this, EventArgs.Empty);
     }
 }

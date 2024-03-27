@@ -1,7 +1,9 @@
 using WebSocketSharp;
 using WebSocketSharp.Server;
+using Timer = System.Timers.Timer;
 
 namespace MockGARTScore;
+
 public static class GameStat
 {
     // Team color
@@ -32,8 +34,33 @@ public static class GameStat
     public static int LeftPenalty = 0;
     public static int RightPenalty = 0;
 }
+
 public class WSUpdate : WebSocketBehavior
 {
+    public class GameEventArgs<T>(T left, T right) : EventArgs
+    {
+        public readonly T Left = left, Right = right;
+    }
+
+    public class SetTimerEventArgs(int time) : EventArgs
+    {
+        public readonly int Time = time;
+    }
+
+    public static event EventHandler<GameEventArgs<int>> SetFuel = null!;
+    public static event EventHandler<GameEventArgs<int>> SetPark = null!;
+    public static event EventHandler<GameEventArgs<int>> SetPenalty = null!;
+    public static event EventHandler<GameEventArgs<int>> SetScore = null!;
+    public static event EventHandler<GameEventArgs<int>> SetWins = null!;
+    public static event EventHandler<GameEventArgs<bool>> SetHatch = null!;
+    public static event EventHandler<GameEventArgs<Color>> SetTeamColor = null!;
+    public static event EventHandler StartTimer = null!;
+    public static event EventHandler StopTimer = null!;
+    public static event EventHandler<SetTimerEventArgs> SetTimer = null!;
+    public static event EventHandler ResetMatch = null!;
+    public static event EventHandler Publish = null!;
+    public static event EventHandler GoBack = null!;
+
     protected override void OnMessage(MessageEventArgs e)
     {
         // Get team color
@@ -62,71 +89,72 @@ public class WSUpdate : WebSocketBehavior
                 // Set the wins number for red and blue team
                 left = int.Parse(leftColor == Color.Red ? param[1] : param[2]);
                 right = int.Parse(rightColor == Color.DodgerBlue ? param[2] : param[1]);
-                Program.InMatchScoreForm.SetWins(left, right);
+                SetWins.Invoke(this, new(left, right));
                 Send("done");
                 break;
             case "score":
                 // Set both team's score
                 left = int.Parse(leftColor == Color.Red ? param[1] : param[2]);
                 right = int.Parse(rightColor == Color.DodgerBlue ? param[2] : param[1]);
-                Program.InMatchScoreForm.SetScore(left, right);
+                SetScore.Invoke(this, new(left, right));
                 Send("done");
                 break;
             case "penalty":
                 left = int.Parse(leftColor == Color.Red ? param[1] : param[2]);
                 right = int.Parse(rightColor == Color.DodgerBlue ? param[2] : param[1]);
-                Program.InMatchScoreForm.SetPenalty(left, right);
+                SetPenalty.Invoke(this, new(left, right));
                 Send("done");
                 break;
             case "hatch":
                 // Hatch score display
                 left = int.Parse(leftColor == Color.Red ? param[1] : param[2]);
                 right = int.Parse(rightColor == Color.DodgerBlue ? param[2] : param[1]);
-                Program.InMatchScoreForm.SetHatch(left == 1, right == 1);
+                SetHatch.Invoke(this, new(left == 1, right == 1));
                 Send("done");
                 break;
             case "fuel":
                 // Fuel score display
                 left = int.Parse(leftColor == Color.Red ? param[1] : param[2]);
                 right = int.Parse(rightColor == Color.DodgerBlue ? param[2] : param[1]);
-                Program.InMatchScoreForm.SetFuel(left, right);
+                SetFuel.Invoke(this, new(left, right));
                 Send("done");
                 break;
             case "park":
                 // Park score display
                 left = int.Parse(leftColor == Color.Red ? param[1] : param[2]);
                 right = int.Parse(rightColor == Color.DodgerBlue ? param[2] : param[1]);
-                Program.InMatchScoreForm.SetPark(left, right);
+                SetPark.Invoke(this, new(left, right));
                 Send("done");
                 break;
             case "changecolor":
                 // Change team color
-                Program.InMatchScoreForm.SetTeamColor(rightColor, leftColor);
+                SetTeamColor.Invoke(this, new(rightColor, leftColor));
                 Send("done");
                 break;
             case "timer":
                 // Set timer
-                Program.InMatchScoreForm.SetTime(int.Parse(param[1]));
+                SetTimer.Invoke(this, new(int.Parse(param[1])));
                 Send("done");
                 break;
             case "start":
-                Program.InMatchScoreForm.StartTimer();
+                StartTimer.Invoke(this, EventArgs.Empty);
                 Send("done");
                 break;
             case "stop":
-                Program.InMatchScoreForm.TimerRunning = false;
+                // Program.InMatchScoreForm.TimerRunning = false;
+                StopTimer.Invoke(this, EventArgs.Empty);
                 Send("done");
                 break;
             case "reset":
-                Program.InMatchScoreForm.ResetMatch();
+                ResetMatch.Invoke(this, EventArgs.Empty);
                 Send("done");
                 break;
             case "publish":
-                Program.SwitchForm(Program.FormEnum.PostMatchScore);
+                Publish.Invoke(this, EventArgs.Empty);
                 Send("done");
                 break;
             case "goback":
-                Program.SwitchForm(Program.FormEnum.InMatchScore);
+                GoBack.Invoke(this, EventArgs.Empty);
                 Send("done");
                 break;
             default:
@@ -152,6 +180,8 @@ public static class Program
         PostMatchScore
     }
 
+    private static FormEnum currentForm = FormEnum.InMatchScore;
+
     public static void SwitchForm(FormEnum target)
     {
         Form to, from;
@@ -166,19 +196,26 @@ public static class Program
             from = InMatchScoreForm;
         }
 
-        from.Activate();
-        to.Show();
-        from.Activate();
-        var fadeTimer = new System.Windows.Forms.Timer();
-        fadeTimer.Interval = 10;
-        from.Opacity = 1;
-        fadeTimer.Tick += (_, _) =>
+        from.Invoke(() => from.Activate());
+        to.Invoke(() =>
         {
-            from.Opacity -= 0.05;
-            if (from.Opacity > 0) return;
+            to.Opacity = 0;
+            to.Show();
             to.Activate();
-            from.Opacity = 1;
+        });
+        from.Invoke(() => from.Activate());
+        to.Invoke(() => to.Opacity = 1);
+        var fadeTimer = new Timer(10);
+        fadeTimer.Interval = 10;
+        from.Invoke(() => from.Opacity = 1);
+        fadeTimer.Elapsed += (_, _) =>
+        {
+            from.Invoke(() => from.Opacity -= 0.05);
+            if (from.Opacity > 0) return;
+            to.Invoke(() => to.Activate());
+            from.Invoke(() => from.Opacity = 1);
             fadeTimer.Stop();
+            fadeTimer.Dispose();
         };
         fadeTimer.Start();
     }
@@ -189,27 +226,23 @@ public static class Program
     [STAThread]
     static void Main()
     {
-        
-
         // To customize application configuration such as set high DPI settings or default font,
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
 
-        InMatchScoreForm.SetTeamColor(Color.Red, Color.DodgerBlue);
-        InMatchScoreForm.SetWins(0, 0);
-        InMatchScoreForm.SetTime(180);
-        InMatchScoreForm.SetScore(0, 0);
-        InMatchScoreForm.SetPenalty(0, 0);
-        InMatchScoreForm.SetHatch(false, false);
-        InMatchScoreForm.SetFuel(0, 0);
-        InMatchScoreForm.SetPark(0, 0);
 
         // Create WebSocket server
         var wssv = new WebSocketServer("ws://0.0.0.0:8000");
 
         wssv.AddWebSocketService<WSUpdate>("/wsupdate");
         wssv.Start();
+
+        WSUpdate.Publish += (_, _) => SwitchForm(FormEnum.PostMatchScore);
+        WSUpdate.GoBack += (_, _) => SwitchForm(FormEnum.InMatchScore);
+        InMatchScoreForm.Publish += (_, _) => SwitchForm(FormEnum.PostMatchScore);
+        PostMatchScoreForm.GoBack += (_, _) => SwitchForm(FormEnum.InMatchScore);
+
+
         Application.Run(InMatchScoreForm);
-        
     }
 }
