@@ -401,5 +401,6 @@ FodyWeavers.xsd
 .idea/
 
 # Build artifacts
-obj/
+obj/Debug/
+obj/Release/
 bin/
