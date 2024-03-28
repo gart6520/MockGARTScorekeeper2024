@@ -14,6 +14,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MockGARTScore
-build_property.ProjectDir = D:\Codes\Project\MockGARTScoreController\MockGARTScorekeeper2024\
+build_property.ProjectDir = E:\Coding\Rider C#\MockGartScorekeeper_Loc\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

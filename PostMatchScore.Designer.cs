@@ -170,6 +170,7 @@ public partial class PostMatchScore
         rightWins.TabIndex = 16;
         rightWins.Text = "0";
         rightWins.TextAlign = ContentAlignment.MiddleCenter;
+        rightWins.SizeChanged += rightWins_SizeChanged;
         // 
         // leftWins
         // 
@@ -184,6 +185,7 @@ public partial class PostMatchScore
         leftWins.TabIndex = 15;
         leftWins.Text = "0";
         leftWins.TextAlign = ContentAlignment.MiddleCenter;
+        leftWins.SizeChanged += leftWins_SizeChanged;
         // 
         // winsLabel
         // 

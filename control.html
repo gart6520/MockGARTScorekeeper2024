@@ -12,187 +12,207 @@
     </style>
 </head>
 <body>
-    <!-- Title + start button -->
-    <center><h1>MockGART Scorekeeper control</h1><button id="mainButton" style="width: 100px; height: 100px; color: white; background-color: red; font-size: 24px;" onclick="mainButtonCallback();">Error</button><button id="publishButton" style="width: 100px; height: 100px; color: white; background-color: #ADD8E6; font-size: 24px;" onclick="publishButtonCallback();">Publish</button></center><br>
+<!-- Title + start button -->
+<center><h1>MockGART Scorekeeper control</h1>
+    <button id="mainButton" style="width: 100px; height: 100px; color: white; background-color: red; font-size: 24px;"
+            onclick="mainButtonCallback();">Error
+    </button>
+    <button id="publishButton"
+            style="width: 100px; height: 100px; color: black; background-color: greenyellow; font-size: 24px;"
+            onclick="publishButtonCallback();">Publish
+    </button>
+</center>
+<br>
 
-    <!-- Overall matches -->
-    <table border="5" width="100%" style="table-layout: fixed;">
-        <tr>
-            <th style="background-color:#ff0000; width: 33%;"><font color="white">RED wins</font></th>
-            <th style="width: 33%;">Match played</th>
-            <th style="background-color:#0000ff; width: 33%;"><font color="white">BLUE wins</font></th>
-        </tr>
-        <tr>
-            <th><p style="font-size: 30px;" id="redWins">0</p></th>
-            <th><p style="font-size: 30px;" id="playedMatches">0</p></th>
-            <th><p style="font-size: 30px;" id="blueWins">0</p></th>
-        </tr>
-    </table>
-    <hr>
+<!-- Overall matches -->
+<table border="5" width="100%" style="table-layout: fixed;">
+    <tr>
+        <th style="background-color:#ff0000; width: 33%;"><font color="white">RED wins</font></th>
+        <th style="background-color:#0000ff; width: 33%;"><font color="white">BLUE wins</font></th>
+    </tr>
+    <tr>
+        <th>
+            <button onclick="redWinsChange(1);">+</button>
+            <p style="font-size: 30px;" id="redWins">0</p>
+            <button onclick="redWinsChange(-1);">-</button>
+        </th>
+        <th>
+            <button onclick="blueWinsChange(1);">+</button>
+            <p style="font-size: 30px;" id="blueWins">0</p>
+            <button onclick="blueWinsChange(-1);">-</button>
+        </th>
+    </tr>
+</table>
+<hr>
 
-    <!-- Score board control -->
-    <table border="5" width="100%">
-        <tr>
-            <th style="background-color:#ff0000;"><font color="white">RED</font></th>
-            <th style="background-color:#0000ff;"><font color="white">BLUE</font></th>
-        </tr>
-        <tr>
-            <th><p style="font-size: 30px;" id="redScore">0</p></th>
-            <th><p style="font-size: 30px;" id="blueScore">0</p></th>
-        </tr>
-        <tr>
-            <th><p>Hatch</p><input type="checkbox" id="redHatch" onclick="redHatchCheck();"></th>
-            <th><p>Hatch</p><input type="checkbox" id="blueHatch" onclick="blueHatchCheck();"></th>
-        </tr>
-        <tr>
-            <th>
-                <p>Solid Fuel</p>
-                <button style="width: 64px; height: 64px; font-size: 16px;" onclick="redFuelInc();">+</button>
-                <input type="number" min="0" id="redFuelNum" value="0" onchange="redFuelInput();">
-                <button style="width: 64px; height: 64px; font-size: 16px;" onclick="redFuelDec();">-</button></th>
-            <th>
-                <p>Solid Fuel</p>
-                <button style="width: 64px; height: 64px; font-size: 16px;" onclick="blueFuelInc();">+</button>
-                <input type="number" min="0" id="blueFuelNum" value="0" onchange="blueFuelInput();">
-                <button style="width: 64px; height: 64px; font-size: 16px;" onclick="blueFuelDec();">-</button></th>
-        </tr>
-        <tr>
-            <th>
-                <p>No parking<input name="redParkStatus" checked value="no" type="radio" onclick="redParkCheck();"></p>
-                <p>Partial parking<input name="redParkStatus" value="half" type="radio" onclick="redParkCheck();"></p>
-                <p>Full parking<input name="redParkStatus" value="full" type="radio" onclick="redParkCheck();"></p>
-            </th>
-            <th>
-                <p>No parking<input name="blueParkStatus" checked value="no" type="radio" onclick="blueParkCheck();"></p>
-                <p>Partial parking<input name="blueParkStatus" value="half" type="radio" onclick="blueParkCheck();"></p>
-                <p>Full parking<input name="blueParkStatus" value="full" type="radio" onclick="blueParkCheck();"></p>
-        </tr>
-        <tr>
-            <th>
-                <p>Penalty</p>
-                <input type="number" min="0" id="redPen" value="0" onchange="redPenInput();">
-            </th>
-            <th>
-                <p>Penalty</p>
-                <input type="number" min="0" id="bluePen" value="0" onchange="bluePenInput();">
-            </th>
-        </tr>
-    </table>
-    <br>
+<!-- Score board control -->
+<table border="5" width="100%">
+    <tr>
+        <th style="background-color:#ff0000;"><font color="white">RED</font></th>
+        <th style="background-color:#0000ff;"><font color="white">BLUE</font></th>
+    </tr>
+    <tr>
+        <th><p style="font-size: 30px;" id="redScore">0</p></th>
+        <th><p style="font-size: 30px;" id="blueScore">0</p></th>
+    </tr>
+    <tr>
+        <th><p>Hatch</p><input type="checkbox" id="redHatch" onclick="redHatchCheck();"></th>
+        <th><p>Hatch</p><input type="checkbox" id="blueHatch" onclick="blueHatchCheck();"></th>
+    </tr>
+    <tr>
+        <th>
+            <p>Solid Fuel</p>
+            <button style="width: 64px; height: 64px; font-size: 16px;" onclick="redFuelInc();">+</button>
+            <input type="number" min="0" id="redFuelNum" value="0" onchange="redFuelInput();">
+            <button style="width: 64px; height: 64px; font-size: 16px;" onclick="redFuelDec();">-</button>
+        </th>
+        <th>
+            <p>Solid Fuel</p>
+            <button style="width: 64px; height: 64px; font-size: 16px;" onclick="blueFuelInc();">+</button>
+            <input type="number" min="0" id="blueFuelNum" value="0" onchange="blueFuelInput();">
+            <button style="width: 64px; height: 64px; font-size: 16px;" onclick="blueFuelDec();">-</button>
+        </th>
+    </tr>
+    <tr>
+        <th>
+            <p>No parking<input name="redParkStatus" checked value="no" type="radio" onclick="redParkCheck();"></p>
+            <p>Partial parking<input name="redParkStatus" value="half" type="radio" onclick="redParkCheck();"></p>
+            <p>Full parking<input name="redParkStatus" value="full" type="radio" onclick="redParkCheck();"></p>
+        </th>
+        <th>
+            <p>No parking<input name="blueParkStatus" checked value="no" type="radio" onclick="blueParkCheck();"></p>
+            <p>Partial parking<input name="blueParkStatus" value="half" type="radio" onclick="blueParkCheck();"></p>
+            <p>Full parking<input name="blueParkStatus" value="full" type="radio" onclick="blueParkCheck();"></p>
+    </tr>
+    <tr>
+        <th>
+            <p>Penalty</p>
+            <input type="number" min="0" id="redPen" value="0" onchange="redPenInput();">
+        </th>
+        <th>
+            <p>Penalty</p>
+            <input type="number" min="0" id="bluePen" value="0" onchange="bluePenInput();">
+        </th>
+    </tr>
+</table>
+<br>
 
-    <!-- Additional settings -->
-    <hr>
-    <button onclick="resetScoreControl();">Reset</button>
-    <p>Match time (in seconds): <input type="number" id="matchTime" value="180"> <button onclick="setMatchTime();">Set</button></p>
-    <button onclick="toggleTeamSide();">Toggle team side</button>
-    <p>Set <i>WebSocket</i> address: <input type="text" id="wsAddress" value="ws://192.168.1.2:8000/wsupdate"><button onclick="setWSAddress();">Set</button></p>
+<!-- Additional settings -->
+<hr>
+<button onclick="resetScoreControl();">Reset</button>
+<p>Match time (in seconds): <input type="number" id="matchTime" value="180">
+    <button onclick="setMatchTime();">Set</button>
+</p>
+<button onclick="toggleTeamSide();">Toggle team side</button>
+<p>Set <i>WebSocket</i> address: <input type="text" id="wsAddress" value="ws://192.168.1.2:8000/wsupdate">
+    <button onclick="setWSAddress();">Set</button>
+</p>
 
-    <!-- Debug -->
-    <textarea id="log">Websocket log:</textarea>
+<!-- Debug -->
+<textarea id="log">Websocket log:</textarea>
 
-    <!-- Main script -->
-    <script type="text/javascript">
-        // Overall matches stat
-        var red_wins = 0;
-        var blue_wins = 0;
-        var match_played = 0;
+<!-- Main script -->
+<script type="text/javascript">
+    // Overall matches stat
+    var red_wins = 0;
+    var blue_wins = 0;
+    var match_played = 0;
 
-        // This match's score
-        var match_started = false;
-        var red_score = 0;
-        var blue_score = 0;
+    // This match's score
+    var match_started = false;
+    var red_score = 0;
+    var blue_score = 0;
+
+    // Fuel
+    var red_fuel_num = 0;
+    var blue_fuel_num = 0;
+
+    // Park status
+    var red_park_status = "no";
+    var blue_park_status = "no";
+    var red_park_num = 0;
+    var blue_park_num = 0;
+
+    // Penalty
+    var red_pen_score = 0;
+    var blue_pen_score = 0;
+
+    // Get ws address from localStorage
+    var ws_address = localStorage.getItem("mockGARTWebSocketAddress");
+
+    // If it is not initialized, init the address
+    if (!ws_address) {
+        localStorage.setItem("mockGARTWebSocketAddress", "ws://192.168.1.2:8000/wsupdate");
+        ws_address = "ws://192.168.1.2:8000/wsupdate";
+    }
+
+    // Set that address to setting field
+    document.getElementById("wsAddress").value = ws_address;
+
+    // Try connecting to ws server
+    var ws = new WebSocket(ws_address);
+
+    // WS open callback function
+    ws.onopen = (event) => {
+        console.log("WebSocket connected!");
+
+        // Change main button to start mode
+        var mainButton = document.getElementById("mainButton");
+        mainButton.textContent = "Start";
+        mainButton.style.backgroundColor = "green";
+
+        // Request status from server
+        send("status");
+    };
+
+    // WS onmessage callback function
+    ws.onmessage = (event) => {
+        var msg = event.data;
+
+        // Print received message
+        console.log("<< " + msg);
+        document.getElementById("log").value += "<< " + msg + "\n";
+
+        // If msg is "done" (acknowledge) -> return
+        if (msg == "done") return;
+
+        // If msg is not "done" -> response of "status"
+        var s = msg.split(",");
+
+        // Colors
+        console.log("Left color:\t\t" + (s[0] == "0" ? "red" : "blue"));
+        console.log("Right color:\t" + (s[1] == "1" ? "blue" : "red"));
+
+        // Wins
+        console.log("Red wins:\t\t" + s[2]);
+        console.log("Blue wins:\t\t" + s[3]);
+
+        document.getElementById("redWins").textContent = s[2];
+        document.getElementById("blueWins").textContent = s[3];
+
+        red_wins = parseInt(s[2]);
+        blue_wins = parseInt(s[3]);
+
+        // Scores
+        console.log("Red score:\t\t" + s[4]);
+        console.log("Blue score:\t\t" + s[5]);
+        red_score = parseInt(s[4]);
+        blue_score = parseInt(s[5]);
+
+        // Hatch
+        console.log("Red hatch:\t\t" + (s[6] == "1" ? "yes" : "no"));
+        console.log("Blue hatch:\t\t" + (s[7] == "1" ? "yes" : "no"));
+        document.getElementById("redHatch").checked = parseInt(s[6]);
+        document.getElementById("blueHatch").checked = parseInt(s[7]);
 
         // Fuel
-        var red_fuel_num = 0;
-        var blue_fuel_num = 0;
+        console.log("Red fuel:\t\t" + s[8]);
+        console.log("Blue fuel:\t\t" + s[9]);
+        red_fuel_num = parseInt(s[8]);
+        blue_fuel_num = parseInt(s[9]);
 
-        // Park status
-        var red_park_status = "no";
-        var blue_park_status = "no";
-        var red_park_num = 0;
-        var blue_park_num = 0;
-
-        // Penalty
-        var red_pen_score = 0;
-        var blue_pen_score = 0;
-
-        // Get ws address from localStorage
-        var ws_address = localStorage.getItem("mockGARTWebSocketAddress");
-
-        // If it is not initialized, init the address
-        if (!ws_address) {
-            localStorage.setItem("mockGARTWebSocketAddress", "ws://192.168.1.2:8000/wsupdate");
-            ws_address = "ws://192.168.1.2:8000/wsupdate";
-        }
-
-        // Set that address to setting field
-        document.getElementById("wsAddress").value = ws_address;
-
-        // Try connecting to ws server
-        var ws = new WebSocket(ws_address);
-
-        // WS open callback function
-        ws.onopen = (event) => {
-            console.log("WebSocket connected!");
-
-            // Change main button to start mode
-            var mainButton = document.getElementById("mainButton");
-            mainButton.textContent = "Start";
-            mainButton.style.backgroundColor = "green";
-
-            // Request status from server
-            send("status");
-        };
-
-        // WS onmessage callback function
-        ws.onmessage = (event) => {
-            var msg = event.data;
-
-            // Print received message
-            console.log("<< " + msg);
-            document.getElementById("log").value += "<< " + msg + "\n";
-
-            // If msg is "done" (acknowledge) -> return
-            if (msg == "done") return;
-
-            // If msg is not "done" -> response of "status"
-            var s = msg.split(",");
-
-            // Colors
-            console.log("Left color:\t\t" + (s[0] == "0" ? "red" : "blue"));
-            console.log("Right color:\t" + (s[1] == "1" ? "blue" : "red"));
-
-            // Wins
-            console.log("Red wins:\t\t" + s[2]);
-            console.log("Blue wins:\t\t" + s[3]);
-
-            document.getElementById("redWins").textContent = s[2];
-            document.getElementById("blueWins").textContent = s[3];
-
-            red_wins = parseInt(s[2]);
-            blue_wins = parseInt(s[3]);
-            document.getElementById("playedMatches").textContent = match_played = red_wins + blue_wins;
-
-            // Scores
-            console.log("Red score:\t\t" + s[4]);
-            console.log("Blue score:\t\t" + s[5]);
-            red_score = parseInt(s[4]);
-            blue_score = parseInt(s[5]);
-
-            // Hatch
-            console.log("Red hatch:\t\t" + (s[6] == "1" ? "yes" : "no"));
-            console.log("Blue hatch:\t\t" + (s[7] == "1" ? "yes" : "no"));
-            document.getElementById("redHatch").checked = parseInt(s[6]);
-            document.getElementById("blueHatch").checked = parseInt(s[7]);
-
-            // Fuel
-            console.log("Red fuel:\t\t" + s[8]);
-            console.log("Blue fuel:\t\t" + s[9]);
-            red_fuel_num = parseInt(s[8]);
-            blue_fuel_num = parseInt(s[9]);
-
-            // Red pack
-            switch (s[10]) {
+        // Red pack
+        switch (s[10]) {
             case "0":
                 // No park
                 red_park_status = "no";
@@ -210,10 +230,10 @@
                 break;
             default:
                 break;
-            }
+        }
 
-            // Blue park
-            switch (s[11]) {
+        // Blue park
+        switch (s[11]) {
             case "0":
                 // No park
                 blue_park_status = "no";
@@ -231,179 +251,194 @@
                 break;
             default:
                 break;
-            }
-
-            // Has match started?
-            console.log("Started:\t\t" + (s[12] == "1" ? "yes" : "no"));
-            match_started = parseInt(s[12]);
-
-            // Update
-            updateScore();
-        };
-
-        ws.onclose = (event) => {
-            console.log("WebSocket disconnected!");
-
-            // Change main button to error mode
-            var mainButton = document.getElementById("mainButton");
-            mainButton.textContent = "Error";
-            mainButton.style.backgroundColor = "red";
-        };
-
-        // Send msg to ws
-        function send(s) {
-            console.log(">> " + s);
-            document.getElementById("log").value += ">> " + s + "\n";
-            ws.send(s);
         }
 
-        // Update score helper
-        function updateScore() {
-            document.getElementById("redScore").textContent = red_score;
-            document.getElementById("blueScore").textContent = blue_score;
+        // Has match started?
+        console.log("Started:\t\t" + (s[12] == "1" ? "yes" : "no"));
+        match_started = parseInt(s[12]);
 
-            document.getElementById("redFuelNum").value = red_fuel_num;
-            document.getElementById("blueFuelNum").value = blue_fuel_num;
+        // Update
+        updateScore();
+    };
 
-            send("score," + red_score + "," + blue_score);
+    ws.onclose = (event) => {
+        console.log("WebSocket disconnected!");
+
+        // Change main button to error mode
+        var mainButton = document.getElementById("mainButton");
+        mainButton.textContent = "Error";
+        mainButton.style.backgroundColor = "red";
+    };
+
+    // Send msg to ws
+    function send(s) {
+        console.log(">> " + s);
+        document.getElementById("log").value += ">> " + s + "\n";
+        ws.send(s);
+    }
+
+    // Update score helper
+    function updateScore() {
+        document.getElementById("redScore").textContent = red_score;
+        document.getElementById("blueScore").textContent = blue_score;
+
+        document.getElementById("redFuelNum").value = red_fuel_num;
+        document.getElementById("blueFuelNum").value = blue_fuel_num;
+
+        document.getElementById("redWins").textContent = red_wins;
+        document.getElementById("blueWins").textContent = blue_wins;
+
+        send("score," + red_score + "," + blue_score);
+    }
+
+    function mainButtonCallback() {
+        // Websocket error, on click = refresh
+        if (ws.readyState != 1) {
+            location.reload();
         }
 
-        function mainButtonCallback() {
-            // Websocket error, on click = refresh
-            if (ws.readyState != 1) {
-                location.reload();
+        // Else, handle match events
+        else {
+            // If match not started -> start it
+            if (!match_started) {
+                match_started = true;
+                console.log("Match started!")
+                send("reset");
+                send("start");
+
+                // Change button status to stop
+                var mainButton = document.getElementById("mainButton");
+                mainButton.textContent = "Abort";
+                mainButton.style.backgroundColor = "purple";
             }
 
-            // Else, handle match events
+            // If match already started -> stop it
             else {
-                // If match not started -> start it
-                if (!match_started) {
-                    match_started = true;
-                    console.log("Match started!")
-                    send("reset");
-                    send("start");
+                var cf = confirm("Confirm Match Abort?");
+                if (cf) {
+                    match_started = false;
+                    console.log("Match stopped!")
+                    send("abort");
 
-                    // Change button status to stop
+                    // Change button status to start
                     var mainButton = document.getElementById("mainButton");
-                    mainButton.textContent = "Abort";
-                    mainButton.style.backgroundColor = "purple";
+                    mainButton.textContent = "Start";
+                    mainButton.style.backgroundColor = "green";
                 }
 
-                // If match already started -> stop it
-                else {
-                    var cf = confirm("Confirm Match Abort?");
-                    if (cf) {
-                        match_started = false;
-                        console.log("Match stopped!")
-                        send("abort");
-
-                        // Change button status to start
-                        var mainButton = document.getElementById("mainButton");
-                        mainButton.textContent = "Start";
-                        mainButton.style.backgroundColor = "green";
-                    }
-                    
-                }
             }
         }
+    }
 
-        // Publish official score
-        function publishButtonCallback() {
-            var publishButton = document.getElementById("publishButton");
-            if (publishButton.textContent == "Publish") {
+    function redWinsChange(increment) {
+        red_wins += increment;
+        updateScore();
+        send("wins," + red_wins + "," + blue_wins)
+    }
 
-                publishButton.textContent = "Go Back";
-                send("publish");
-            }
-            else {
-                publishButton.textContent = "Publish";
-                send("goback");
-            }
-            updateScore();
+    function blueWinsChange(increment) {
+
+        blue_wins += increment;
+        updateScore();
+        send("wins," + red_wins + "," + blue_wins)
+    }
+
+    // Publish official score
+    function publishButtonCallback() {
+        var publishButton = document.getElementById("publishButton");
+        if (publishButton.textContent == "Publish") {
+
+            publishButton.textContent = "Go Back";
+            send("publish");
+        } else {
+            publishButton.textContent = "Publish";
+            send("goback");
+        }
+        updateScore();
+    }
+
+    // Red hatch
+    function redHatchCheck() {
+        if (document.getElementById("redHatch").checked) {
+            red_score += 20;
+        } else {
+            red_score -= 20;
         }
 
-        // Red hatch
-        function redHatchCheck() {
-            if (document.getElementById("redHatch").checked) {
-                red_score += 20;
-            } else {
-                red_score -= 20;
-            }
+        send("hatch," + (document.getElementById("redHatch").checked ? "1" : "0") + "," + (document.getElementById("blueHatch").checked ? "1" : "0"));
+        updateScore();
+    }
 
-            send("hatch," + (document.getElementById("redHatch").checked ? "1" : "0") + "," + (document.getElementById("blueHatch").checked ? "1" : "0"));
-            updateScore();
+    // Blue hatch
+    function blueHatchCheck() {
+        if (document.getElementById("blueHatch").checked) {
+            blue_score += 20;
+        } else {
+            blue_score -= 20;
         }
 
-        // Blue hatch
-        function blueHatchCheck() {
-            if (document.getElementById("blueHatch").checked) {
-                blue_score += 20;
-            } else {
-                blue_score -= 20;
-            }
+        send("hatch," + (document.getElementById("redHatch").checked ? "1" : "0") + "," + (document.getElementById("blueHatch").checked ? "1" : "0"));
+        updateScore();
+    }
 
-            send("hatch," + (document.getElementById("redHatch").checked ? "1" : "0") + "," + (document.getElementById("blueHatch").checked ? "1" : "0"));
-            updateScore();
-        }
+    // Red fuel increase
+    function redFuelInc() {
+        red_fuel_num++;
+        red_score += 2;
+        send("fuel," + red_fuel_num + "," + blue_fuel_num);
+        updateScore();
+    }
 
-        // Red fuel increase
-        function redFuelInc() {
-            red_fuel_num++;
-            red_score += 2;
-            send("fuel," + red_fuel_num + "," + blue_fuel_num);
-            updateScore();
-        }
+    // Red fuel decrease
+    function redFuelDec() {
+        red_fuel_num--;
+        red_score -= 2;
+        send("fuel," + red_fuel_num + "," + blue_fuel_num);
+        updateScore();
+    }
 
-        // Red fuel decrease
-        function redFuelDec() {
-            red_fuel_num--;
-            red_score -= 2;
-            send("fuel," + red_fuel_num + "," + blue_fuel_num);
-            updateScore();
-        }
+    // Blue fuel increase
+    function blueFuelInc() {
+        blue_fuel_num++;
+        blue_score += 2;
+        send("fuel," + red_fuel_num + "," + blue_fuel_num);
+        updateScore();
+    }
 
-        // Blue fuel increase
-        function blueFuelInc() {
-            blue_fuel_num++;
-            blue_score += 2;
-            send("fuel," + red_fuel_num + "," + blue_fuel_num);
-            updateScore();
-        }
+    // Blue fuel decrease
+    function blueFuelDec() {
+        blue_fuel_num--;
+        blue_score -= 2;
+        send("fuel," + red_fuel_num + "," + blue_fuel_num);
+        updateScore();
+    }
 
-        // Blue fuel decrease
-        function blueFuelDec() {
-            blue_fuel_num--;
-            blue_score -= 2;
-            send("fuel," + red_fuel_num + "," + blue_fuel_num);
-            updateScore();
-        }
+    // Red fuel numerical input
+    function redFuelInput() {
+        var current_fuel = parseInt(document.getElementById("redFuelNum").value);
+        if (isNaN(current_fuel)) return;
+        red_score += (current_fuel - red_fuel_num) * 2;
+        red_fuel_num = current_fuel;
+        send("fuel," + red_fuel_num + "," + blue_fuel_num);
+        updateScore();
+    }
 
-        // Red fuel numerical input
-        function redFuelInput() {
-            var current_fuel = parseInt(document.getElementById("redFuelNum").value);
-            if (isNaN(current_fuel)) return;
-            red_score += (current_fuel - red_fuel_num) * 2;
-            red_fuel_num = current_fuel;
-            send("fuel," + red_fuel_num + "," + blue_fuel_num);
-            updateScore();
-        }
+    // Blue fuel numerical input
+    function blueFuelInput() {
+        var current_fuel = parseInt(document.getElementById("blueFuelNum").value);
+        if (isNaN(current_fuel)) return;
+        blue_score += (current_fuel - blue_fuel_num) * 2;
+        blue_fuel_num = current_fuel;
+        send("fuel," + red_fuel_num + "," + blue_fuel_num);
+        updateScore();
+    }
 
-        // Blue fuel numerical input
-        function blueFuelInput() {
-            var current_fuel = parseInt(document.getElementById("blueFuelNum").value);
-            if (isNaN(current_fuel)) return;
-            blue_score += (current_fuel - blue_fuel_num) * 2;
-            blue_fuel_num = current_fuel;
-            send("fuel," + red_fuel_num + "," + blue_fuel_num);
-            updateScore();
-        }
+    // Red park
+    function redParkCheck() {
+        var park_status = document.querySelector('input[name="redParkStatus"]:checked').value;
+        if (park_status == red_park_status) return;
 
-        // Red park
-        function redParkCheck() {
-            var park_status = document.querySelector('input[name="redParkStatus"]:checked').value;
-            if (park_status == red_park_status) return;
-
-            switch (park_status) {
+        switch (park_status) {
             case "no":
                 red_score -= (red_park_status == "full") ? 30 : 10;
                 red_park_num = 0;
@@ -419,22 +454,22 @@
             default:
                 // How tf
                 break;
-            }
-
-            // Update park status
-            red_park_status = park_status;
-
-            // Update
-            send("park," + red_park_num + "," + blue_park_num);
-            updateScore();
         }
 
-        // Blue park
-        function blueParkCheck() {
-            var park_status = document.querySelector('input[name="blueParkStatus"]:checked').value;
-            if (park_status == blue_park_status) return;
+        // Update park status
+        red_park_status = park_status;
 
-            switch (park_status) {
+        // Update
+        send("park," + red_park_num + "," + blue_park_num);
+        updateScore();
+    }
+
+    // Blue park
+    function blueParkCheck() {
+        var park_status = document.querySelector('input[name="blueParkStatus"]:checked').value;
+        if (park_status == blue_park_status) return;
+
+        switch (park_status) {
             case "no":
                 blue_score -= (blue_park_status == "full") ? 30 : 10;
                 blue_park_num = 0;
@@ -450,93 +485,93 @@
             default:
                 // How tf
                 break;
-            }
-
-            // Update park status
-            blue_park_status = park_status;
-
-            // Update
-            send("park," + red_park_num + "," + blue_park_num);
-            updateScore();
         }
 
-        // Red penalty
-        function redPenInput() {
-            var red_pen = parseInt(document.getElementById("redPen").value);
-            if (isNaN(red_pen)) return;
-            blue_score += (red_pen - red_pen_score);
-            red_pen_score = red_pen;
-            send("penalty," + blue_pen_score + "," + red_pen_score);
-            updateScore();
-        }
+        // Update park status
+        blue_park_status = park_status;
 
-        // Blue penalty
-        function bluePenInput() {
-            var blue_pen = parseInt(document.getElementById("bluePen").value);
-            if (isNaN(blue_pen)) return;
-            red_score += (blue_pen - blue_pen_score);
-            blue_pen_score = blue_pen;
-            send("penalty," + blue_pen_score + "," + red_pen_score);
-            updateScore();
-        }
+        // Update
+        send("park," + red_park_num + "," + blue_park_num);
+        updateScore();
+    }
 
-        function resetScoreControl() {
-            // This match's score
-            red_score = 0;
-            blue_score = 0;
+    // Red penalty
+    function redPenInput() {
+        var red_pen = parseInt(document.getElementById("redPen").value);
+        if (isNaN(red_pen)) return;
+        blue_score += (red_pen - red_pen_score);
+        red_pen_score = red_pen;
+        send("penalty," + blue_pen_score + "," + red_pen_score);
+        updateScore();
+    }
 
-            // Reset hatch
-            document.getElementById("redHatch").checked = false;
-            document.getElementById("blueHatch").checked = false;
+    // Blue penalty
+    function bluePenInput() {
+        var blue_pen = parseInt(document.getElementById("bluePen").value);
+        if (isNaN(blue_pen)) return;
+        red_score += (blue_pen - blue_pen_score);
+        blue_pen_score = blue_pen;
+        send("penalty," + blue_pen_score + "," + red_pen_score);
+        updateScore();
+    }
 
-            // Fuel
-            red_fuel_num = 0;
-            blue_fuel_num = 0;
+    function resetScoreControl() {
+        // This match's score
+        red_score = 0;
+        blue_score = 0;
 
-            // Park status
-            red_park_status = "no";
-            red_park_num = 0;
-            document.getElementsByName("redParkStatus")[0].click()
-            blue_park_status = "no";
-            blue_park_num = 0;
-            document.getElementsByName("blueParkStatus")[0].click()
+        // Reset hatch
+        document.getElementById("redHatch").checked = false;
+        document.getElementById("blueHatch").checked = false;
 
-            // Penalty
-            red_pen_score = 0;
-            document.getElementById("redPen").value = 0;
-            blue_pen_score = 0;
-            document.getElementById("bluePen").value = 0;
+        // Fuel
+        red_fuel_num = 0;
+        blue_fuel_num = 0;
 
-            // Reset start button 
-            match_started = false;
-            
-            var mainButton = document.getElementById("mainButton");
-            mainButton.textContent = "Start";
-            mainButton.style.backgroundColor = "green";
+        // Park status
+        red_park_status = "no";
+        red_park_num = 0;
+        document.getElementsByName("redParkStatus")[0].click()
+        blue_park_status = "no";
+        blue_park_num = 0;
+        document.getElementsByName("blueParkStatus")[0].click()
 
-            send("reset");
+        // Penalty
+        red_pen_score = 0;
+        document.getElementById("redPen").value = 0;
+        blue_pen_score = 0;
+        document.getElementById("bluePen").value = 0;
 
-            updateScore();
-        }
+        // Reset start button
+        match_started = false;
 
-        // Set match time (in seconds)
-        function setMatchTime() {
-            send("timer," + parseInt(document.getElementById("matchTime").value).toString());
-        }
+        var mainButton = document.getElementById("mainButton");
+        mainButton.textContent = "Start";
+        mainButton.style.backgroundColor = "green";
 
-        // Swap team color
-        function toggleTeamSide() {
-            send("changecolor");
-        }
+        send("reset");
 
-        function setWSAddress() {
-            // Save to localStorage
-            localStorage.setItem("mockGARTWebSocketAddress", document.getElementById("wsAddress").value);
+        updateScore();
+    }
 
-            // Refresh page to reconnect to WS server
-            location.reload();
-        }
+    // Set match time (in seconds)
+    function setMatchTime() {
+        send("timer," + parseInt(document.getElementById("matchTime").value).toString());
+    }
 
-    </script>
+    // Swap team color
+    function toggleTeamSide() {
+        send("changecolor");
+    }
+
+    function setWSAddress() {
+        // Save to localStorage
+        localStorage.setItem("mockGARTWebSocketAddress", document.getElementById("wsAddress").value);
+
+        // Refresh page to reconnect to WS server
+        location.reload();
+    }
+
+</script>
 </body>
 </html>

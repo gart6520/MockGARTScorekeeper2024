@@ -104,7 +104,7 @@ public partial class PostMatchScore : Form
             2 => "30",
             _ => leftEndgameScoreLabel.Text
         };
-        
+
         rightEndgameScoreLabel.Text = RightParkStatus switch
         {
             0 => "0",
@@ -112,7 +112,7 @@ public partial class PostMatchScore : Form
             2 => "30",
             _ => rightEndgameScoreLabel.Text
         };
-        
+
         leftPenaltyScoreLabel.Text = LeftPenalty.ToString();
         rightPenaltyScoreLabel.Text = RightPenalty.ToString();
 
@@ -314,5 +314,19 @@ public partial class PostMatchScore : Form
     private void exitButton_Click(object sender, EventArgs e)
     {
         Application.Exit();
+    }
+
+    private void leftWins_SizeChanged(object sender, EventArgs e)
+    {
+        leftWins.Location = new Point(
+            w / 3 + w / 24 - leftWins.Size.Width / 2,
+            (h / 10 - leftWins.Size.Height) / 2);
+    }
+
+    private void rightWins_SizeChanged(object sender, EventArgs e)
+    {
+        rightWins.Location = new Point(
+            w / 3 + w * 7 / 24 - rightWins.Size.Width / 2,
+            (h / 10 - rightWins.Size.Height) / 2);
     }
 }
