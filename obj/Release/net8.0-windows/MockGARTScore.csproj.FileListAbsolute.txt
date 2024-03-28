@@ -41,3 +41,4 @@ E:\Coding\Rider C#\MockGartScorekeeper_Loc\obj\Release\net8.0-windows\refint\Moc
 E:\Coding\Rider C#\MockGartScorekeeper_Loc\obj\Release\net8.0-windows\MockGARTScore.pdb
 E:\Coding\Rider C#\MockGartScorekeeper_Loc\obj\Release\net8.0-windows\MockGARTScore.genruntimeconfig.cache
 E:\Coding\Rider C#\MockGartScorekeeper_Loc\obj\Release\net8.0-windows\ref\MockGARTScore.dll
+D:\Codes\Project\MockGARTScoreController\MockGARTScorekeeper2024\obj\Release\net8.0-windows\MockGARTScore.PostMatchScore.resources
