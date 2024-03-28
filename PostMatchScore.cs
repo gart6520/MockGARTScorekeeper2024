@@ -7,7 +7,10 @@ public partial class PostMatchScore : Form
 {
     private readonly int w;
     private readonly int h;
-    readonly Color darkerRed = Color.FromArgb(200, 0, 0);
+
+    private Color leftDarker = Color.FromArgb(200, 0, 0); // Darker red
+    private Color rightDarker = Color.DarkBlue; // Darker blue
+
     public event EventHandler GoBack = null!;
     private int winner; // -1 is left 0 is tie 1 is right
 
@@ -28,6 +31,9 @@ public partial class PostMatchScore : Form
         w = Width;
         h = Height;
 
+        leftDarker = Color.FromArgb(200, 0, 0);
+        rightDarker = Color.DarkBlue;
+
         // Align score category labels
         teleOpCatLabel.Location =
             new Point(w / 2 - teleOpCatLabel.Size.Width / 2, 11 * h / 30 - teleOpCatLabel.Height / 2);
@@ -37,9 +43,9 @@ public partial class PostMatchScore : Form
             new Point(w / 2 - penaltyCatLabel.Size.Width / 2, 19 * h / 30 - penaltyCatLabel.Height / 2);
 
         // Align score labels
-        leftTeleOpScoreLabel.BackColor = darkerRed;
-        leftEndgameScoreLabel.BackColor = darkerRed;
-        leftPenaltyScoreLabel.BackColor = darkerRed;
+        leftTeleOpScoreLabel.BackColor = leftDarker;
+        leftEndgameScoreLabel.BackColor = leftDarker;
+        leftPenaltyScoreLabel.BackColor = leftDarker;
         leftTeleOpScoreLabel.Location = new Point(7 * w / 24 - leftTeleOpScoreLabel.Width / 2,
             11 * h / 30 - leftTeleOpScoreLabel.Height / 2);
         leftEndgameScoreLabel.Location = new Point(7 * w / 24 - leftEndgameScoreLabel.Width / 2,
@@ -47,9 +53,9 @@ public partial class PostMatchScore : Form
         leftPenaltyScoreLabel.Location = new Point(7 * w / 24 - leftPenaltyScoreLabel.Width / 2,
             19 * h / 30 - leftPenaltyScoreLabel.Height / 2);
 
-        rightTeleOpScoreLabel.BackColor = Color.DarkBlue;
-        rightEndgameScoreLabel.BackColor = Color.DarkBlue;
-        rightPenaltyScoreLabel.BackColor = Color.DarkBlue;
+        rightTeleOpScoreLabel.BackColor = rightDarker;
+        rightEndgameScoreLabel.BackColor = rightDarker;
+        rightPenaltyScoreLabel.BackColor = rightDarker;
         rightTeleOpScoreLabel.Location = new Point(17 * w / 24 - rightTeleOpScoreLabel.Width / 2,
             11 * h / 30 - rightTeleOpScoreLabel.Height / 2);
         rightEndgameScoreLabel.Location = new Point(17 * w / 24 - rightEndgameScoreLabel.Width / 2,
@@ -90,7 +96,56 @@ public partial class PostMatchScore : Form
             w / 3 + w * 7 / 24 - rightWins.Size.Width / 2,
             (h / 10 - rightWins.Size.Height) / 2);
 
+        WSUpdate.SetTeamColor += (_, e) => SetTeamColor(e.Left, e.Right);
+
         UpdateScore();
+    }
+
+    private void SetTeamColor(Color left, Color right)
+    {
+        // Set color
+        LeftColor = left;
+        RightColor = right;
+
+        // Set darker color
+        leftDarker = (LeftColor == Color.Red) ? Color.FromArgb(200, 0, 0) : Color.DarkBlue;
+        rightDarker = (RightColor == Color.DodgerBlue) ? Color.DarkBlue : Color.FromArgb(200, 0, 0);
+
+        // Redraw canvas
+        canvas.Refresh();
+
+        // Change team wins text background color
+        leftWins.BackColor = LeftColor;
+        rightWins.BackColor = RightColor;
+
+        // Change team name
+        leftTeamName.Text = LeftColor == Color.Red ? "RED" : "BLUE";
+        rightTeamName.Text = RightColor == Color.DodgerBlue ? "BLUE" : "RED";
+
+        // Align team names
+        leftTeamName.Location = new Point(
+            w / 6 - leftTeamName.Size.Width / 2,
+            h / 8);
+        rightTeamName.Location = new Point(
+            w * 5 / 6 - rightTeamName.Size.Width / 2,
+            h / 8);
+
+        // Change team name background
+        leftTeamName.BackColor = LeftColor;
+        rightTeamName.BackColor = RightColor;
+
+        // Change score background
+        leftScore.BackColor = LeftColor;
+        rightScore.BackColor = RightColor;
+
+        // Score components
+        leftTeleOpScoreLabel.BackColor = leftDarker;
+        leftEndgameScoreLabel.BackColor = leftDarker;
+        leftPenaltyScoreLabel.BackColor = leftDarker;
+
+        rightTeleOpScoreLabel.BackColor = rightDarker;
+        rightEndgameScoreLabel.BackColor = rightDarker;
+        rightPenaltyScoreLabel.BackColor = rightDarker;
     }
 
     private void UpdateScore()
@@ -159,12 +214,12 @@ public partial class PostMatchScore : Form
         g.FillRectangle(new SolidBrush(Color.White), new Rectangle(_w / 3, 7 * _h / 12, _w / 3, _h / 10));
 
         // Draw category score box
-        g.FillRectangle(new SolidBrush(darkerRed), new Rectangle(_w / 4, 19 * _h / 60, _w / 12, _h / 10));
-        g.FillRectangle(new SolidBrush(darkerRed), new Rectangle(_w / 4, 9 * _h / 20, _w / 12, _h / 10));
-        g.FillRectangle(new SolidBrush(darkerRed), new Rectangle(_w / 4, 7 * _h / 12, _w / 12, _h / 10));
-        g.FillRectangle(new SolidBrush(Color.DarkBlue), new Rectangle(2 * _w / 3, 19 * _h / 60, _w / 12, _h / 10));
-        g.FillRectangle(new SolidBrush(Color.DarkBlue), new Rectangle(2 * _w / 3, 9 * _h / 20, _w / 12, _h / 10));
-        g.FillRectangle(new SolidBrush(Color.DarkBlue), new Rectangle(2 * _w / 3, 7 * _h / 12, _w / 12, _h / 10));
+        g.FillRectangle(new SolidBrush(leftDarker), new Rectangle(_w / 4, 19 * _h / 60, _w / 12, _h / 10));
+        g.FillRectangle(new SolidBrush(leftDarker), new Rectangle(_w / 4, 9 * _h / 20, _w / 12, _h / 10));
+        g.FillRectangle(new SolidBrush(leftDarker), new Rectangle(_w / 4, 7 * _h / 12, _w / 12, _h / 10));
+        g.FillRectangle(new SolidBrush(rightDarker), new Rectangle(2 * _w / 3, 19 * _h / 60, _w / 12, _h / 10));
+        g.FillRectangle(new SolidBrush(rightDarker), new Rectangle(2 * _w / 3, 9 * _h / 20, _w / 12, _h / 10));
+        g.FillRectangle(new SolidBrush(rightDarker), new Rectangle(2 * _w / 3, 7 * _h / 12, _w / 12, _h / 10));
 
         // Draw champion box
         leftWinningCupImage.Visible = false;
