@@ -246,9 +246,14 @@ public static class Program
             {
                 path = "control.html";
             }
+
+            else if (path == "/wsupdate") 
+            {
+                return;
+            }
             
             // Else if not websocket, get rejected -> 403
-            else if (path != "/wsupdate")
+            else
             {
                 res.StatusCode = (int)HttpStatusCode.Forbidden;
                 return;
