@@ -1,4 +1,6 @@
+using System.Text;
 using WebSocketSharp;
+using WebSocketSharp.Net;
 using WebSocketSharp.Server;
 using Timer = System.Timers.Timer;
 
@@ -230,16 +232,66 @@ public static class Program
 
 
         // Create WebSocket server
-        var webSocketServer = new WebSocketServer("ws://0.0.0.0:8000");
+        var httpsv = new HttpServer(System.Net.IPAddress.Any, 8000);
 
-        webSocketServer.AddWebSocketService<WSUpdate>("/wsupdate");
-        webSocketServer.Start();
+        // Set the HTTP GET request event.
+        httpsv.OnGet += (sender, e) => {
+            var req = e.Request;
+            var res = e.Response;
+
+            var path = req.RawUrl;
+
+            // Only serve main html document
+            if (path == "/" || path == "index.html" || path == "/control.html")
+            {
+                path = "control.html";
+            }
+            
+            // Else if not websocket, get rejected -> 403
+            else if (path != "/wsupdate")
+            {
+                res.StatusCode = (int)HttpStatusCode.Forbidden;
+                return;
+            }
+
+            byte[] contents;
+
+            // If file not found -> 404
+            // The HTML file need to be in the same directory as your executable
+            // If testing, symlink it
+            if (!File.Exists(path))
+            {
+                res.StatusCode = (int)HttpStatusCode.NotFound;
+                return;
+            }
+
+            // Try reading the file
+            try
+            {
+                contents = File.ReadAllBytes(path);
+            }
+            
+            // Error reading -> 503
+            catch
+            {
+                res.StatusCode = (int)HttpStatusCode.InternalServerError;
+                return;
+            }
+
+            res.ContentType = "text/html";
+            res.ContentEncoding = Encoding.UTF8;
+            res.ContentLength64 = contents.LongLength;
+
+            res.Close(contents, true);
+        };
+
+        httpsv.AddWebSocketService<WSUpdate>("/wsupdate");
+        httpsv.Start();
 
         WSUpdate.Publish += (_, _) => SwitchForm(FormEnum.PostMatchScore);
         WSUpdate.GoBack += (_, _) => SwitchForm(FormEnum.InMatchScore);
         InMatchScoreForm.Publish += (_, _) => SwitchForm(FormEnum.PostMatchScore);
         PostMatchScoreForm.GoBack += (_, _) => SwitchForm(FormEnum.InMatchScore);
-
 
         Application.Run(InMatchScoreForm);
     }

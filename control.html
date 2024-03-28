@@ -142,8 +142,8 @@
 
     // If it is not initialized, init the address
     if (!ws_address) {
-        localStorage.setItem("mockGARTWebSocketAddress", "ws://192.168.1.2:8000/wsupdate");
-        ws_address = "ws://192.168.1.2:8000/wsupdate";
+        ws_address = "ws://" + location.host.split(":")[0] + ":8000/wsupdate";
+        localStorage.setItem("mockGARTWebSocketAddress", ws_address);
     }
 
     // Set that address to setting field
@@ -516,6 +516,11 @@
     }
 
     function resetScoreControl() {
+        // Reload if connection is lost
+        if (ws.readyState != 1) {
+            location.reload();
+        }
+
         // This match's score
         red_score = 0;
         blue_score = 0;
