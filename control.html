@@ -86,6 +86,23 @@
     </tr>
     <tr>
         <th>
+            <p>Red Ball</p><input type="checkbox" id="redBallCheckbox" onclick="onRedBallChanged();">
+        </th>
+        <th>
+            <p>Blue Ball</p><input type="checkbox" id="blueBallCheckbox" onclick="onBlueBallChanged();">
+        </th>
+    </tr>
+    <tr>
+        <th>
+            <p>Red Multiplier</p><input type="checkbox" id="redMultiplierCheckbox" onclick="onRedMultiplierChanged();">
+        </th>
+        <th>
+            <p>Blue Multiplier</p><input type="checkbox" id="blueMultiplierCheckbox"
+                                         onclick="onBlueMultiplierChanged();">
+        </th>
+    </tr>
+    <tr>
+        <th>
             <p>Penalty</p>
             <input type="number" min="0" id="redPen" value="0" onchange="redPenInput();">
         </th>
@@ -133,9 +150,21 @@
     var red_park_num = 0;
     var blue_park_num = 0;
 
+    // Ball status
+    var red_ball = false;
+    var blue_ball = false;
+
+    // Hatch
+    var red_hatch = false;
+    var blue_hatch = false;
+
     // Penalty
     var red_pen_score = 0;
     var blue_pen_score = 0;
+
+    // Fuel multiplier
+    var red_multiplier = 1;
+    var blue_multiplier = 1;
 
     // Get ws address from localStorage
     var ws_address = localStorage.getItem("mockGARTWebSocketAddress");
@@ -277,8 +306,17 @@
         ws.send(s);
     }
 
+    function parkToScore(parkStatus) {
+        if (parkStatus === 0) return 0;
+        else if (parkStatus === 1) return 10;
+        else if (parkStatus === 2) return 30;
+        throw Error("Park status get weird");
+    }
+
     // Update score helper
     function updateScore() {
+        red_score = 2 * red_fuel_num * red_multiplier + (red_hatch ? 20 : 0) + (red_ball ? 20 : 0) + parkToScore(red_park_num) + blue_pen_score;
+        blue_score = 2 * blue_fuel_num * blue_multiplier + (blue_hatch ? 20 : 0) + (blue_ball ? 20 : 0) + parkToScore(blue_park_num) + red_pen_score;
         document.getElementById("redScore").textContent = red_score;
         document.getElementById("blueScore").textContent = blue_score;
 
@@ -288,7 +326,7 @@
         document.getElementById("redWins").textContent = red_wins;
         document.getElementById("blueWins").textContent = blue_wins;
 
-        send("score," + red_score + "," + blue_score);
+        send("score," + Math.round(red_score) + "," + Math.round(blue_score));
     }
 
     function mainButtonCallback() {
@@ -330,6 +368,30 @@
         }
     }
 
+    function onBlueMultiplierChanged() {
+        blue_multiplier = (document.getElementById("blueMultiplierCheckbox").checked ? 1.25 : 1);
+        updateScore();
+        send("multiplier," + red_multiplier + "," + blue_multiplier);
+    }
+
+    function onRedMultiplierChanged() {
+        red_multiplier = (document.getElementById("redMultiplierCheckbox").checked ? 1.25 : 1);
+        updateScore();
+        send("multiplier," + red_multiplier + "," + blue_multiplier);
+    }
+
+    function onBlueBallChanged() {
+        blue_ball = document.getElementById("blueBallCheckbox").checked;
+        updateScore();
+        send("ball," + (red_ball ? "1" : "0") + "," + (blue_ball ? "1" : "0"));
+    }
+
+    function onRedBallChanged() {
+        red_ball = document.getElementById("redBallCheckbox").checked;
+        updateScore();
+        send("ball," + (red_ball ? "1" : "0") + "," + (blue_ball ? "1" : "0"));
+    }
+
     function redWinsChange(increment) {
         red_wins += increment;
         updateScore();
@@ -360,9 +422,9 @@
     // Red hatch
     function redHatchCheck() {
         if (document.getElementById("redHatch").checked) {
-            red_score += 20;
+            red_hatch = true
         } else {
-            red_score -= 20;
+            red_hatch = false;
         }
 
         send("hatch," + (document.getElementById("redHatch").checked ? "1" : "0") + "," + (document.getElementById("blueHatch").checked ? "1" : "0"));
@@ -372,9 +434,9 @@
     // Blue hatch
     function blueHatchCheck() {
         if (document.getElementById("blueHatch").checked) {
-            blue_score += 20;
+            blue_hatch = true;
         } else {
-            blue_score -= 20;
+            blue_hatch = false;
         }
 
         send("hatch," + (document.getElementById("redHatch").checked ? "1" : "0") + "," + (document.getElementById("blueHatch").checked ? "1" : "0"));
@@ -384,7 +446,6 @@
     // Red fuel increase
     function redFuelInc() {
         red_fuel_num++;
-        red_score += 2;
         send("fuel," + red_fuel_num + "," + blue_fuel_num);
         updateScore();
     }
@@ -392,7 +453,6 @@
     // Red fuel decrease
     function redFuelDec() {
         red_fuel_num--;
-        red_score -= 2;
         send("fuel," + red_fuel_num + "," + blue_fuel_num);
         updateScore();
     }
@@ -400,7 +460,6 @@
     // Blue fuel increase
     function blueFuelInc() {
         blue_fuel_num++;
-        blue_score += 2;
         send("fuel," + red_fuel_num + "," + blue_fuel_num);
         updateScore();
     }
@@ -408,7 +467,6 @@
     // Blue fuel decrease
     function blueFuelDec() {
         blue_fuel_num--;
-        blue_score -= 2;
         send("fuel," + red_fuel_num + "," + blue_fuel_num);
         updateScore();
     }
@@ -417,7 +475,6 @@
     function redFuelInput() {
         var current_fuel = parseInt(document.getElementById("redFuelNum").value);
         if (isNaN(current_fuel)) return;
-        red_score += (current_fuel - red_fuel_num) * 2;
         red_fuel_num = current_fuel;
         send("fuel," + red_fuel_num + "," + blue_fuel_num);
         updateScore();
@@ -427,7 +484,6 @@
     function blueFuelInput() {
         var current_fuel = parseInt(document.getElementById("blueFuelNum").value);
         if (isNaN(current_fuel)) return;
-        blue_score += (current_fuel - blue_fuel_num) * 2;
         blue_fuel_num = current_fuel;
         send("fuel," + red_fuel_num + "," + blue_fuel_num);
         updateScore();
@@ -440,15 +496,12 @@
 
         switch (park_status) {
             case "no":
-                red_score -= (red_park_status == "full") ? 30 : 10;
                 red_park_num = 0;
                 break;
             case "half":
-                red_score += (red_park_status == "no") ? 10 : -20;
                 red_park_num = 1;
                 break;
             case "full":
-                red_score += (red_park_status == "no") ? 30 : 20;
                 red_park_num = 2;
                 break;
             default:
@@ -471,15 +524,12 @@
 
         switch (park_status) {
             case "no":
-                blue_score -= (blue_park_status == "full") ? 30 : 10;
                 blue_park_num = 0;
                 break;
             case "half":
-                blue_score += (blue_park_status == "no") ? 10 : -20;
                 blue_park_num = 1;
                 break;
             case "full":
-                blue_score += (blue_park_status == "no") ? 30 : 20;
                 blue_park_num = 2;
                 break;
             default:
@@ -499,7 +549,6 @@
     function redPenInput() {
         var red_pen = parseInt(document.getElementById("redPen").value);
         if (isNaN(red_pen)) return;
-        blue_score += (red_pen - red_pen_score);
         red_pen_score = red_pen;
         send("penalty," + blue_pen_score + "," + red_pen_score);
         updateScore();
@@ -509,7 +558,6 @@
     function bluePenInput() {
         var blue_pen = parseInt(document.getElementById("bluePen").value);
         if (isNaN(blue_pen)) return;
-        red_score += (blue_pen - blue_pen_score);
         blue_pen_score = blue_pen;
         send("penalty," + blue_pen_score + "," + red_pen_score);
         updateScore();
@@ -528,6 +576,8 @@
         // Reset hatch
         document.getElementById("redHatch").checked = false;
         document.getElementById("blueHatch").checked = false;
+        blue_hatch = false;
+        red_hatch = false;
 
         // Fuel
         red_fuel_num = 0;

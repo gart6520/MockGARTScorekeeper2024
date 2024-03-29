@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text;
 using WebSocketSharp;
 using WebSocketSharp.Net;
@@ -20,9 +21,17 @@ public static class GameStat
     public static int LeftFuelLevel = 0;
     public static int RightFuelLevel = 0;
 
+    // Multiplier
+    public static double LeftMultiplier = 1;
+    public static double RightMultiplier = 1;
+
     // Hatch status
     public static bool LeftHatchStatus = false;
     public static bool RightHatchStatus = false;
+
+    // Ball status
+    public static bool LeftBallStatus = false;
+    public static bool RightBallStatus = false;
 
     // Score
     public static int LeftScore = 0;
@@ -50,11 +59,13 @@ public class WSUpdate : WebSocketBehavior
     }
 
     public static event EventHandler<GameEventArgs<int>> SetFuel = null!;
+    public static event EventHandler<GameEventArgs<double>> SetMultiplier = null!;
     public static event EventHandler<GameEventArgs<int>> SetPark = null!;
     public static event EventHandler<GameEventArgs<int>> SetPenalty = null!;
     public static event EventHandler<GameEventArgs<int>> SetScore = null!;
     public static event EventHandler<GameEventArgs<int>> SetWins = null!;
     public static event EventHandler<GameEventArgs<bool>> SetHatch = null!;
+    public static event EventHandler<GameEventArgs<bool>> SetBall = null!;
     public static event EventHandler<GameEventArgs<Color>> SetTeamColor = null!;
     public static event EventHandler StartTimer = null!;
     public static event EventHandler AbortMatch = null!;
@@ -126,6 +137,18 @@ public class WSUpdate : WebSocketBehavior
                 left = int.Parse(leftColor == Color.Red ? param[1] : param[2]);
                 right = int.Parse(rightColor == Color.DodgerBlue ? param[2] : param[1]);
                 SetPark.Invoke(this, new(left, right));
+                Send("done");
+                break;
+            case "ball":
+                left = int.Parse(leftColor == Color.Red ? param[1] : param[2]);
+                right = int.Parse(rightColor == Color.DodgerBlue ? param[2] : param[1]);
+                SetBall.Invoke(this, new(left == 1, right == 1));
+                Send("done");
+                break;
+            case "multiplier":
+                var leftD = Double.Parse(leftColor == Color.Red ? param[1] : param[2], CultureInfo.InvariantCulture);
+                var rightD = Double.Parse(rightColor == Color.DodgerBlue ? param[2] : param[1], CultureInfo.InvariantCulture);
+                SetMultiplier.Invoke(this, new (leftD, rightD));
                 Send("done");
                 break;
             case "changecolor":

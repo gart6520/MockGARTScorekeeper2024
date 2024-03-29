@@ -150,29 +150,32 @@ public partial class PostMatchScore : Form
 
     private void UpdateScore()
     {
-        //TODO add score for endgame
-
-        leftEndgameScoreLabel.Text = LeftParkStatus switch
+        var leftEndgame = LeftParkStatus switch
         {
-            0 => "0",
-            1 => "20",
-            2 => "30",
-            _ => leftEndgameScoreLabel.Text
-        };
+            0 => 0,
+            1 => 10,
+            2 => 30,
+            _ => -1
+        } + (LeftBallStatus ? 20 : 0);
 
-        rightEndgameScoreLabel.Text = RightParkStatus switch
+        var rightEndgame = RightParkStatus switch
         {
-            0 => "0",
-            1 => "20",
-            2 => "30",
-            _ => rightEndgameScoreLabel.Text
-        };
+            0 => 0,
+            1 => 10,
+            2 => 30,
+            _ => -1
+        } + (RightBallStatus ? 20 : 0);
+
+        leftEndgameScoreLabel.Text = leftEndgame.ToString();
+        rightEndgameScoreLabel.Text = rightEndgame.ToString();
 
         leftPenaltyScoreLabel.Text = LeftPenalty.ToString();
         rightPenaltyScoreLabel.Text = RightPenalty.ToString();
 
-        leftTeleOpScoreLabel.Text = (LeftFuelLevel * 2 + (LeftHatchStatus ? 20 : 0)).ToString();
-        rightTeleOpScoreLabel.Text = (RightFuelLevel * 2 + (RightHatchStatus ? 20 : 0)).ToString();
+        leftTeleOpScoreLabel.Text =
+            ((int)Math.Round(LeftFuelLevel * 2 * LeftMultiplier) + (LeftHatchStatus ? 20 : 0)).ToString();
+        rightTeleOpScoreLabel.Text =
+            ((int)Math.Round(RightFuelLevel * 2 * RightMultiplier) + (RightHatchStatus ? 20 : 0)).ToString();
 
         leftWins.Text = LeftWin.ToString();
         rightWins.Text = RightWin.ToString();

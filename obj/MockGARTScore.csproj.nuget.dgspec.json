@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\dev\\MockGARTScoreKeeper2024\\MockGARTScore.csproj": {}
+    "E:\\Coding\\Rider C#\\MockGartScorekeeper_Loc\\MockGARTScore.csproj": {}
   },
   "projects": {
-    "D:\\dev\\MockGARTScoreKeeper2024\\MockGARTScore.csproj": {
+    "E:\\Coding\\Rider C#\\MockGartScorekeeper_Loc\\MockGARTScore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\dev\\MockGARTScoreKeeper2024\\MockGARTScore.csproj",
+        "projectUniqueName": "E:\\Coding\\Rider C#\\MockGartScorekeeper_Loc\\MockGARTScore.csproj",
         "projectName": "MockGARTScore",
-        "projectPath": "D:\\dev\\MockGARTScoreKeeper2024\\MockGARTScore.csproj",
-        "packagesPath": "C:\\Users\\mmb\\.nuget\\packages\\",
-        "outputPath": "D:\\dev\\MockGARTScoreKeeper2024\\obj\\",
+        "projectPath": "E:\\Coding\\Rider C#\\MockGartScorekeeper_Loc\\MockGARTScore.csproj",
+        "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
+        "outputPath": "E:\\Coding\\Rider C#\\MockGartScorekeeper_Loc\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\mmb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -34,11 +38,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {

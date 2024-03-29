@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Globalization;
 using MockGARTScore.Properties;
 using System.Media;
 using static MockGARTScore.GameStat;
@@ -12,7 +13,7 @@ public partial class InMatchScore : Form
     public event EventHandler Publish = null!;
 
     // Time left
-    private int timeTotal;
+    private int timeTotal = 180;
     private int timeLeft;
 
     readonly int w;
@@ -59,7 +60,6 @@ public partial class InMatchScore : Form
     // Set team color
     private void SetTeamColor(Color left, Color right)
     {
-
         // Set team color variables
         LeftColor = left;
         RightColor = right;
@@ -110,12 +110,33 @@ public partial class InMatchScore : Form
         rightParkNo.BackColor = RightColor;
         rightParkHalf.BackColor = RightColor;
         rightParkFull.BackColor = RightColor;
+
+        // Change ball background
+        leftBallPicture.BackColor = LeftColor;
+        rightBallPicture.BackColor = RightColor;
+    }
+
+    private void SetBall(bool left, bool right)
+    {
+        LeftBallStatus = left;
+        RightBallStatus = right;
+
+        leftBallPicture.Image = left ? Resources.ball : Resources.no_ball;
+        rightBallPicture.Image = right ? Resources.ball : Resources.no_ball;
+    }
+
+    private void SetMultiplier(double left, double right)
+    {
+        LeftMultiplier = left;
+        RightMultiplier = right;
+
+        leftMultiplierLabel.Text = @"x" + left.ToString(CultureInfo.InvariantCulture);
+        rightMultiplierLabel.Text = @"x" + right.ToString(CultureInfo.InvariantCulture);
     }
 
     // Set score
     private void SetScore(int left, int right)
     {
-
         // Set team scores
         // Align team scores
         leftScore.Invoke(() =>
@@ -312,6 +333,7 @@ public partial class InMatchScore : Form
         SetFuel(0, 0);
         SetPark(0, 0);
     }
+
     // Reset match
     private void ResetMatch()
     {
@@ -322,14 +344,15 @@ public partial class InMatchScore : Form
         SetScore(0, 0);
         SetPenalty(0, 0);
         SetHatch(false, false);
+        SetBall(false, false);
         SetFuel(0, 0);
+        SetMultiplier(1, 1);
         SetPark(0, 0);
     }
 
     // Set wins
     private void SetWins(int left, int right)
     {
-
         // Set wins text
         // Align the leftWins and rightWins label
         leftWins.Invoke(() =>
@@ -375,7 +398,8 @@ public partial class InMatchScore : Form
         rightParkHalf.Size = rightParkHalf.Image.Size;
         rightParkFull.Size = rightParkFull.Image.Size;
         rightParkNo.Size = rightParkNo.Image.Size;
-
+        leftBallPicture.Size = leftBallPicture.Image.Size;
+        rightBallPicture.Size = rightBallPicture.Image.Size;
 
 
         // Add paint event handler to the canvas
@@ -443,26 +467,44 @@ public partial class InMatchScore : Form
             w * 37 / 48 - rightFuel.Width / 2,
             h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - rightFuel.Height / 2);
 
-        // Align park images
+        // Align park and ball images
         leftParkNo.Location = new Point(
-            w / 6 - leftParkHalf.Size.Width / 2,
-            h - leftParkNo.Size.Height * 4 / 3);
+            w * 5 / 48 - leftParkNo.Size.Width / 2,
+            h * 9 / 10 - leftParkNo.Height / 2);
         leftParkHalf.Location = new Point(
-            w / 6 - leftParkHalf.Size.Width / 2,
-            h - leftParkNo.Size.Height * 4 / 3);
+            w * 5 / 48 - leftParkHalf.Size.Width / 2,
+            h * 9 / 10 - leftParkHalf.Height / 2);
         leftParkFull.Location = new Point(
-            w / 6 - leftParkHalf.Size.Width / 2,
-            h - leftParkNo.Size.Height * 4 / 3);
+            w * 5 / 48 - leftParkFull.Size.Width / 2,
+            h * 9 / 10 - leftParkFull.Height / 2);
+
+        leftBallPicture.Location = new Point(
+            w * 11 / 48 - leftBallPicture.Width / 2,
+            h * 9 / 10 - leftBallPicture.Height / 2);
 
         rightParkNo.Location = new Point(
-            w * 5 / 6 - rightParkHalf.Size.Width / 2,
-            h - rightParkHalf.Size.Height * 4 / 3);
+            w * 43 / 48 - rightParkNo.Width / 2,
+            h * 9 / 10 - rightParkNo.Size.Height / 2);
         rightParkHalf.Location = new Point(
-            w * 5 / 6 - rightParkHalf.Size.Width / 2,
-            h - rightParkHalf.Size.Height * 4 / 3);
+            w * 43 / 48 - rightParkHalf.Width / 2,
+            h * 9 / 10 - rightParkHalf.Size.Height / 2);
         rightParkFull.Location = new Point(
-            w * 5 / 6 - rightParkHalf.Size.Width / 2,
-            h - rightParkHalf.Size.Height * 4 / 3);
+            w * 43 / 48 - rightParkFull.Width / 2,
+            h * 9 / 10 - rightParkFull.Size.Height / 2);
+
+        rightBallPicture.Location = new Point(
+            w * 37 / 48 - rightBallPicture.Width / 2,
+            h * 9 / 10 - rightBallPicture.Height / 2);
+
+        // Align multiplier label
+        leftMultiplierLabel.Location = new Point(
+            w / 3,
+            h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - leftMultiplierLabel.Height / 2
+        );
+        rightMultiplierLabel.Location = new Point(
+            2 * w / 3 - rightMultiplierLabel.Width,
+            h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - rightMultiplierLabel.Height / 2
+        );
 
         WSUpdate.StartTimer += (_, _) => StartTimer();
         WSUpdate.SetFuel += (_, e) => SetFuel(e.Left, e.Right);
@@ -470,6 +512,8 @@ public partial class InMatchScore : Form
         WSUpdate.SetScore += (_, e) => SetScore(e.Left, e.Right);
         WSUpdate.SetHatch += (_, e) => SetHatch(e.Left, e.Right);
         WSUpdate.SetPenalty += (_, e) => SetPenalty(e.Left, e.Right);
+        WSUpdate.SetBall += (_, e) => SetBall(e.Left, e.Right);
+        WSUpdate.SetMultiplier += (_, e) => SetMultiplier(e.Left, e.Right);
         WSUpdate.SetWins += (_, e) => SetWins(e.Left, e.Right);
         WSUpdate.SetTeamColor += (_, e) => SetTeamColor(e.Left, e.Right);
         WSUpdate.SetTimer += (_, e) => SetTime(e.Time);
@@ -480,12 +524,8 @@ public partial class InMatchScore : Form
         {
             SetTeamColor(Color.Red, Color.DodgerBlue);
             SetWins(0, 0);
-            SetTime(180);
-            SetScore(0, 0);
-            SetPenalty(0, 0);
-            SetHatch(false, false);
-            SetFuel(0, 0);
-            SetPark(0, 0);
+            SetTime(timeTotal);
+            ResetMatch();
             Program.PostMatchScoreForm.Show();
             Activate();
         };
@@ -598,5 +638,21 @@ public partial class InMatchScore : Form
     private void timerText_Click(object sender, EventArgs e)
     {
         Publish.Invoke(this, EventArgs.Empty);
+    }
+
+    private void timerText_SizeChanged(object sender, EventArgs e)
+    {
+        timerText.Location = new Point(
+            (w - timerText.Width) / 2,
+            (h - timerText.Height) / 2
+        );
+    }
+
+    private void rightMultiplierLabel_SizeChanged(object sender, EventArgs e)
+    {
+        rightMultiplierLabel.Location = new Point(
+            2 * w / 3 - rightMultiplierLabel.Width,
+            h / 2 + h / 6 + h / 24 + h / 96 + h / 36 - rightMultiplierLabel.Height / 2
+        );
     }
 }

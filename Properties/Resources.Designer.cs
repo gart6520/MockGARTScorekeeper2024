@@ -63,6 +63,16 @@ namespace MockGARTScore.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ball {
+            get {
+                object obj = ResourceManager.GetObject("ball", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap bot {
             get {
                 object obj = ResourceManager.GetObject("bot", resourceCulture);
@@ -106,6 +116,26 @@ namespace MockGARTScore.Properties {
         internal static System.Drawing.Bitmap hatch {
             get {
                 object obj = ResourceManager.GetObject("hatch", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap no_ball {
+            get {
+                object obj = ResourceManager.GetObject("no_ball", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap no_ball1 {
+            get {
+                object obj = ResourceManager.GetObject("no_ball1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

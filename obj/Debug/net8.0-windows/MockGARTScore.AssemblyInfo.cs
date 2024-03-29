@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MockGARTScore")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+76e20ee47b8c94bcc43d45517ce9eba54e57a928")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cbdba0935a6bf67b526f45a6ac787c7dd289a325")]
 [assembly: System.Reflection.AssemblyProductAttribute("MockGARTScore")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MockGARTScore")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
